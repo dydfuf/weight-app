@@ -102,6 +102,7 @@ import {
   Bell,
   MoreHorizontal,
 } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function UIComponentsPage() {
   const [progressValue, setProgressValue] = React.useState(33);
@@ -115,14 +116,17 @@ export default function UIComponentsPage() {
     <div className="min-h-screen bg-background p-6">
       <div className="mx-auto max-w-7xl space-y-8">
         {/* Header */}
-        <div className="space-y-2">
-          <h1 className="text-4xl font-bold tracking-tight">
-            UI Components Showcase
-          </h1>
-          <p className="text-muted-foreground">
-            Explore all available UI components in this design system. Each
-            component includes examples and usage patterns.
-          </p>
+        <div className="flex items-center justify-between">
+          <div className="space-y-2">
+            <h1 className="text-4xl font-bold tracking-tight">
+              UI Components Showcase
+            </h1>
+            <p className="text-muted-foreground">
+              Explore all available UI components in this design system. Each
+              component includes examples and usage patterns.
+            </p>
+          </div>
+          <ThemeToggle />
         </div>
 
         {/* Navigation Tabs */}
