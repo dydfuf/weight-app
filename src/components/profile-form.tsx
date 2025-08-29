@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -65,11 +65,12 @@ export function ProfileForm({ userId, initial }: ProfileFormProps) {
   });
 
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [isPending, startTransition] = useTransition();
+  const [saving, setSaving] = useState(false);
 
-  const onSubmit = (values: FormValues) => {
+  const onSubmit = async (values: FormValues) => {
     setSuccessMessage(null);
-    startTransition(async () => {
+    setSaving(true);
+    try {
       const supabase = createClient();
       const weightNum =
         values.target_weight && values.target_weight !== "" ? Number(values.target_weight) : null;
@@ -86,7 +87,9 @@ export function ProfileForm({ userId, initial }: ProfileFormProps) {
       }
 
       setSuccessMessage("프로필이 저장되었습니다.");
-    });
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -150,8 +153,8 @@ export function ProfileForm({ userId, initial }: ProfileFormProps) {
         />
 
         <div className="flex items-center gap-3">
-          <Button type="submit" disabled={isPending}>
-            {isPending ? "저장 중..." : "저장"}
+          <Button type="submit" disabled={saving}>
+            {saving ? "저장 중..." : "저장"}
           </Button>
           {successMessage ? (
             <p className="text-sm text-muted-foreground">{successMessage}</p>
