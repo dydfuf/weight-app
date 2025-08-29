@@ -1,22 +1,8 @@
 "use client";
 
+import { Bell, Heart, Home, MoreHorizontal, Settings, User } from "lucide-react";
 import * as React from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   Accordion,
   AccordionContent,
@@ -24,25 +10,19 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Switch } from "@/components/ui/switch";
-import { Slider } from "@/components/ui/slider";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -60,16 +40,6 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -77,14 +47,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Pagination,
   PaginationContent,
@@ -93,16 +57,31 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { Separator } from "@/components/ui/separator";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Progress } from "@/components/ui/progress";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
-  Heart,
-  Home,
-  Settings,
-  User,
-  Bell,
-  MoreHorizontal,
-} from "lucide-react";
-import { ThemeToggle } from "@/components/theme-toggle";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export default function UIComponentsPage() {
   const [progressValue, setProgressValue] = React.useState(33);
@@ -118,12 +97,10 @@ export default function UIComponentsPage() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="space-y-2">
-            <h1 className="text-4xl font-bold tracking-tight">
-              UI Components Showcase
-            </h1>
+            <h1 className="text-4xl font-bold tracking-tight">UI Components Showcase</h1>
             <p className="text-muted-foreground">
-              Explore all available UI components in this design system. Each
-              component includes examples and usage patterns.
+              Explore all available UI components in this design system. Each component includes
+              examples and usage patterns.
             </p>
           </div>
           <ThemeToggle />
@@ -186,10 +163,7 @@ export default function UIComponentsPage() {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="textarea">Textarea</Label>
-                    <Textarea
-                      id="textarea"
-                      placeholder="Enter longer text..."
-                    />
+                    <Textarea id="textarea" placeholder="Enter longer text..." />
                   </div>
                   <div className="flex items-center space-x-2">
                     <Checkbox id="checkbox" />
@@ -202,9 +176,7 @@ export default function UIComponentsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Select & Radio</CardTitle>
-                  <CardDescription>
-                    Selection controls and dropdowns
-                  </CardDescription>
+                  <CardDescription>Selection controls and dropdowns</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
@@ -222,10 +194,7 @@ export default function UIComponentsPage() {
                   </div>
                   <div className="space-y-2">
                     <Label>Radio Group</Label>
-                    <RadioGroup
-                      value={radioValue}
-                      onValueChange={setRadioValue}
-                    >
+                    <RadioGroup value={radioValue} onValueChange={setRadioValue}>
                       <div className="flex items-center space-x-2">
                         <RadioGroupItem value="option1" id="r1" />
                         <Label htmlFor="r1">Option 1</Label>
@@ -243,16 +212,11 @@ export default function UIComponentsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Switches & Sliders</CardTitle>
-                  <CardDescription>
-                    Toggle controls and range inputs
-                  </CardDescription>
+                  <CardDescription>Toggle controls and range inputs</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center space-x-2">
-                    <Switch
-                      checked={switchChecked}
-                      onCheckedChange={setSwitchChecked}
-                    />
+                    <Switch checked={switchChecked} onCheckedChange={setSwitchChecked} />
                     <Label>Toggle switch</Label>
                   </div>
                   <div className="space-y-2">
@@ -264,9 +228,7 @@ export default function UIComponentsPage() {
                       step={1}
                       className="w-full"
                     />
-                    <div className="text-sm text-muted-foreground">
-                      Value: {sliderValue[0]}
-                    </div>
+                    <div className="text-sm text-muted-foreground">Value: {sliderValue[0]}</div>
                   </div>
                 </CardContent>
               </Card>
@@ -275,9 +237,7 @@ export default function UIComponentsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Avatars</CardTitle>
-                  <CardDescription>
-                    User profile images and fallbacks
-                  </CardDescription>
+                  <CardDescription>User profile images and fallbacks</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex gap-4">
@@ -305,14 +265,13 @@ export default function UIComponentsPage() {
                 <CardHeader>
                   <CardTitle>Card Component</CardTitle>
                   <CardDescription>
-                    A flexible content container with header, content, and
-                    footer sections.
+                    A flexible content container with header, content, and footer sections.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <p>
-                    This is the main content area of the card. Cards are perfect
-                    for displaying related information in a structured way.
+                    This is the main content area of the card. Cards are perfect for displaying
+                    related information in a structured way.
                   </p>
                 </CardContent>
                 <Button className="w-fit">Action</Button>
@@ -322,9 +281,7 @@ export default function UIComponentsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Tabs</CardTitle>
-                  <CardDescription>
-                    Organize content into separate panels
-                  </CardDescription>
+                  <CardDescription>Organize content into separate panels</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Tabs defaultValue="tab1" className="w-full">
@@ -350,25 +307,22 @@ export default function UIComponentsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Accordion</CardTitle>
-                  <CardDescription>
-                    Collapsible content sections
-                  </CardDescription>
+                  <CardDescription>Collapsible content sections</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value="item-1">
                       <AccordionTrigger>Section 1</AccordionTrigger>
                       <AccordionContent>
-                        This is the content for section 1. It can contain any
-                        type of content including text, images, or other
-                        components.
+                        This is the content for section 1. It can contain any type of content
+                        including text, images, or other components.
                       </AccordionContent>
                     </AccordionItem>
                     <AccordionItem value="item-2">
                       <AccordionTrigger>Section 2</AccordionTrigger>
                       <AccordionContent>
-                        This is the content for section 2. Accordions are great
-                        for organizing information in a compact way.
+                        This is the content for section 2. Accordions are great for organizing
+                        information in a compact way.
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
@@ -379,9 +333,7 @@ export default function UIComponentsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Data Table</CardTitle>
-                  <CardDescription>
-                    Display tabular data with proper styling
-                  </CardDescription>
+                  <CardDescription>Display tabular data with proper styling</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Table>
@@ -431,9 +383,7 @@ export default function UIComponentsPage() {
                       </BreadcrumbItem>
                       <BreadcrumbSeparator />
                       <BreadcrumbItem>
-                        <BreadcrumbLink href="/components">
-                          Components
-                        </BreadcrumbLink>
+                        <BreadcrumbLink href="/components">Components</BreadcrumbLink>
                       </BreadcrumbItem>
                       <BreadcrumbSeparator />
                       <BreadcrumbItem>
@@ -447,9 +397,7 @@ export default function UIComponentsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Pagination</CardTitle>
-                  <CardDescription>
-                    Navigate through multiple pages
-                  </CardDescription>
+                  <CardDescription>Navigate through multiple pages</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Pagination>
@@ -485,9 +433,7 @@ export default function UIComponentsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Dialog</CardTitle>
-                  <CardDescription>
-                    Modal dialog for important messages or forms
-                  </CardDescription>
+                  <CardDescription>Modal dialog for important messages or forms</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -498,22 +444,15 @@ export default function UIComponentsPage() {
                       <DialogHeader>
                         <DialogTitle>Are you sure?</DialogTitle>
                         <DialogDescription>
-                          This action cannot be undone. This will permanently
-                          delete your account and remove your data from our
-                          servers.
+                          This action cannot be undone. This will permanently delete your account
+                          and remove your data from our servers.
                         </DialogDescription>
                       </DialogHeader>
                       <div className="flex justify-end gap-2">
-                        <Button
-                          variant="outline"
-                          onClick={() => setDialogOpen(false)}
-                        >
+                        <Button variant="outline" onClick={() => setDialogOpen(false)}>
                           Cancel
                         </Button>
-                        <Button
-                          variant="destructive"
-                          onClick={() => setDialogOpen(false)}
-                        >
+                        <Button variant="destructive" onClick={() => setDialogOpen(false)}>
                           Delete
                         </Button>
                       </div>
@@ -526,9 +465,7 @@ export default function UIComponentsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Drawer</CardTitle>
-                  <CardDescription>
-                    Slide-out panel for mobile navigation or forms
-                  </CardDescription>
+                  <CardDescription>Slide-out panel for mobile navigation or forms</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
@@ -538,29 +475,18 @@ export default function UIComponentsPage() {
                     <DrawerContent>
                       <DrawerHeader>
                         <DrawerTitle>Navigation</DrawerTitle>
-                        <DrawerDescription>
-                          Choose a page to navigate to.
-                        </DrawerDescription>
+                        <DrawerDescription>Choose a page to navigate to.</DrawerDescription>
                       </DrawerHeader>
                       <div className="px-4 pb-4 space-y-2">
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-start"
-                        >
+                        <Button variant="ghost" className="w-full justify-start">
                           <Home className="mr-2 h-4 w-4" />
                           Home
                         </Button>
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-start"
-                        >
+                        <Button variant="ghost" className="w-full justify-start">
                           <User className="mr-2 h-4 w-4" />
                           Profile
                         </Button>
-                        <Button
-                          variant="ghost"
-                          className="w-full justify-start"
-                        >
+                        <Button variant="ghost" className="w-full justify-start">
                           <Settings className="mr-2 h-4 w-4" />
                           Settings
                         </Button>
@@ -574,9 +500,7 @@ export default function UIComponentsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Popover</CardTitle>
-                  <CardDescription>
-                    Floating content that appears on trigger
-                  </CardDescription>
+                  <CardDescription>Floating content that appears on trigger</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Popover>
@@ -586,9 +510,7 @@ export default function UIComponentsPage() {
                     <PopoverContent className="w-80">
                       <div className="grid gap-4">
                         <div className="space-y-2">
-                          <h4 className="font-medium leading-none">
-                            Dimensions
-                          </h4>
+                          <h4 className="font-medium leading-none">Dimensions</h4>
                           <p className="text-sm text-muted-foreground">
                             Set the dimensions for the layer.
                           </p>
@@ -596,19 +518,11 @@ export default function UIComponentsPage() {
                         <div className="grid gap-2">
                           <div className="grid grid-cols-3 items-center gap-4">
                             <Label htmlFor="width">Width</Label>
-                            <Input
-                              id="width"
-                              defaultValue="100%"
-                              className="col-span-2 h-8"
-                            />
+                            <Input id="width" defaultValue="100%" className="col-span-2 h-8" />
                           </div>
                           <div className="grid grid-cols-3 items-center gap-4">
                             <Label htmlFor="height">Height</Label>
-                            <Input
-                              id="height"
-                              defaultValue="25px"
-                              className="col-span-2 h-8"
-                            />
+                            <Input id="height" defaultValue="25px" className="col-span-2 h-8" />
                           </div>
                         </div>
                       </div>
@@ -639,9 +553,7 @@ export default function UIComponentsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Dropdown Menu</CardTitle>
-                  <CardDescription>
-                    Contextual menu with actions
-                  </CardDescription>
+                  <CardDescription>Contextual menu with actions</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <DropdownMenu>
@@ -677,22 +589,16 @@ export default function UIComponentsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Alerts</CardTitle>
-                  <CardDescription>
-                    Important information or warnings
-                  </CardDescription>
+                  <CardDescription>Important information or warnings</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <Alert>
                     <AlertTitle>Success!</AlertTitle>
-                    <AlertDescription>
-                      Your changes have been saved successfully.
-                    </AlertDescription>
+                    <AlertDescription>Your changes have been saved successfully.</AlertDescription>
                   </Alert>
                   <Alert variant="destructive">
                     <AlertTitle>Error</AlertTitle>
-                    <AlertDescription>
-                      Something went wrong. Please try again.
-                    </AlertDescription>
+                    <AlertDescription>Something went wrong. Please try again.</AlertDescription>
                   </Alert>
                 </CardContent>
               </Card>
@@ -701,9 +607,7 @@ export default function UIComponentsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Progress</CardTitle>
-                  <CardDescription>
-                    Progress indicators and loading states
-                  </CardDescription>
+                  <CardDescription>Progress indicators and loading states</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
@@ -712,9 +616,7 @@ export default function UIComponentsPage() {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() =>
-                        setProgressValue(Math.min(100, progressValue + 10))
-                      }
+                      onClick={() => setProgressValue(Math.min(100, progressValue + 10))}
                     >
                       Increase Progress
                     </Button>
@@ -726,9 +628,7 @@ export default function UIComponentsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Badges</CardTitle>
-                  <CardDescription>
-                    Status indicators and labels
-                  </CardDescription>
+                  <CardDescription>Status indicators and labels</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex flex-wrap gap-2">
@@ -754,9 +654,7 @@ export default function UIComponentsPage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Separator</CardTitle>
-                  <CardDescription>
-                    Visual dividers and section breaks
-                  </CardDescription>
+                  <CardDescription>Visual dividers and section breaks</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>

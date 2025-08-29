@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { LogoutButton } from "@/components/logout-button";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function SettingsPage() {
   const supabase = await createClient();
@@ -26,8 +26,7 @@ export default async function SettingsPage() {
           {user ? (
             <div className="space-y-1">
               <p>
-                <span className="text-muted-foreground">이메일:</span>{" "}
-                {user.email}
+                <span className="text-muted-foreground">이메일:</span> {user.email}
               </p>
               <p className="break-all">
                 <span className="text-muted-foreground">UID:</span> {user.id}

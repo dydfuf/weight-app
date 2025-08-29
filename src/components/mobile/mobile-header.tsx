@@ -1,8 +1,8 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import * as React from "react";
 import { cn } from "@/lib/utils";
 import { MOBILE_HEADER_HEIGHT } from "./constants";
 
@@ -22,7 +22,7 @@ export function MobileHeader() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 pt-[env(safe-area-inset-top)]"
+        "fixed inset-x-0 top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 pt-[env(safe-area-inset-top)]",
       )}
       style={{ height: MOBILE_HEADER_HEIGHT }}
     >
@@ -34,5 +34,3 @@ export function MobileHeader() {
     </header>
   );
 }
-
-export {};

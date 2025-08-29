@@ -1,10 +1,7 @@
 import type { ReactNode } from "react";
-import { MobileHeader } from "@/components/mobile/mobile-header";
+import { MOBILE_BOTTOM_NAV_HEIGHT, MOBILE_HEADER_HEIGHT } from "@/components/mobile/constants";
 import { MobileBottomNav } from "@/components/mobile/mobile-bottom-nav";
-import {
-  MOBILE_BOTTOM_NAV_HEIGHT,
-  MOBILE_HEADER_HEIGHT,
-} from "@/components/mobile/constants";
+import { MobileHeader } from "@/components/mobile/mobile-header";
 
 export default function MobileLayout({ children }: { children: ReactNode }) {
   return (
