@@ -1,16 +1,10 @@
 "use client";
 
+import { BarChart3, Dumbbell, Home, Settings as SettingsIcon, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { MOBILE_BOTTOM_NAV_HEIGHT } from "./constants";
-import {
-  BarChart3,
-  Dumbbell,
-  Home,
-  Settings as SettingsIcon,
-  User,
-} from "lucide-react";
 
 type NavItem = {
   label: string;
@@ -32,7 +26,7 @@ export function MobileBottomNav() {
   return (
     <nav
       className={cn(
-        "fixed inset-x-0 bottom-0 z-40 border-t border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+        "fixed inset-x-0 bottom-0 z-40 border-t border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60",
       )}
       aria-label="Bottom navigation"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
@@ -42,7 +36,7 @@ export function MobileBottomNav() {
         style={{ height: MOBILE_BOTTOM_NAV_HEIGHT }}
       >
         {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
-          const isActive = pathname === href || pathname.startsWith(href + "/");
+          const isActive = pathname === href || pathname.startsWith(`${href}/`);
           return (
             <Link
               key={href}
@@ -50,15 +44,13 @@ export function MobileBottomNav() {
               aria-current={isActive ? "page" : undefined}
               className={cn(
                 "group flex flex-col items-center justify-center rounded-md px-3 py-2 text-xs font-medium transition-colors",
-                isActive
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground",
               )}
             >
               <Icon
                 className={cn(
                   "mb-1 h-5 w-5 transition-colors",
-                  isActive ? "text-primary" : "text-muted-foreground"
+                  isActive ? "text-primary" : "text-muted-foreground",
                 )}
               />
               <span>{label}</span>
@@ -69,5 +61,3 @@ export function MobileBottomNav() {
     </nav>
   );
 }
-
-export {};
