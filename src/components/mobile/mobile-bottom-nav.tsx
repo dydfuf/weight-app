@@ -32,9 +32,10 @@ export function MobileBottomNav() {
   return (
     <nav
       className={cn(
-        "fixed inset-x-0 bottom-0 z-40 border-t border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 pb-[env(safe-area-inset-bottom)]"
+        "fixed inset-x-0 bottom-0 z-40 border-t border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60"
       )}
       aria-label="Bottom navigation"
+      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <div
         className="mx-auto grid max-w-md grid-cols-5 gap-1 px-2 py-1"
