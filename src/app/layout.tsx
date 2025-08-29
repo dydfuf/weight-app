@@ -19,6 +19,11 @@ export const metadata: Metadata = {
   description: "웨잇은 나만의 운동기록을 관리할 수 있는 웹앱 입니다.",
   themeColor: "#0a0a0a",
   manifest: "/manifest.webmanifest",
+  viewport: {
+    width: "device-width",
+    initialScale: 1.0,
+    viewportFit: "cover",
+  },
 };
 
 export default function RootLayout({
