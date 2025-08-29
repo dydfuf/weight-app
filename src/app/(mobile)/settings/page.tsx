@@ -10,6 +10,13 @@ export default async function SettingsPage() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  const { data: profile } = user
+    ? await supabase
+        .from("profiles")
+        .select("nickname, unit, target_weight")
+        .eq("id", user.id)
+        .maybeSingle()
+    : { data: null };
 
   return (
     <section className="space-y-4 py-4">
@@ -31,6 +38,23 @@ export default async function SettingsPage() {
               <p className="break-all">
                 <span className="text-muted-foreground">UID:</span> {user.id}
               </p>
+              <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
+                <p>
+                  <span className="text-muted-foreground">닉네임:</span> {profile?.nickname ?? "-"}
+                </p>
+                <p>
+                  <span className="text-muted-foreground">단위:</span> {profile?.unit ?? "kg"}
+                </p>
+                <p>
+                  <span className="text-muted-foreground">목표 체중:</span>{" "}
+                  {profile?.target_weight ?? "-"}
+                </p>
+              </div>
+              <div className="pt-2">
+                <Button asChild size="sm" variant="outline">
+                  <Link href="/profile">프로필 설정</Link>
+                </Button>
+              </div>
             </div>
           ) : (
             <div className="flex items-center justify-between">
