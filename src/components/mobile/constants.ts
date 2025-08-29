@@ -1,0 +1,2 @@
+export const MOBILE_HEADER_HEIGHT = 56;
+export const MOBILE_BOTTOM_NAV_HEIGHT = 64;

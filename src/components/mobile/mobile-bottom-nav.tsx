@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { MOBILE_BOTTOM_NAV_HEIGHT } from "./constants";
 import {
   BarChart3,
   Dumbbell,
@@ -31,11 +32,14 @@ export function MobileBottomNav() {
   return (
     <nav
       className={cn(
-        "fixed inset-x-0 bottom-0 z-40 border-t border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 pb-[env(safe-area-inset-bottom)]",
+        "fixed inset-x-0 bottom-0 z-40 border-t border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 pb-[env(safe-area-inset-bottom)]"
       )}
       aria-label="Bottom navigation"
     >
-      <div className="mx-auto grid max-w-md grid-cols-5 gap-1 px-2 py-1">
+      <div
+        className="mx-auto grid max-w-md grid-cols-5 gap-1 px-2 py-1"
+        style={{ height: MOBILE_BOTTOM_NAV_HEIGHT }}
+      >
         {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
           const isActive = pathname === href || pathname.startsWith(href + "/");
           return (
@@ -47,13 +51,13 @@ export function MobileBottomNav() {
                 "group flex flex-col items-center justify-center rounded-md px-3 py-2 text-xs font-medium transition-colors",
                 isActive
                   ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground",
+                  : "text-muted-foreground hover:text-foreground"
               )}
             >
               <Icon
                 className={cn(
                   "mb-1 h-5 w-5 transition-colors",
-                  isActive ? "text-primary" : "text-muted-foreground",
+                  isActive ? "text-primary" : "text-muted-foreground"
                 )}
               />
               <span>{label}</span>
@@ -65,4 +69,4 @@ export function MobileBottomNav() {
   );
 }
 
-export const MOBILE_BOTTOM_NAV_HEIGHT = 64;
+export {};
