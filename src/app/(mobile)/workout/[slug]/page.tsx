@@ -15,15 +15,25 @@ export default async function ExerciseDetailPage({
 }) {
   const { slug } = await params;
   const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  const { data, error } = await supabase
+  let query = supabase
     .from("exercises")
     .select(
       "id, name, slug, difficulty, mechanic, plane, unilateral, description, instruction_steps, media",
     )
-    .eq("slug", slug)
-    .eq("visibility", "public")
-    .maybeSingle();
+    .eq("slug", slug);
+
+  if (user?.id) {
+    // Allow public rows for guests; allow public or owned rows for logged-in users
+    query = query.or(`visibility.eq.public,created_by.eq.${user.id}`);
+  } else {
+    query = query.eq("visibility", "public");
+  }
+
+  const { data, error } = await query.maybeSingle();
 
   if (error) {
     throw error;
