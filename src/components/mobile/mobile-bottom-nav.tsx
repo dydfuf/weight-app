@@ -2,7 +2,8 @@
 
 import { BarChart3, Dumbbell, Home, Settings as SettingsIcon, User } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { MOBILE_BOTTOM_NAV_HEIGHT } from "./constants";
 
@@ -22,6 +23,18 @@ const NAV_ITEMS: NavItem[] = [
 
 export function MobileBottomNav() {
   const pathname = usePathname() || "/dashboard";
+  const router = useRouter();
+
+  // Warm up route cache for primary tabs
+  useEffect(() => {
+    try {
+      NAV_ITEMS.forEach(({ href }) => {
+        router.prefetch?.(href);
+      });
+    } catch {
+      // no-op
+    }
+  }, [router]);
 
   return (
     <nav
@@ -41,6 +54,7 @@ export function MobileBottomNav() {
             <Link
               key={href}
               href={href}
+              prefetch
               aria-current={isActive ? "page" : undefined}
               className={cn(
                 "group flex flex-col items-center justify-center rounded-md px-3 py-2 text-xs font-medium transition-colors",

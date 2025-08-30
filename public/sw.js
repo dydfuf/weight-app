@@ -4,8 +4,17 @@
   - Runtime cache: network-first for navigation, stale-while-revalidate for static assets
 */
 
-const CACHE_NAME = "pwa-cache-v1";
-const CORE_ASSETS = ["/", "/manifest.webmanifest", "/icon.svg"];
+const CACHE_NAME = "pwa-cache-v2";
+const CORE_ASSETS = [
+  "/",
+  "/manifest.webmanifest",
+  "/icon.svg",
+  "/dashboard",
+  "/workout",
+  "/stats",
+  "/profile",
+  "/settings",
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -30,14 +39,19 @@ self.addEventListener("fetch", (event) => {
 
   // Navigation requests: network first for up-to-date pages
   if (req.mode === "navigate") {
+    // Use stale-while-revalidate to improve perceived speed on repeated navigations
     event.respondWith(
-      fetch(req)
-        .then((res) => {
-          const resClone = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(req, resClone));
-          return res;
-        })
-        .catch(() => caches.match(req)),
+      (async () => {
+        const cache = await caches.open(CACHE_NAME);
+        const cached = await cache.match(req);
+        const networkPromise = fetch(req)
+          .then((res) => {
+            cache.put(req, res.clone());
+            return res;
+          })
+          .catch(() => cached);
+        return cached || networkPromise;
+      })(),
     );
     return;
   }
