@@ -76,16 +76,16 @@ export async function ExerciseList({
         <Link key={ex.id} href={`/workout/${ex.slug}`} className="block">
           <Card className="hover:bg-accent/40 transition-colors">
             <CardContent className="py-4">
-              <div className="flex items-start justify-between gap-2">
+              <div className="flex flex-col gap-2">
                 <div className="min-w-0">
-                  <div className="font-medium leading-tight truncate">{ex.name}</div>
+                  <div className="font-medium leading-tight whitespace-normal break-words">{ex.name}</div>
                   {ex.description && (
                     <div className="text-xs text-muted-foreground line-clamp-2">
                       {ex.description}
                     </div>
                   )}
                 </div>
-                <div className="flex flex-wrap gap-1 justify-end shrink-0">
+                <div className="flex flex-wrap gap-1">
                   <Badge variant="secondary">{ex.difficulty}</Badge>
                   <Badge variant="outline">{ex.mechanic}</Badge>
                   <Badge variant="outline">{ex.plane}</Badge>
