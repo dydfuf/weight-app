@@ -78,7 +78,9 @@ export async function ExerciseList({
             <CardContent className="py-4">
               <div className="flex flex-col gap-2">
                 <div className="min-w-0">
-                  <div className="font-medium leading-tight whitespace-normal break-words">{ex.name}</div>
+                  <div className="font-medium leading-tight whitespace-normal break-words">
+                    {ex.name}
+                  </div>
                   {ex.description && (
                     <div className="text-xs text-muted-foreground line-clamp-2">
                       {ex.description}

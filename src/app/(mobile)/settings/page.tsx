@@ -1,8 +1,14 @@
+import { ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
 import { LogoutButton } from "@/components/logout-button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function SettingsPage() {
@@ -19,55 +25,67 @@ export default async function SettingsPage() {
     : { data: null };
 
   return (
-    <section className="space-y-4 py-4">
+    <section className="space-y-6 py-4">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">설정</h1>
-        <ThemeToggle />
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>유저 정보</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2 text-sm">
-          {user ? (
-            <div className="space-y-1">
-              <p>
-                <span className="text-muted-foreground">이메일:</span> {user.email}
-              </p>
-              <p className="break-all">
-                <span className="text-muted-foreground">UID:</span> {user.id}
-              </p>
-              <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
-                <p>
-                  <span className="text-muted-foreground">닉네임:</span> {profile?.nickname ?? "-"}
-                </p>
-                <p>
-                  <span className="text-muted-foreground">단위:</span> {profile?.unit ?? "kg"}
-                </p>
-                <p>
-                  <span className="text-muted-foreground">목표 체중:</span>{" "}
-                  {profile?.target_weight ?? "-"}
-                </p>
-              </div>
-              <div className="pt-2">
-                <Button asChild size="sm" variant="outline">
-                  <Link href="/profile">프로필 설정</Link>
-                </Button>
-              </div>
+      {user ? (
+        <>
+          <div className="rounded-lg border divide-y">
+            <div className="px-4 py-3">
+              <p className="text-xs text-muted-foreground">이메일</p>
+              <p className="break-all text-lg font-medium">{user.email}</p>
             </div>
-          ) : (
-            <div className="flex items-center justify-between">
-              <p className="text-muted-foreground">로그인이 필요합니다.</p>
-              <Button asChild>
-                <Link href="/auth/login">로그인</Link>
-              </Button>
+            <div className="px-4 py-3">
+              <p className="text-xs text-muted-foreground">닉네임</p>
+              <p className="text-lg font-medium">{profile?.nickname ?? "-"}</p>
             </div>
-          )}
-        </CardContent>
-      </Card>
+          </div>
 
-      <div className="flex gap-2">{user ? <LogoutButton /> : null}</div>
+          <Accordion type="single" collapsible className="rounded-lg border">
+            <AccordionItem value="details">
+              <AccordionTrigger className="px-4">추가 정보</AccordionTrigger>
+              <AccordionContent className="px-4">
+                <div className="divide-y">
+                  <div className="flex items-center justify-between py-3">
+                    <span className="text-sm text-muted-foreground">단위</span>
+                    <span>{profile?.unit ?? "kg"}</span>
+                  </div>
+                  <div className="flex items-center justify-between py-3">
+                    <span className="text-sm text-muted-foreground">목표 체중</span>
+                    <span>{profile?.target_weight ?? "-"}</span>
+                  </div>
+                  <div className="flex items-center justify-between py-3">
+                    <span className="text-sm text-muted-foreground">UID</span>
+                    <span className="break-all">{user.id}</span>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+
+          <div className="rounded-lg border divide-y">
+            <div className="flex items-center justify-between px-4 py-3">
+              <span className="text-sm">테마</span>
+              <ThemeToggle />
+            </div>
+            <Link href="/profile" className="flex items-center justify-between px-4 py-3">
+              <span className="text-sm">프로필 설정</span>
+              <ChevronRightIcon className="size-4 text-muted-foreground" />
+            </Link>
+          </div>
+
+          <div className="flex gap-2">{user ? <LogoutButton /> : null}</div>
+        </>
+      ) : (
+        <div className="flex items-center justify-between">
+          <p className="text-muted-foreground">로그인이 필요합니다.</p>
+          <Button asChild>
+            <Link href="/auth/login">로그인</Link>
+          </Button>
+        </div>
+      )}
     </section>
   );
 }
