@@ -32,7 +32,7 @@ export function MobileBottomNav() {
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <div
-        className="mx-auto grid max-w-md grid-cols-5 gap-1 px-2 py-1"
+        className="mx-auto grid max-w-md grid-cols-5 gap-1 px-2 pt-1 mb-4"
         style={{ height: MOBILE_BOTTOM_NAV_HEIGHT }}
       >
         {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
