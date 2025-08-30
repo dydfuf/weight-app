@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "biome check --write",
     "format": "biome format --write",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "supabase:login": "npx -y supabase login",
+    "supabase:gen:types": "npx -y supabase gen types typescript --project-id craejdbidgqpmnvwsbip --schema public > database.types.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
