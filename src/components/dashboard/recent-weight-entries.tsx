@@ -3,7 +3,7 @@
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { Calendar, MessageSquare, RefreshCw, Scale } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,7 +34,7 @@ export function RecentWeightEntries({ optimisticEntry, refreshTrigger }: RecentW
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   const fetchRecentEntries = useCallback(async () => {
     try {
@@ -84,7 +84,7 @@ export function RecentWeightEntries({ optimisticEntry, refreshTrigger }: RecentW
     } finally {
       setLoading(false);
     }
-  }, [supabase, optimisticEntry]);
+  }, [optimisticEntry, supabase]);
 
   useEffect(() => {
     fetchRecentEntries();

@@ -3,7 +3,7 @@
 import { endOfWeek, format, startOfWeek, subMonths, subWeeks } from "date-fns";
 import { ko } from "date-fns/locale";
 import { Calendar, Minus, Scale, TrendingDown, TrendingUp } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -42,7 +42,7 @@ export function WeightSummaryCards({ optimisticEntry, refreshTrigger }: WeightSu
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   const fetchWeightSummary = useCallback(async () => {
     try {
@@ -141,7 +141,7 @@ export function WeightSummaryCards({ optimisticEntry, refreshTrigger }: WeightSu
     } finally {
       setLoading(false);
     }
-  }, [supabase, optimisticEntry]);
+  }, [optimisticEntry, supabase]);
 
   useEffect(() => {
     fetchWeightSummary();
