@@ -48,22 +48,21 @@
 
 ### 3) 타입 생성 파이프라인
 
-- [ ] Supabase 타입 생성 스크립트 추가: `pnpm gen:types`
-- [ ] 생성 산출물 저장: `src/types/supabase.ts`
-- [ ] `src/lib/supabase/*`에서 DB 타입 적용(타입 안전한 쿼리 응답)
-- [ ] 신규 테이블(`exercises`, `program_templates`, `user_programs`, `user_maxes`, `planned_workouts`, `planned_sets`) 포함하여 타입 반영
+- [x] Supabase 타입 생성 스크립트 추가: `pnpm gen:types`
+- [x] 생성 산출물 저장: `src/types/supabase.ts`
+- [x] `src/lib/supabase/*`에서 DB 타입 적용(타입 안전한 쿼리 응답)
+- [x] 신규 테이블(`exercises`, `program_templates`, `user_programs`, `user_maxes`, `planned_workouts`, `planned_sets`) 포함하여 타입 반영
 
 ### 4) 대시보드(핵심 흐름)
 
-- [ ] `src/components/weight-entry-form.tsx` 생성(오늘 체중 입력 폼)
-  - [ ] 입력 유효성: 최소/최대, 소수점 자릿수
-  - [ ] 단위 전환: kg↔lb 표시/저장은 kg 기준
-  - [ ] 낙관적 업데이트 + 실패 시 롤백
-- [ ] `src/app/(mobile)/dashboard/page.tsx` 요약 카드 추가
-  - [ ] 최근 체중/주간 변화/월간 변화 카드
-  - [ ] 최근 입력 목록(5~10개)
-- [ ] 서버 동작: 체중 INSERT/SELECT 서버 액션 또는 서버 컴포넌트에 구현
-\
+- [x] `src/components/weight-entry-form.tsx` 생성(오늘 체중 입력 폼)
+  - [x] 입력 유효성: 최소/최대, 소수점 자릿수
+  - [x] 단위 전환: kg↔lb 표시/저장은 kg 기준
+  - [x] 낙관적 업데이트 + 실패 시 롤백
+- [x] `src/app/(mobile)/dashboard/page.tsx` 요약 카드 추가
+  - [x] 최근 체중/주간 변화/월간 변화 카드
+  - [x] 최근 입력 목록(5~10개)
+- [x] 서버 동작: 체중 INSERT/SELECT 서버 액션 또는 서버 컴포넌트에 구현
 - [ ] 오늘의 운동 섹션
   - [ ] 오늘 날짜의 `planned_workouts` 조회하여 있을 경우 카드 + CTA(시작하기)
   - [ ] 없을 경우: 프리셋 선택/자동 채우기 모달(무분할/2분할/3분할/5분할/CBum/5x5)
