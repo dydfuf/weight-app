@@ -45,7 +45,7 @@ const schema = z.object({
       "multi",
     ],
   ),
-  unilateral: z.boolean().default(false),
+  unilateral: z.boolean(),
   visibility: z.enum(
     Constants.public.Enums.exercise_visibility as unknown as ["public", "private"],
   ),
