@@ -343,6 +343,104 @@ export type Database = {
           },
         ];
       };
+      planned_sets: {
+        Row: {
+          created_at: string;
+          exercise_id: string;
+          id: string;
+          percent_of: Database["public"]["Enums"]["reference_lift"] | null;
+          percent_value: number | null;
+          planned_workout_id: string;
+          rpe: number | null;
+          target_reps: number;
+          target_sets: number;
+          target_weight_kg: number | null;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          exercise_id: string;
+          id?: string;
+          percent_of?: Database["public"]["Enums"]["reference_lift"] | null;
+          percent_value?: number | null;
+          planned_workout_id: string;
+          rpe?: number | null;
+          target_reps: number;
+          target_sets: number;
+          target_weight_kg?: number | null;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          exercise_id?: string;
+          id?: string;
+          percent_of?: Database["public"]["Enums"]["reference_lift"] | null;
+          percent_value?: number | null;
+          planned_workout_id?: string;
+          rpe?: number | null;
+          target_reps?: number;
+          target_sets?: number;
+          target_weight_kg?: number | null;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "planned_sets_exercise_fk";
+            columns: ["exercise_id"];
+            isOneToOne: false;
+            referencedRelation: "exercises";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "planned_sets_planned_workout_id_fkey";
+            columns: ["planned_workout_id"];
+            isOneToOne: false;
+            referencedRelation: "planned_workouts";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      planned_workouts: {
+        Row: {
+          created_at: string;
+          id: string;
+          planned_for: string;
+          status: Database["public"]["Enums"]["workout_status"];
+          title: string;
+          updated_at: string;
+          user_id: string;
+          user_program_id: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          planned_for: string;
+          status?: Database["public"]["Enums"]["workout_status"];
+          title: string;
+          updated_at?: string;
+          user_id?: string;
+          user_program_id?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          planned_for?: string;
+          status?: Database["public"]["Enums"]["workout_status"];
+          title?: string;
+          updated_at?: string;
+          user_id?: string;
+          user_program_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "planned_workouts_user_program_id_fkey";
+            columns: ["user_program_id"];
+            isOneToOne: false;
+            referencedRelation: "user_programs";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       profiles: {
         Row: {
           created_at: string;
@@ -370,6 +468,39 @@ export type Database = {
         };
         Relationships: [];
       };
+      program_templates: {
+        Row: {
+          created_at: string;
+          days_per_week: number;
+          description: string | null;
+          id: string;
+          key: string;
+          name: string;
+          template_json: Json;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          days_per_week: number;
+          description?: string | null;
+          id?: string;
+          key: string;
+          name: string;
+          template_json?: Json;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          days_per_week?: number;
+          description?: string | null;
+          id?: string;
+          key?: string;
+          name?: string;
+          template_json?: Json;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       tags: {
         Row: {
           created_at: string;
@@ -388,6 +519,181 @@ export type Database = {
           id?: string;
           name?: string;
           slug?: string;
+        };
+        Relationships: [];
+      };
+      user_maxes: {
+        Row: {
+          bench_kg: number | null;
+          bodyweight_kg: number | null;
+          deadlift_kg: number | null;
+          ohp_kg: number | null;
+          source: Database["public"]["Enums"]["max_source"];
+          squat_kg: number | null;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          bench_kg?: number | null;
+          bodyweight_kg?: number | null;
+          deadlift_kg?: number | null;
+          ohp_kg?: number | null;
+          source?: Database["public"]["Enums"]["max_source"];
+          squat_kg?: number | null;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Update: {
+          bench_kg?: number | null;
+          bodyweight_kg?: number | null;
+          deadlift_kg?: number | null;
+          ohp_kg?: number | null;
+          source?: Database["public"]["Enums"]["max_source"];
+          squat_kg?: number | null;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+      user_programs: {
+        Row: {
+          created_at: string;
+          id: string;
+          name: string;
+          start_date: string;
+          status: Database["public"]["Enums"]["program_status"];
+          template_key: string | null;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          name: string;
+          start_date?: string;
+          status?: Database["public"]["Enums"]["program_status"];
+          template_key?: string | null;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          name?: string;
+          start_date?: string;
+          status?: Database["public"]["Enums"]["program_status"];
+          template_key?: string | null;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_programs_template_key_fkey";
+            columns: ["template_key"];
+            isOneToOne: false;
+            referencedRelation: "program_templates";
+            referencedColumns: ["key"];
+          },
+        ];
+      };
+      weights: {
+        Row: {
+          created_at: string;
+          id: string;
+          note: string | null;
+          recorded_at: string;
+          updated_at: string;
+          user_id: string;
+          weight_kg: number;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          note?: string | null;
+          recorded_at: string;
+          updated_at?: string;
+          user_id?: string;
+          weight_kg: number;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          note?: string | null;
+          recorded_at?: string;
+          updated_at?: string;
+          user_id?: string;
+          weight_kg?: number;
+        };
+        Relationships: [];
+      };
+      workout_sets: {
+        Row: {
+          created_at: string;
+          exercise: string;
+          id: string;
+          reps: number;
+          rpe: number | null;
+          updated_at: string;
+          weight_kg: number;
+          workout_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          exercise: string;
+          id?: string;
+          reps: number;
+          rpe?: number | null;
+          updated_at?: string;
+          weight_kg: number;
+          workout_id: string;
+        };
+        Update: {
+          created_at?: string;
+          exercise?: string;
+          id?: string;
+          reps?: number;
+          rpe?: number | null;
+          updated_at?: string;
+          weight_kg?: number;
+          workout_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "workout_sets_workout_id_fkey";
+            columns: ["workout_id"];
+            isOneToOne: false;
+            referencedRelation: "workouts";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      workouts: {
+        Row: {
+          created_at: string;
+          id: string;
+          note: string | null;
+          performed_at: string;
+          title: string;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          note?: string | null;
+          performed_at: string;
+          title: string;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          note?: string | null;
+          performed_at?: string;
+          title?: string;
+          updated_at?: string;
+          user_id?: string;
         };
         Relationships: [];
       };
@@ -446,10 +752,14 @@ export type Database = {
         | "alternate"
         | "contraindicated_for";
       exercise_visibility: "public" | "private";
+      max_source: "user" | "estimate";
       mechanic_type: "compound" | "isolation";
       muscle_role: "primary" | "secondary" | "synergist" | "stabilizer";
       plane_of_motion: "sagittal" | "frontal" | "transverse" | "multi";
+      program_status: "active" | "paused" | "archived";
+      reference_lift: "squat" | "bench" | "deadlift" | "ohp";
       weight_unit: "kg" | "lb";
+      workout_status: "planned" | "in_progress" | "done" | "skipped";
     };
     CompositeTypes: {
       [_ in never]: never;
@@ -584,10 +894,14 @@ export const Constants = {
         "contraindicated_for",
       ],
       exercise_visibility: ["public", "private"],
+      max_source: ["user", "estimate"],
       mechanic_type: ["compound", "isolation"],
       muscle_role: ["primary", "secondary", "synergist", "stabilizer"],
       plane_of_motion: ["sagittal", "frontal", "transverse", "multi"],
+      program_status: ["active", "paused", "archived"],
+      reference_lift: ["squat", "bench", "deadlift", "ohp"],
       weight_unit: ["kg", "lb"],
+      workout_status: ["planned", "in_progress", "done", "skipped"],
     },
   },
 } as const;
