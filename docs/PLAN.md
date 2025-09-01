@@ -11,44 +11,65 @@
 
 ### 1) 인증 · 내비게이션
 
-- [ ] `.env.local` 생성: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- [ ] `src/lib/supabase/client.ts`에서 ENV 로드 및 클라이언트 생성 확인
-- [ ] `src/lib/supabase/server.ts`에서 서버 클라이언트 생성 확인
-- [ ] `src/app/auth/login/page.tsx`에 `src/components/login-form.tsx` 연동
-- [ ] `src/app/auth/oauth/route.ts` OAuth 콜백 플로우 정상 동작 점검
-- [ ] 보호 라우팅 통일: `src/middleware.ts`에서 `(mobile)` 이하 인증 가드 적용
-- [ ] `src/components/mobile/mobile-header.tsx`에 `src/components/logout-button.tsx` 노출
-- [ ] 로그인/로그아웃 후 리다이렉트 경로 일관화(`dashboard` 기본)
+- [x] `.env.local` 생성: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- [x] `src/lib/supabase/client.ts`에서 ENV 로드 및 클라이언트 생성 확인
+- [x] `src/lib/supabase/server.ts`에서 서버 클라이언트 생성 확인
+- [x] `src/app/auth/login/page.tsx`에 `src/components/login-form.tsx` 연동
+- [x] `src/app/auth/oauth/route.ts` OAuth 콜백 플로우 정상 동작 점검
+- [x] 보호 라우팅 통일: `src/middleware.ts`에서 `(mobile)` 이하 인증 가드 적용
+- [x] `src/components/mobile/mobile-header.tsx`에 `src/components/logout-button.tsx` 노출
+- [x] 로그인/로그아웃 후 리다이렉트 경로 일관화(`dashboard` 기본)
 
 ### 2) 데이터 모델 · RLS (Supabase)
 
-- [ ] 테이블 생성: `profiles`
-  - [ ] 컬럼: `id (uuid, pk, ref auth.users)`, `nickname`, `unit (kg|lb)`, `target_weight`, `created_at`
-- [ ] 테이블 생성: `weights`
-  - [ ] 컬럼: `id`, `user_id`, `recorded_at (date)`, `weight_kg (numeric)`, `note`, `created_at`
-- [ ] 테이블 생성: `workouts`
-  - [ ] 컬럼: `id`, `user_id`, `performed_at (timestamptz)`, `title`, `note`
-- [ ] 테이블 생성: `workout_sets`
-  - [ ] 컬럼: `id`, `workout_id`, `exercise`, `weight_kg`, `reps`, `rpe`
-- [ ] RLS ON: 각 테이블에 유저 격리 정책(SELECT/INSERT/UPDATE/DELETE)
-- [ ] 인덱스: `weights.user_id + recorded_at`, `workout_sets.workout_id`
+- [x] 테이블 생성: `profiles`
+  - [x] 컬럼: `id (uuid, pk, ref auth.users)`, `nickname`, `unit (kg|lb)`, `target_weight`, `created_at`
+- [x] 테이블 생성: `weights`
+  - [x] 컬럼: `id`, `user_id`, `recorded_at (date)`, `weight_kg (numeric)`, `note`, `created_at`
+- [x] 테이블 생성: `workouts`
+  - [x] 컬럼: `id`, `user_id`, `performed_at (timestamptz)`, `title`, `note`
+- [x] 테이블 생성: `workout_sets`
+  - [x] 컬럼: `id`, `workout_id`, `exercise`, `weight_kg`, `reps`, `rpe`
+- [x] 테이블 생성: `exercises`
+  - [x] 컬럼: `id`, `name`, `primary_muscle`, `secondary_muscles`, `is_compound (bool)`, `created_at`
+- [x] 테이블 생성: `program_templates` (프리셋: 무분할/2분할/3분할/5분할/크리스범스테드/5x5 등)
+  - [x] 컬럼: `id`, `key (unique)`, `name`, `description`, `days_per_week`, `template_json (jsonb)`, `created_at`
+- [x] 테이블 생성: `user_programs` (유저가 선택/생성한 프로그램 인스턴스)
+  - [x] 컬럼: `id`, `user_id`, `template_key`, `name`, `start_date`, `status (active|paused|archived)`, `created_at`
+- [x] 테이블 생성: `user_maxes` (1RM/체중 베이스라인)
+  - [x] 컬럼: `user_id (pk)`, `squat_kg`, `bench_kg`, `deadlift_kg`, `ohp_kg`, `bodyweight_kg`, `source (user|estimate)`, `updated_at`
+- [x] 테이블 생성: `planned_workouts` (오늘의 운동 제안/스케줄)
+  - [x] 컬럼: `id`, `user_program_id (nullable)`, `user_id`, `planned_for (date)`, `title`, `status (planned|in_progress|done|skipped)`, `created_at`
+- [x] 테이블 생성: `planned_sets` (예정 세트/반복/무게)
+  - [x] 컬럼: `id`, `planned_workout_id`, `exercise_id`, `target_sets`, `target_reps`, `target_weight_kg`, `rpe`, `percent_of (squat|bench|deadlift|ohp|null)`, `percent_value`
+- [x] RLS ON: 각 테이블에 유저 격리 정책(SELECT/INSERT/UPDATE/DELETE)
+- [x] 인덱스: `weights.user_id + recorded_at`, `workout_sets.workout_id`
+- [x] 인덱스: `planned_workouts.user_id + planned_for`, `planned_sets.planned_workout_id`, `user_programs.user_id`
 
 ### 3) 타입 생성 파이프라인
 
-- [ ] Supabase 타입 생성 스크립트 추가: `pnpm gen:types`
-- [ ] 생성 산출물 저장: `src/types/supabase.ts`
-- [ ] `src/lib/supabase/*`에서 DB 타입 적용(타입 안전한 쿼리 응답)
+- [x] Supabase 타입 생성 스크립트 추가: `pnpm gen:types`
+- [x] 생성 산출물 저장: `src/types/supabase.ts`
+- [x] `src/lib/supabase/*`에서 DB 타입 적용(타입 안전한 쿼리 응답)
+- [x] 신규 테이블(`exercises`, `program_templates`, `user_programs`, `user_maxes`, `planned_workouts`, `planned_sets`) 포함하여 타입 반영
 
 ### 4) 대시보드(핵심 흐름)
 
-- [ ] `src/components/weight-entry-form.tsx` 생성(오늘 체중 입력 폼)
-  - [ ] 입력 유효성: 최소/최대, 소수점 자릿수
-  - [ ] 단위 전환: kg↔lb 표시/저장은 kg 기준
-  - [ ] 낙관적 업데이트 + 실패 시 롤백
-- [ ] `src/app/(mobile)/dashboard/page.tsx` 요약 카드 추가
-  - [ ] 최근 체중/주간 변화/월간 변화 카드
-  - [ ] 최근 입력 목록(5~10개)
-- [ ] 서버 동작: 체중 INSERT/SELECT 서버 액션 또는 서버 컴포넌트에 구현
+- [x] `src/components/weight-entry-form.tsx` 생성(오늘 체중 입력 폼)
+  - [x] 입력 유효성: 최소/최대, 소수점 자릿수
+  - [x] 단위 전환: kg↔lb 표시/저장은 kg 기준
+  - [x] 낙관적 업데이트 + 실패 시 롤백
+- [x] `src/app/(mobile)/dashboard/page.tsx` 요약 카드 추가
+  - [x] 최근 체중/주간 변화/월간 변화 카드
+  - [x] 최근 입력 목록(5~10개)
+- [x] 서버 동작: 체중 INSERT/SELECT 서버 액션 또는 서버 컴포넌트에 구현
+- [ ] 오늘의 운동 섹션
+  - [ ] 오늘 날짜의 `planned_workouts` 조회하여 있을 경우 카드 + CTA(시작하기)
+  - [ ] 없을 경우: 프리셋 선택/자동 채우기 모달(무분할/2분할/3분할/5분할/CBum/5x5)
+  - [ ] 1RM/체중 정보 결측 시 온보딩 유도(페이지 진입 또는 모달 내 링크)
+  - [ ] "시작하기" 클릭 시 `src/app/(mobile)/workout/[slug]/page.tsx`로 이동
+  - [ ] 예정 세트(`planned_sets`)를 실제 세트(`workout_sets`)로 전개/동기화
+  - [ ] 서버 액션 확장: `src/app/(mobile)/workout/actions.ts`에 계획→실행 변환/완료 처리 추가
 
 ### 5) 통계
 
@@ -57,6 +78,38 @@
   - [ ] `src/components/ui/chart.tsx` 사용해 라인 차트 렌더
   - [ ] 빈 데이터/로딩/에러 상태 처리
 - [ ] 단위 변환 유틸 강화: `src/lib/utils.ts`에 kg↔lb 함수 및 테스트 케이스 정리
+
+### 5.5) 온보딩 · 1RM/체중 설정
+
+- [ ] 온보딩 라우트: `src/app/(mobile)/onboarding/` (보호 라우트, 최초 로그인/미완료 시 진입)
+  - [ ] Step 1: 단위/체중 입력(`profiles.unit`, `user_maxes.bodyweight_kg` 저장)
+  - [ ] Step 2: 1RM 또는 추정 정보 입력(스쿼트/벤치/데드/오버헤드프레스)
+    - [ ] "모른다" 옵션 제공 → 추정 경로(반복수/무게 또는 건너뛰기)
+    - [ ] 추정 공식: Epley/Brzycki (유틸 `src/lib/strength.ts` 제공)
+  - [ ] 완료 시 대시보드로 리다이렉트, 프리셋 추천 표시
+- [ ] 컴포넌트: `src/components/onboarding/maxes-form.tsx`, `src/components/onboarding/bodyweight-form.tsx`
+- [ ] 저장 동작: 서버 액션 또는 RSC에서 `user_maxes` upsert
+
+### 5.6) 프로그램 생성기 · 프리셋
+
+- [ ] 프리셋/생성기 구조 정의: `src/lib/programs/`
+  - [ ] `types.ts`: Template/Day/ExercisePrescription 타입 정의
+  - [ ] `presets/` 디렉토리: 무분할/2분할/3분할/5분할/크리스범스테드/5x5 스펙 정의(JSON or TS)
+  - [ ] `generator.ts`: `generateUserProgram({ templateKey, userMaxes, startDate })`
+    - [ ] 퍼센트 기반 무게 산출(예: 5x5=85% 1RM), 2.5kg 라운딩, 단위 반영
+  - [ ] `estimation.ts`: 1RM/반복-무게 상호 변환(Epley/Brzycki)
+  - [ ] `progression.ts`: 주차/세션별 진행 로직(간단 선형, AMRAP 옵션 등)
+- [ ] UI 연동: `src/components/program/preset-picker.tsx` (모달/시트)
+- [ ] 선택 결과 저장: `user_programs` 생성, `planned_workouts`/`planned_sets` 배치 생성
+
+### 5.7) 사용자 지정 운동 등록
+
+- [ ] 라우트: `src/app/(mobile)/workout/new/page.tsx`
+  - [ ] 기존에 기록한 운동(최근 `workout_sets` 기준) 빠른 선택
+  - [ ] `exercises` 검색/선택 → 세트/반복/무게 입력, 세트 복제/일괄 편집
+  - [ ] 저장 시: `planned_workouts` + `planned_sets` 생성(오늘 날짜 기본)
+- [ ] 컴포넌트: `src/components/workout/exercise-picker.tsx`, `src/components/workout/set-editor.tsx`
+- [ ] 서버 액션: 새 계획 생성/업데이트 API(`src/app/(mobile)/workout/actions.ts`)
 
 ### 6) 프로필
 
