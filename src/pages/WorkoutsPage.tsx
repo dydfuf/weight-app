@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useSearchParams } from "react-router";
 import { PlusIcon, Trash2Icon, XIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -27,7 +28,7 @@ export function WorkoutsPage() {
   const addSet = useAddWorkoutSet();
   const deleteSet = useDeleteWorkoutSet();
 
-  const exercises = data?.exercises ?? [];
+  const exercises = useMemo(() => data?.exercises ?? [], [data?.exercises]);
 
   const totals = useMemo(() => {
     const totalSets = exercises.reduce((acc, ex) => acc + ex.sets.length, 0);
@@ -39,7 +40,10 @@ export function WorkoutsPage() {
     return { totalSets, totalVolume };
   }, [exercises]);
 
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [searchParams] = useSearchParams();
+  const [isFormOpen, setIsFormOpen] = useState(
+    () => searchParams.get("add") === "1"
+  );
   const [exerciseName, setExerciseName] = useState("");
   const [setForms, setSetForms] = useState<
     Record<string, { weight: string; reps: string }>

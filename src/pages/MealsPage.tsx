@@ -1,4 +1,5 @@
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
+import { useSearchParams } from "react-router";
 import { Trash2Icon, PlusIcon, XIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -39,7 +40,10 @@ export function MealsPage() {
   const addEntry = useAddFoodEntry();
   const deleteEntry = useDeleteFoodEntry();
 
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [searchParams] = useSearchParams();
+  const [isFormOpen, setIsFormOpen] = useState(
+    () => searchParams.get("add") === "1"
+  );
   const [formData, setFormData] = useState({
     name: "",
     calories: "",

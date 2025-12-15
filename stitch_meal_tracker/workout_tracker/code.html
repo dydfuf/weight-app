@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Workout Tracker</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "card-dark": "#162b1e",
+                        "input-dark": "#0e1f13",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #102216; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e3a29; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2a5038; 
+        }
+
+        /* Hide number input spinners */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display min-h-screen flex flex-col overflow-x-hidden antialiased selection:bg-primary selection:text-background-dark">
+<!-- Sticky Header -->
+<header class="sticky top-0 z-50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-gray-200 dark:border-white/5 pb-2 pt-safe-top">
+<div class="px-4 py-3 flex items-center justify-between">
+<div class="flex flex-col">
+<h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Upper Body Power</h1>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="material-symbols-outlined text-primary text-[18px]">timer</span>
+<span class="text-sm font-medium text-slate-500 dark:text-gray-400 font-mono">00:45:12</span>
+</div>
+</div>
+<button class="bg-primary/10 hover:bg-primary/20 text-primary px-4 py-1.5 rounded-full text-sm font-bold transition-colors border border-primary/20">
+                Finish
+            </button>
+</div>
+<!-- Workout Progress -->
+<div class="px-4 pb-2">
+<div class="flex justify-between items-end mb-1">
+<span class="text-xs font-medium text-slate-500 dark:text-gray-400">Workout Completion</span>
+<span class="text-xs font-bold text-primary">65%</span>
+</div>
+<div class="h-1.5 w-full bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 65%"></div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 p-4 flex flex-col gap-6 pb-24">
+<!-- Exercise Card 1: Active -->
+<div class="bg-white dark:bg-card-dark rounded-xl shadow-sm border border-gray-200 dark:border-white/5 overflow-hidden">
+<!-- Card Header -->
+<div class="p-4 flex gap-4 items-center border-b border-gray-100 dark:border-white/5">
+<div class="h-12 w-12 rounded-lg bg-gray-100 dark:bg-white/5 bg-cover bg-center shrink-0 border border-gray-200 dark:border-white/10" data-alt="Close up of weight plates in gym" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAknwpGXerxr64YoziZ4y29objoxCeBuv_R4c3rdsZGjSyMqUPtVc4OM42vlBhc4DBngPe42DmnLK9909W9BkSuAlAfZCrdycl3RBguFf9p9cFYuX7OowSJb1ivgR4Aqby7_T6JdeizN3QmBs8Y4Lpe7cl54IQDINcoapKAnGu9y4qjrEmwEhUry6j--iOeQHHWjuG2Y83UmJ3nn2XCjBqLzQ_DC7FLvorV0A1nFKtQLCCtQQISszFMHfJGhGdCGulIAQ8T1wlMj2A');"></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="text-lg font-bold truncate pr-2">Barbell Squat</h3>
+<button class="text-slate-400 dark:text-gray-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<p class="text-xs text-primary font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">history</span>
+                        Last: 225lbs x 5
+                    </p>
+</div>
+</div>
+<!-- Set List Header -->
+<div class="grid grid-cols-[1.5rem_1fr_1fr_1fr_2rem] gap-3 px-4 py-2 bg-gray-50 dark:bg-black/20 text-xs font-medium text-slate-500 dark:text-gray-400 uppercase tracking-wider text-center">
+<span>Set</span>
+<span>Prev</span>
+<span>Lbs</span>
+<span>Reps</span>
+<span><span class="material-symbols-outlined text-[16px] align-middle">check</span></span>
+</div>
+<!-- Sets -->
+<div class="p-2 space-y-1">
+<!-- Completed Set 1 -->
+<div class="grid grid-cols-[1.5rem_1fr_1fr_1fr_2rem] gap-3 items-center p-2 rounded-lg bg-primary/5 border border-primary/10">
+<span class="text-sm font-bold text-slate-400 dark:text-gray-500 text-center">1</span>
+<span class="text-xs text-slate-400 dark:text-gray-500 text-center font-mono">220x5</span>
+<input class="w-full bg-white dark:bg-input-dark border border-primary/30 text-center rounded py-2 text-slate-900 dark:text-white font-bold focus:ring-1 focus:ring-primary focus:border-primary outline-none" inputmode="decimal" type="number" value="225"/>
+<input class="w-full bg-white dark:bg-input-dark border border-primary/30 text-center rounded py-2 text-slate-900 dark:text-white font-bold focus:ring-1 focus:ring-primary focus:border-primary outline-none" inputmode="numeric" type="number" value="5"/>
+<button class="h-8 w-8 rounded bg-primary flex items-center justify-center text-background-dark hover:bg-primary/90 transition-colors shadow-[0_0_10px_rgba(19,236,91,0.3)]">
+<span class="material-symbols-outlined text-xl font-bold">check</span>
+</button>
+</div>
+<!-- Completed Set 2 -->
+<div class="grid grid-cols-[1.5rem_1fr_1fr_1fr_2rem] gap-3 items-center p-2 rounded-lg bg-primary/5 border border-primary/10">
+<span class="text-sm font-bold text-slate-400 dark:text-gray-500 text-center">2</span>
+<span class="text-xs text-slate-400 dark:text-gray-500 text-center font-mono">220x5</span>
+<input class="w-full bg-white dark:bg-input-dark border border-primary/30 text-center rounded py-2 text-slate-900 dark:text-white font-bold focus:ring-1 focus:ring-primary focus:border-primary outline-none" inputmode="decimal" type="number" value="225"/>
+<input class="w-full bg-white dark:bg-input-dark border border-primary/30 text-center rounded py-2 text-slate-900 dark:text-white font-bold focus:ring-1 focus:ring-primary focus:border-primary outline-none" inputmode="numeric" type="number" value="5"/>
+<button class="h-8 w-8 rounded bg-primary flex items-center justify-center text-background-dark hover:bg-primary/90 transition-colors shadow-[0_0_10px_rgba(19,236,91,0.3)]">
+<span class="material-symbols-outlined text-xl font-bold">check</span>
+</button>
+</div>
+<!-- Active Set 3 -->
+<div class="grid grid-cols-[1.5rem_1fr_1fr_1fr_2rem] gap-3 items-center p-2 rounded-lg bg-gray-50 dark:bg-white/5 border border-primary border-l-4">
+<span class="text-sm font-bold text-primary text-center">3</span>
+<span class="text-xs text-slate-400 dark:text-gray-500 text-center font-mono">225x4</span>
+<input autofocus="" class="w-full bg-white dark:bg-input-dark border border-gray-200 dark:border-white/10 text-center rounded py-3 text-lg text-slate-900 dark:text-white font-bold focus:ring-1 focus:ring-primary focus:border-primary outline-none placeholder:text-gray-600" inputmode="decimal" placeholder="-" type="number"/>
+<input class="w-full bg-white dark:bg-input-dark border border-gray-200 dark:border-white/10 text-center rounded py-3 text-lg text-slate-900 dark:text-white font-bold focus:ring-1 focus:ring-primary focus:border-primary outline-none placeholder:text-gray-600" inputmode="numeric" placeholder="-" type="number"/>
+<button class="h-8 w-8 rounded bg-gray-200 dark:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/20 transition-colors">
+<span class="material-symbols-outlined text-xl">check</span>
+</button>
+</div>
+</div>
+<!-- Add Set Button -->
+<button class="w-full py-3 text-sm font-medium text-primary hover:bg-primary/5 transition-colors flex items-center justify-center gap-2 border-t border-gray-100 dark:border-white/5">
+<span class="material-symbols-outlined text-lg">add</span>
+                Add Set
+            </button>
+</div>
+<!-- Exercise Card 2: Upcoming -->
+<div class="bg-white dark:bg-card-dark rounded-xl shadow-sm border border-gray-200 dark:border-white/5 overflow-hidden opacity-90">
+<!-- Card Header -->
+<div class="p-4 flex gap-4 items-center border-b border-gray-100 dark:border-white/5">
+<div class="h-12 w-12 rounded-lg bg-gray-100 dark:bg-white/5 bg-cover bg-center shrink-0 border border-gray-200 dark:border-white/10" data-alt="Dumbbells on a rack in a gym" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB7hTl7kX9SiozQEk9Xv-Tbb4wG3GFOaC7jc90OceA2tLfIP5XvAXyzMI7qjFAdbP-MQofZv9JcwXtkTrkN6bUUbYbndJIHb-9MBqGIHKCijtHSXkadBa0TOjnsnicu8NF5REGMIPy56d4KSrzEunWyHv0HEfQdw10cXRhdy_ey5Uw2Ap1H-tT8f-qv4N9uwCmhIhdD86aIazW2X-AG2p3KL9mKYqOajObQw0AVDWcD4eruXvI8Ke59vvTAgiDhLactuX-kNgEZ_nM');"></div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start">
+<h3 class="text-lg font-bold truncate pr-2">Incline Dumbbell Press</h3>
+<button class="text-slate-400 dark:text-gray-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<p class="text-xs text-slate-500 dark:text-gray-400 font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">history</span>
+                        Last: 65lbs x 10
+                    </p>
+</div>
+</div>
+<!-- Set List Header -->
+<div class="grid grid-cols-[1.5rem_1fr_1fr_1fr_2rem] gap-3 px-4 py-2 bg-gray-50 dark:bg-black/20 text-xs font-medium text-slate-500 dark:text-gray-400 uppercase tracking-wider text-center">
+<span>Set</span>
+<span>Prev</span>
+<span>Lbs</span>
+<span>Reps</span>
+<span><span class="material-symbols-outlined text-[16px] align-middle">check</span></span>
+</div>
+<!-- Sets -->
+<div class="p-2 space-y-1">
+<!-- Pending Set 1 -->
+<div class="grid grid-cols-[1.5rem_1fr_1fr_1fr_2rem] gap-3 items-center p-2 rounded-lg hover:bg-white/5">
+<span class="text-sm font-bold text-slate-400 dark:text-gray-500 text-center">1</span>
+<span class="text-xs text-slate-400 dark:text-gray-500 text-center font-mono">65x10</span>
+<input class="w-full bg-white dark:bg-input-dark border border-transparent hover:border-white/10 text-center rounded py-2 text-slate-900 dark:text-white font-medium focus:ring-1 focus:ring-primary focus:border-primary outline-none placeholder:text-gray-600" inputmode="decimal" placeholder="65" type="number"/>
+<input class="w-full bg-white dark:bg-input-dark border border-transparent hover:border-white/10 text-center rounded py-2 text-slate-900 dark:text-white font-medium focus:ring-1 focus:ring-primary focus:border-primary outline-none placeholder:text-gray-600" inputmode="numeric" placeholder="10" type="number"/>
+<button class="h-8 w-8 rounded bg-gray-200 dark:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/20 transition-colors">
+<span class="material-symbols-outlined text-xl">check</span>
+</button>
+</div>
+<!-- Pending Set 2 -->
+<div class="grid grid-cols-[1.5rem_1fr_1fr_1fr_2rem] gap-3 items-center p-2 rounded-lg hover:bg-white/5">
+<span class="text-sm font-bold text-slate-400 dark:text-gray-500 text-center">2</span>
+<span class="text-xs text-slate-400 dark:text-gray-500 text-center font-mono">65x9</span>
+<input class="w-full bg-white dark:bg-input-dark border border-transparent hover:border-white/10 text-center rounded py-2 text-slate-900 dark:text-white font-medium focus:ring-1 focus:ring-primary focus:border-primary outline-none placeholder:text-gray-600" inputmode="decimal" placeholder="65" type="number"/>
+<input class="w-full bg-white dark:bg-input-dark border border-transparent hover:border-white/10 text-center rounded py-2 text-slate-900 dark:text-white font-medium focus:ring-1 focus:ring-primary focus:border-primary outline-none placeholder:text-gray-600" inputmode="numeric" placeholder="-" type="number"/>
+<button class="h-8 w-8 rounded bg-gray-200 dark:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/20 transition-colors">
+<span class="material-symbols-outlined text-xl">check</span>
+</button>
+</div>
+</div>
+<!-- Add Set Button -->
+<button class="w-full py-3 text-sm font-medium text-slate-500 dark:text-gray-400 hover:text-primary hover:bg-primary/5 transition-colors flex items-center justify-center gap-2 border-t border-gray-100 dark:border-white/5">
+<span class="material-symbols-outlined text-lg">add</span>
+                Add Set
+            </button>
+</div>
+<!-- Add Exercise Button -->
+<button class="group flex flex-col items-center justify-center gap-3 p-6 border-2 border-dashed border-gray-300 dark:border-white/10 rounded-xl hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer">
+<div class="h-10 w-10 rounded-full bg-gray-200 dark:bg-white/10 group-hover:bg-primary group-hover:text-background-dark flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-slate-500 dark:text-white group-hover:text-background-dark">add</span>
+</div>
+<span class="text-sm font-bold text-slate-500 dark:text-gray-300 group-hover:text-primary">Add Exercise</span>
+</button>
+</main>
+<!-- Rest Timer Overlay (Floating) -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+<div class="bg-card-dark border border-white/10 shadow-2xl rounded-full pl-2 pr-4 py-2 flex items-center gap-3 animate-bounce-subtle backdrop-blur-xl">
+<div class="relative flex items-center justify-center">
+<svg class="h-10 w-10 -rotate-90 text-white/10" viewbox="0 0 36 36">
+<path class="text-white/10" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-primary drop-shadow-[0_0_2px_rgba(19,236,91,0.8)]" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="75, 100" stroke-width="3"></path>
+</svg>
+<span class="absolute text-[10px] font-bold text-white">45s</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-medium text-gray-400">Rest Timer</span>
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold text-white tracking-wide">01:15</span>
+<button class="text-xs bg-white/10 hover:bg-white/20 px-2 py-0.5 rounded text-white transition-colors">+30s</button>
+</div>
+</div>
+<button class="ml-2 h-8 w-8 rounded-full bg-red-500/20 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "surface-dark": "#1c2e24", // Custom surface color for cards
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display antialiased selection:bg-primary selection:text-black">
+<div class="relative min-h-screen w-full flex flex-col mx-auto max-w-md bg-background-light dark:bg-background-dark overflow-x-hidden pb-24">
+<!-- Header -->
+<header class="sticky top-0 z-10 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md p-4 pb-2 flex items-center justify-between border-b border-gray-200 dark:border-white/5 transition-colors duration-300">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-primary/50" data-alt="User profile avatar showing a smiling person" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBxua4spxIl2FbvLhZzLiBlxR_hZ7oGEQDAXBbszNg9JjP7hObs3gQ7Fx3XREw7uJvWVjKvpt6wTzKQiuCN7LTa8mU2U-Uke6m3OJe9Mdpxg4NkXvBsl4ZZ8GNOFcCSsz-N4Fen9x6AN3qqYN0yjRygZKtqdBs9jcRmbUZ6xUWXk293FzSEH6ol1plyQtp8dxjaxsqnkPzt4Sv-BRTMpXm85w_hQ7xHxG03mwge5z3bO6GaANblJyVTWF7lbxzH7SK27HHNv-pSvxA");'></div>
+<div class="absolute bottom-0 right-0 size-3 bg-primary rounded-full border-2 border-background-dark"></div>
+</div>
+<div>
+<p class="text-xs text-gray-500 dark:text-gray-400 font-medium leading-none mb-1">Oct 24, Tuesday</p>
+<h2 class="text-lg font-bold leading-none tracking-tight">Hi, Alex</h2>
+</div>
+</div>
+<button class="flex items-center justify-center size-10 rounded-full bg-gray-100 dark:bg-surface-dark text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-[24px]">notifications</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex flex-col gap-6 p-4">
+<!-- Hero: Calories Chart -->
+<section class="flex flex-col gap-4">
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-end">
+<div>
+<p class="text-sm font-medium text-gray-500 dark:text-gray-400">Calories Remaining</p>
+<div class="flex items-baseline gap-2">
+<p class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">1,850</p>
+<p class="text-sm font-medium text-gray-400">/ 2,200 kcal</p>
+</div>
+</div>
+<div class="flex items-center gap-1 bg-primary/10 px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-primary text-[16px]">trending_up</span>
+<p class="text-primary text-xs font-bold">+12% vs last week</p>
+</div>
+</div>
+</div>
+<div class="relative w-full h-[140px] bg-white dark:bg-surface-dark rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-white/5">
+<!-- Graph Background -->
+<div class="absolute inset-0 opacity-20">
+<svg height="100%" preserveaspectratio="none" width="100%">
+<defs>
+<pattern height="40" id="grid" patternunits="userSpaceOnUse" width="40">
+<path class="text-gray-200 dark:text-gray-700" d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="0.5"></path>
+</pattern>
+</defs>
+<rect fill="url(#grid)" height="100%" width="100%"></rect>
+</svg>
+</div>
+<!-- Chart SVG -->
+<svg class="absolute bottom-0 left-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 400 150">
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#13ec5b" stop-opacity="0.4"></stop>
+<stop offset="100%" stop-color="#13ec5b" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0 110 C 40 110, 60 40, 100 40 C 140 40, 160 90, 200 90 C 240 90, 260 50, 300 50 C 340 50, 360 120, 400 120 V 150 H 0 Z" fill="url(#chartGradient)"></path>
+<path d="M0 110 C 40 110, 60 40, 100 40 C 140 40, 160 90, 200 90 C 240 90, 260 50, 300 50 C 340 50, 360 120, 400 120" fill="none" stroke="#13ec5b" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+<!-- Meal Markers -->
+<div class="absolute bottom-2 left-0 w-full flex justify-between px-6">
+<span class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Bfast</span>
+<span class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Lunch</span>
+<span class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Snack</span>
+<span class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Dinner</span>
+</div>
+</div>
+</section>
+<!-- Quick Actions -->
+<section>
+<div class="grid grid-cols-3 gap-3">
+<button class="group flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 active:scale-95 transition-all shadow-sm">
+<div class="flex items-center justify-center size-10 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-black transition-colors">
+<span class="material-symbols-outlined text-[24px]">restaurant</span>
+</div>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300">Log Meal</span>
+</button>
+<button class="group flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 active:scale-95 transition-all shadow-sm">
+<div class="flex items-center justify-center size-10 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-black transition-colors">
+<span class="material-symbols-outlined text-[24px]">fitness_center</span>
+</div>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300">Workout</span>
+</button>
+<button class="group flex flex-col items-center justify-center gap-2 p-3 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 active:scale-95 transition-all shadow-sm">
+<div class="flex items-center justify-center size-10 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-black transition-colors">
+<span class="material-symbols-outlined text-[24px]">monitor_weight</span>
+</div>
+<span class="text-xs font-bold text-gray-600 dark:text-gray-300">Log Weight</span>
+</button>
+</div>
+</section>
+<!-- Macro Stats -->
+<section class="grid grid-cols-3 gap-3">
+<!-- Protein -->
+<div class="flex flex-col gap-2 p-3 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 shadow-sm">
+<p class="text-xs font-medium text-gray-500 dark:text-gray-400">Protein</p>
+<div class="relative size-full min-h-[4px] w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full w-[66%] bg-primary"></div>
+</div>
+<div class="flex justify-between items-end">
+<p class="text-sm font-bold dark:text-white">120g</p>
+<p class="text-[10px] text-gray-400">/ 180g</p>
+</div>
+</div>
+<!-- Carbs -->
+<div class="flex flex-col gap-2 p-3 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 shadow-sm">
+<p class="text-xs font-medium text-gray-500 dark:text-gray-400">Carbs</p>
+<div class="relative size-full min-h-[4px] w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full w-[50%] bg-blue-400"></div>
+</div>
+<div class="flex justify-between items-end">
+<p class="text-sm font-bold dark:text-white">100g</p>
+<p class="text-[10px] text-gray-400">/ 200g</p>
+</div>
+</div>
+<!-- Fats -->
+<div class="flex flex-col gap-2 p-3 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 shadow-sm">
+<p class="text-xs font-medium text-gray-500 dark:text-gray-400">Fats</p>
+<div class="relative size-full min-h-[4px] w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+<div class="absolute left-0 top-0 h-full w-[61%] bg-yellow-400"></div>
+</div>
+<div class="flex justify-between items-end">
+<p class="text-sm font-bold dark:text-white">40g</p>
+<p class="text-[10px] text-gray-400">/ 65g</p>
+</div>
+</div>
+</section>
+<!-- Workout Card -->
+<section>
+<div class="flex flex-col gap-3">
+<h3 class="text-base font-bold text-gray-900 dark:text-white px-1">Today's Schedule</h3>
+<div class="group relative overflow-hidden rounded-xl bg-white dark:bg-surface-dark shadow-sm border border-gray-100 dark:border-white/5">
+<div class="flex">
+<div class="flex flex-1 flex-col justify-between p-4 z-10">
+<div class="flex flex-col gap-1">
+<div class="inline-flex w-fit items-center rounded-md bg-primary/20 px-2 py-0.5 text-xs font-bold text-primary ring-1 ring-inset ring-primary/30">
+                                        Day 12
+                                    </div>
+<h4 class="text-lg font-bold text-gray-900 dark:text-white mt-1">Push Day: Strength</h4>
+<p class="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 45 mins • Heavy Intensity
+                                    </p>
+</div>
+<button class="mt-4 flex items-center gap-2 w-fit bg-primary text-black px-4 py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+                                    Start Workout
+                                </button>
+</div>
+<div class="w-1/3 bg-cover bg-center relative" data-alt="Close up of gym weights in a dark gym setting" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCriEyvHdNU7DpmudGyng0QxUpsNGvIHsPEYekZJUof_284dDmcVoxSMNpSPIKqSEIcGAxVxmDu_5WNwR_xwx9_NvEDR870J6lSXhrG2nitwatEBqr4v8ZGG38oCkrAjUmYbKryRjMGzkzxkv-2wO13Gm81BJupA52MOd5ms9d6fEZYogFjuquaZ4zUIecJAKTwOAgu_lTMnsa6-qBb7Ou5-1FcV-3l0z9Aji8-8X2d7kjqXlnRCnvi0vUrvIjmLEqzqywet5Ete24');">
+<div class="absolute inset-0 bg-gradient-to-l from-transparent to-white dark:to-surface-dark"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Weight Trend Mini Section -->
+<section>
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-center px-1">
+<h3 class="text-base font-bold text-gray-900 dark:text-white">Weight Trend</h3>
+<span class="text-xs text-primary font-medium cursor-pointer">View History</span>
+</div>
+<div class="p-4 rounded-xl bg-white dark:bg-surface-dark border border-gray-100 dark:border-white/5 shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-xs text-gray-500">Current Weight</span>
+<span class="text-2xl font-bold dark:text-white">74.5 <span class="text-sm font-normal text-gray-400">kg</span></span>
+<span class="text-xs text-green-500 font-medium flex items-center mt-1">
+<span class="material-symbols-outlined text-[14px] mr-0.5">arrow_downward</span>
+                                0.5 kg this week
+                            </span>
+</div>
+<div class="w-32 h-12">
+<svg height="100%" viewbox="0 0 100 40" width="100%">
+<path d="M0 30 Q 25 35, 50 15 T 100 20" fill="none" stroke="#13ec5b" stroke-linecap="round" stroke-width="2"></path>
+<circle cx="100" cy="20" fill="#13ec5b" r="3"></circle>
+</svg>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-50 bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-white/5 pb-6 pt-2 px-6">
+<ul class="flex justify-between items-center">
+<li class="flex flex-col items-center gap-1 cursor-pointer group">
+<div class="text-primary transition-colors">
+<span class="material-symbols-outlined filled text-[26px]">dashboard</span>
+</div>
+<span class="text-[10px] font-bold text-primary">Home</span>
+</li>
+<li class="flex flex-col items-center gap-1 cursor-pointer group">
+<div class="text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[26px]">menu_book</span>
+</div>
+<span class="text-[10px] font-medium text-gray-500 dark:text-gray-400">Diary</span>
+</li>
+<li class="flex flex-col items-center gap-1 cursor-pointer group">
+<!-- Floating Action Button effect for Workout -->
+<div class="relative -top-5 bg-primary text-black p-3 rounded-full shadow-lg shadow-primary/20 ring-4 ring-background-light dark:ring-background-dark hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[28px]">fitness_center</span>
+</div>
+</li>
+<li class="flex flex-col items-center gap-1 cursor-pointer group">
+<div class="text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[26px]">bar_chart</span>
+</div>
+<span class="text-[10px] font-medium text-gray-500 dark:text-gray-400">Reports</span>
+</li>
+<li class="flex flex-col items-center gap-1 cursor-pointer group">
+<div class="text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[26px]">person</span>
+</div>
+<span class="text-[10px] font-medium text-gray-500 dark:text-gray-400">Profile</span>
+</li>
+</ul>
+</nav>
+</div>
+</body></html>

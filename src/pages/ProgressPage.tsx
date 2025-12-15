@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useSearchParams } from "react-router";
 import { PlusIcon, Trash2Icon, XIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -47,7 +48,11 @@ function formatTime(ts: number) {
 export function ProgressPage() {
   const today = getTodayDateString();
 
-  const [type, setType] = useState<MetricType>("weight");
+  const [searchParams] = useSearchParams();
+  const [type, setType] = useState<MetricType>(() => {
+    const t = searchParams.get("type");
+    return t === "weight" || t === "bodyFat" ? t : "weight";
+  });
   const { data: latest, isLoading: isLatestLoading } =
     useLatestMetricByType(type);
   const { data: rawEntries = [], isLoading: isEntriesLoading } =
@@ -63,7 +68,9 @@ export function ProgressPage() {
     );
   }, [rawEntries]);
 
-  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(
+    () => searchParams.get("add") === "1"
+  );
   const [formData, setFormData] = useState({
     date: today,
     value: "",

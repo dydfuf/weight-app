@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Recommendations - Training</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "surface-dark": "#162e20",
+                        "surface-dark-highlight": "#1e3b2a",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hide for cleaner UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display antialiased overflow-x-hidden selection:bg-primary selection:text-black">
+<div class="relative flex h-full min-h-screen w-full flex-col pb-24">
+<!-- Header -->
+<header class="sticky top-0 z-50 flex items-center bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md p-4 pb-2 justify-between border-b border-gray-200 dark:border-white/5">
+<button class="text-slate-900 dark:text-white flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">AI Coach Insights</h2>
+<div class="flex w-10 items-center justify-end">
+<button class="flex items-center justify-center rounded-full text-primary hover:text-primary/80 transition-colors">
+<span class="material-symbols-outlined fill-1" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</button>
+</div>
+</header>
+<!-- Readiness Score Section -->
+<div class="px-4 pt-6 pb-2">
+<div class="flex flex-col gap-3">
+<div class="flex items-end justify-between">
+<div class="flex flex-col gap-1">
+<p class="text-slate-500 dark:text-gray-400 text-sm font-medium uppercase tracking-wider">Daily Readiness</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-extrabold text-slate-900 dark:text-white">85%</span>
+<span class="text-primary font-bold text-sm">Peak Condition</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary text-3xl">ecg_heart</span>
+</div>
+<div class="relative h-3 w-full rounded-full bg-gray-200 dark:bg-surface-dark overflow-hidden">
+<div class="absolute top-0 left-0 h-full rounded-full bg-primary" style="width: 85%;"></div>
+<!-- Decorative segmented lines -->
+<div class="absolute top-0 left-1/4 h-full w-0.5 bg-background-light dark:bg-background-dark opacity-30"></div>
+<div class="absolute top-0 left-2/4 h-full w-0.5 bg-background-light dark:bg-background-dark opacity-30"></div>
+<div class="absolute top-0 left-3/4 h-full w-0.5 bg-background-light dark:bg-background-dark opacity-30"></div>
+</div>
+<p class="text-slate-600 dark:text-gray-400 text-xs font-normal leading-normal">
+<span class="material-symbols-outlined align-middle text-sm mr-1">info</span>
+                    Your sleep and HRV indicate you're ready for high intensity.
+                </p>
+</div>
+</div>
+<!-- Today's Adjustment Hero Card -->
+<div class="pt-6 pb-2">
+<h2 class="px-4 text-xl font-bold text-slate-900 dark:text-white mb-3">Today's Focus</h2>
+<div class="px-4">
+<div class="group relative overflow-hidden rounded-2xl bg-white dark:bg-surface-dark shadow-sm ring-1 ring-gray-900/5 dark:ring-white/10 transition-all active:scale-[0.98]">
+<!-- Background Image with Overlay -->
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-r from-background-dark via-surface-dark/90 to-transparent z-10"></div>
+<img alt="Gym weights background" class="h-full w-full object-cover opacity-60 mix-blend-overlay" data-alt="Close up of weight plates in a dark gym" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsIzA_lx3nUjozW5pVcLM6lpv8jk1sjUwdThi2ohZFVn9lQQA49e6e-0uKdRHQpXPF_cn5zoYL7qbEqcausd4zIs-bhibVNAtkINlVcv8GmSYGhMHoK8tQOwNEbnimxlRAAPtoC_VCo1ARCL87ykXZ9-u2j14WHoJvpvV25HOd3ZOq9wDSa-QaZnIfHFPE-XH9S03SvEndrtHzsMt1FUkqAPgrid11wUG3t8V4iGSHBrD7iSxMalk-mT3oxhFkEW-2F2HMMip9t4Y"/>
+</div>
+<div class="relative z-20 p-5 flex flex-col gap-4">
+<div class="flex items-start justify-between">
+<div class="rounded-lg bg-primary/20 px-3 py-1 backdrop-blur-sm">
+<span class="text-xs font-bold text-primary uppercase tracking-wide">Volume Adjustment</span>
+</div>
+<span class="material-symbols-outlined text-gray-400">auto_awesome</span>
+</div>
+<div class="space-y-1">
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white leading-tight">Increase Chest Intensity</h3>
+<p class="text-slate-600 dark:text-gray-300 text-sm leading-relaxed max-w-[90%]">
+                                Based on your last push session performance, we recommend adding <span class="text-primary font-bold">+2 sets</span> to your compound movements.
+                            </p>
+</div>
+<div class="flex gap-2 mt-2">
+<button class="flex-1 bg-primary text-background-dark font-bold text-sm py-2.5 px-4 rounded-lg hover:bg-primary/90 transition-colors">
+                                Apply All Changes
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Exercise Optimizations List -->
+<div class="pt-6">
+<h3 class="px-4 text-xl font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+                Optimized Exercises
+                <span class="flex h-5 w-5 items-center justify-center rounded-full bg-primary/20 text-[10px] font-bold text-primary">3</span>
+</h3>
+<div class="flex flex-col gap-4 px-4 pb-4">
+<!-- Card 1: Progressive Overload -->
+<div class="rounded-xl bg-white dark:bg-surface-dark p-4 shadow-sm ring-1 ring-gray-900/5 dark:ring-white/5">
+<div class="flex items-center justify-between mb-4 border-b border-gray-100 dark:border-white/5 pb-3">
+<div class="flex items-center gap-3">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 dark:bg-surface-dark-highlight">
+<span class="material-symbols-outlined text-slate-900 dark:text-white">fitness_center</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white text-base">Barbell Squat</h4>
+<span class="text-xs text-slate-500 dark:text-gray-400 font-medium">Legs • Compound</span>
+</div>
+</div>
+<span class="rounded bg-green-900/30 px-2 py-0.5 text-[10px] font-bold text-primary uppercase">Overload</span>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-4">
+<div class="flex flex-col gap-1 p-2 rounded bg-gray-50 dark:bg-black/20">
+<span class="text-[10px] uppercase text-gray-500 font-semibold">Previous</span>
+<span class="text-sm font-medium text-gray-400 line-through decoration-gray-500">225lbs x 5</span>
+</div>
+<div class="flex flex-col gap-1 p-2 rounded bg-primary/10 border border-primary/20 relative overflow-hidden">
+<div class="absolute -right-2 -top-2 h-8 w-8 bg-primary blur-xl opacity-20"></div>
+<span class="text-[10px] uppercase text-primary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px]">trending_up</span> AI Target
+                            </span>
+<span class="text-lg font-bold text-primary">230lbs x 5</span>
+</div>
+</div>
+<div class="flex gap-3 items-start bg-gray-50 dark:bg-surface-dark-highlight/50 p-3 rounded-lg">
+<span class="material-symbols-outlined text-primary text-sm mt-0.5">psychology</span>
+<p class="text-xs text-slate-600 dark:text-gray-300 leading-normal">
+                            Your bar velocity was high (0.45m/s) last week. You can safely handle +5lbs while maintaining form.
+                        </p>
+</div>
+</div>
+<!-- Card 2: Exercise Swap -->
+<div class="rounded-xl bg-white dark:bg-surface-dark p-4 shadow-sm ring-1 ring-gray-900/5 dark:ring-white/5">
+<div class="flex items-center justify-between mb-4 border-b border-gray-100 dark:border-white/5 pb-3">
+<div class="flex items-center gap-3">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 dark:bg-surface-dark-highlight">
+<span class="material-symbols-outlined text-slate-900 dark:text-white">change_circle</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white text-base">Deadlift</h4>
+<span class="text-xs text-slate-500 dark:text-gray-400 font-medium">Posterior Chain</span>
+</div>
+</div>
+<span class="rounded bg-orange-900/30 px-2 py-0.5 text-[10px] font-bold text-orange-400 uppercase">Substitution</span>
+</div>
+<div class="flex items-center gap-2 mb-4">
+<div class="flex-1 p-2 rounded bg-gray-50 dark:bg-black/20 text-center opacity-60">
+<span class="block text-xs font-medium text-gray-400">Conventional</span>
+</div>
+<span class="material-symbols-outlined text-gray-500 text-sm">arrow_forward</span>
+<div class="flex-1 p-2 rounded bg-orange-500/10 border border-orange-500/20 text-center">
+<span class="block text-xs font-bold text-orange-400">Romanian DL</span>
+</div>
+</div>
+<div class="flex gap-3 items-start bg-gray-50 dark:bg-surface-dark-highlight/50 p-3 rounded-lg">
+<span class="material-symbols-outlined text-orange-400 text-sm mt-0.5">warning</span>
+<p class="text-xs text-slate-600 dark:text-gray-300 leading-normal">
+                            Lower back fatigue detected from yesterday's row session. Switching to RDLs isolates hamstrings better today.
+                        </p>
+</div>
+</div>
+<!-- Card 3: Volume Increase -->
+<div class="rounded-xl bg-white dark:bg-surface-dark p-4 shadow-sm ring-1 ring-gray-900/5 dark:ring-white/5">
+<div class="flex items-center justify-between mb-4 border-b border-gray-100 dark:border-white/5 pb-3">
+<div class="flex items-center gap-3">
+<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 dark:bg-surface-dark-highlight">
+<span class="material-symbols-outlined text-slate-900 dark:text-white">straighten</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white text-base">Incline Bench</h4>
+<span class="text-xs text-slate-500 dark:text-gray-400 font-medium">Chest • Upper</span>
+</div>
+</div>
+<span class="rounded bg-green-900/30 px-2 py-0.5 text-[10px] font-bold text-primary uppercase">Volume</span>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-4">
+<div class="flex flex-col gap-1 p-2 rounded bg-gray-50 dark:bg-black/20">
+<span class="text-[10px] uppercase text-gray-500 font-semibold">Previous</span>
+<span class="text-sm font-medium text-gray-400">3 Sets x 10 Reps</span>
+</div>
+<div class="flex flex-col gap-1 p-2 rounded bg-primary/10 border border-primary/20">
+<span class="text-[10px] uppercase text-primary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px]">add</span> AI Target
+                            </span>
+<span class="text-sm font-bold text-primary">4 Sets x 10 Reps</span>
+</div>
+</div>
+<div class="flex gap-3 items-start bg-gray-50 dark:bg-surface-dark-highlight/50 p-3 rounded-lg">
+<span class="material-symbols-outlined text-primary text-sm mt-0.5">insights</span>
+<p class="text-xs text-slate-600 dark:text-gray-300 leading-normal">
+                            You've hit a plateau on strength. Increasing volume for one week can help break through the sticking point.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom CTA -->
+<div class="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background-light dark:from-background-dark via-background-light/95 dark:via-background-dark/95 to-transparent z-50">
+<button class="w-full h-14 bg-primary rounded-xl flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(19,236,91,0.3)] hover:shadow-[0_0_30px_rgba(19,236,91,0.5)] transition-all active:scale-[0.98]">
+<span class="text-background-dark text-lg font-bold tracking-wide">Start Optimized Workout</span>
+<span class="material-symbols-outlined text-background-dark">play_arrow</span>
+</button>
+</div>
+<div class="h-6 w-full"></div>
+</div>
+</body></html>

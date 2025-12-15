@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Recommendations</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "surface-dark": "#193322",
+                        "surface-dark-lighter": "#23482f",
+                        "text-secondary": "#92c9a4"
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased text-slate-900 dark:text-white">
+<div class="relative flex h-full min-h-screen w-full max-w-md mx-auto flex-col overflow-x-hidden shadow-xl">
+<!-- Top App Bar -->
+<div class="sticky top-0 z-50 flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between backdrop-blur-md bg-opacity-90 dark:bg-opacity-90">
+<div class="text-slate-900 dark:text-white flex size-12 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">AI Coach</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex size-12 cursor-pointer items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-slate-900 dark:text-white text-[24px]">settings</span>
+</button>
+</div>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 flex flex-col pb-24">
+<!-- Segmented Buttons -->
+<div class="px-4 py-3 sticky top-[60px] z-40 bg-background-light dark:bg-background-dark">
+<div class="flex h-12 flex-1 items-center justify-center rounded-xl bg-slate-200 dark:bg-surface-dark-lighter p-1">
+<label class="relative flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold leading-normal transition-all duration-200">
+<input checked="" class="peer invisible absolute w-0" name="view_mode" type="radio" value="Nutrition"/>
+<div class="absolute inset-0 bg-white dark:bg-background-dark shadow-sm opacity-0 peer-checked:opacity-100 transition-opacity rounded-lg"></div>
+<span class="relative z-10 text-slate-500 dark:text-text-secondary peer-checked:text-slate-900 dark:peer-checked:text-white transition-colors">Nutrition</span>
+</label>
+<label class="relative flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold leading-normal transition-all duration-200">
+<input class="peer invisible absolute w-0" name="view_mode" type="radio" value="Training"/>
+<div class="absolute inset-0 bg-white dark:bg-background-dark shadow-sm opacity-0 peer-checked:opacity-100 transition-opacity rounded-lg"></div>
+<span class="relative z-10 text-slate-500 dark:text-text-secondary peer-checked:text-slate-900 dark:peer-checked:text-white transition-colors">Training</span>
+</label>
+</div>
+</div>
+<!-- Header Section -->
+<div class="flex flex-col px-4 pt-4 pb-2">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-[20px] animate-pulse">auto_awesome</span>
+<span class="text-primary text-xs font-bold uppercase tracking-wider">Analysis Complete</span>
+</div>
+<h2 class="text-slate-900 dark:text-white tracking-tight text-[28px] font-bold leading-tight text-left">Smart Nutrition</h2>
+<p class="text-slate-500 dark:text-text-secondary text-sm font-normal leading-normal pt-2">
+                    Optimization for <span class="font-semibold text-slate-700 dark:text-white">Alex</span> based on today's leg workout.
+                </p>
+</div>
+<!-- Primary Recommendation Card -->
+<div class="p-4">
+<div class="flex flex-col items-stretch justify-start rounded-2xl shadow-lg bg-white dark:bg-surface-dark overflow-hidden ring-1 ring-slate-100 dark:ring-white/5">
+<!-- Image with Overlay -->
+<div class="relative w-full aspect-video">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
+<div class="w-full h-full bg-center bg-no-repeat bg-cover" data-alt="Close up of a healthy salmon bowl with quinoa and avocado" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCPWVWth89UgzH_zrgUFaAy_hMqSv18hj0jTfQTOc4bhp3ydSUpAzeihuWkFGQNcFpndV21GA5nM5SjpT3pe5K7tLreT_APbc8tl-X6z4P1I3eIvDtH007wZgX0yTBKGqPvGZpRTDezmeyz7WHB8NJaQs_GRZOOLEg8EDjlQPL_INecGt-8a8aHvQsUzBsxN9EMDim6TlM06znJ1e4xM64iM8R8QWIt_IbCPqpromtbupdnv8VkzPikkvXmgkgfZ48hQwFDEuKIMJI");'>
+</div>
+<div class="absolute bottom-4 left-4 right-4 z-20 flex justify-between items-end">
+<div>
+<span class="inline-block px-2 py-1 mb-2 bg-primary text-background-dark text-xs font-bold rounded-md">Top Pick</span>
+<p class="text-white text-xl font-bold leading-tight">Salmon Power Bowl</p>
+</div>
+<button class="size-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center hover:bg-white/30 transition text-white">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+</div>
+<!-- AI Reasoning -->
+<div class="px-4 py-3 bg-primary/10 border-b border-white/5 flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5">psychology</span>
+<p class="text-slate-700 dark:text-text-secondary text-sm leading-relaxed">
+<span class="font-bold text-slate-900 dark:text-white">Why this meal?</span> You're 200 cal under your goal and need extra protein for muscle recovery after heavy squats.
+                         </p>
+</div>
+<!-- Content Body -->
+<div class="flex flex-col gap-4 p-4">
+<!-- Macros -->
+<div class="grid grid-cols-3 gap-4">
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-xs font-medium text-slate-500 dark:text-text-secondary">
+<span>Protein</span>
+<span class="text-slate-900 dark:text-white">45g</span>
+</div>
+<div class="h-1.5 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[85%] rounded-full"></div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-xs font-medium text-slate-500 dark:text-text-secondary">
+<span>Carbs</span>
+<span class="text-slate-900 dark:text-white">30g</span>
+</div>
+<div class="h-1.5 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-blue-400 w-[40%] rounded-full"></div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex justify-between text-xs font-medium text-slate-500 dark:text-text-secondary">
+<span>Fats</span>
+<span class="text-slate-900 dark:text-white">12g</span>
+</div>
+<div class="h-1.5 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-yellow-400 w-[25%] rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-3 pt-2">
+<button class="flex-1 h-12 flex items-center justify-center gap-2 rounded-xl bg-primary text-background-dark text-base font-bold shadow-[0_0_15px_rgba(19,236,91,0.3)] hover:shadow-[0_0_20px_rgba(19,236,91,0.5)] transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+                                Log Meal
+                            </button>
+<button class="h-12 px-4 flex items-center justify-center rounded-xl border border-slate-200 dark:border-white/10 bg-transparent text-slate-700 dark:text-white font-medium hover:bg-slate-100 dark:hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined">cached</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Section Divider -->
+<div class="h-px w-full bg-gradient-to-r from-transparent via-slate-200 dark:via-white/10 to-transparent my-2"></div>
+<!-- Secondary Suggestions -->
+<div class="flex flex-col px-4 py-4">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Quick Additions</h3>
+<a class="text-primary text-sm font-medium hover:underline" href="#">See all</a>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Snack Item 1 -->
+<div class="flex items-center p-3 rounded-xl bg-white dark:bg-surface-dark border border-slate-100 dark:border-white/5 hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="size-16 rounded-lg bg-slate-100 dark:bg-white/5 bg-center bg-cover shrink-0" data-alt="Bowl of greek yogurt with berries" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAdh1pdw6DuoK8yJYswwXX0HYI_yZDN4r4ntX6Iea7he1djb6OKfel231Tmt6RF3JfAtc_XtKMxS15GBaSJ8YuFP5L296nKcecq5dwrcGf1srdlMaHdIgYwgZOU3clSjM4fgEuGvb0YrJXKOiR2apXMlp1QfOzVkNtC0BdrxRqqJbu1IGoRWJZ_K-kUVn09fKuttZbpaGytioMrwjsG3CCkSyEiG6Sd-oZ2JyBsesLNpSsGAskOn10lrKtgTksvjqR5tugKca9VzNo");'>
+</div>
+<div class="flex-1 px-4">
+<h4 class="text-slate-900 dark:text-white font-bold text-sm">Greek Yogurt &amp; Berries</h4>
+<p class="text-slate-500 dark:text-text-secondary text-xs mt-1">150 kcal • 15g Protein</p>
+</div>
+<button class="size-8 rounded-full bg-slate-100 dark:bg-surface-dark-lighter text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-background-dark transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+<!-- Snack Item 2 -->
+<div class="flex items-center p-3 rounded-xl bg-white dark:bg-surface-dark border border-slate-100 dark:border-white/5 hover:border-primary/50 transition-colors cursor-pointer group">
+<div class="size-16 rounded-lg bg-slate-100 dark:bg-white/5 bg-center bg-cover shrink-0" data-alt="Handful of almonds on a wooden table" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBGVLrGTSDEOA_zxzEdRwYnwO4ln7arwDCu2N_QZoTB8yJUOVzRNUxNXt4SFCPZ68o_MPHWWg9d7AaB5YDSfTDqwvIdOMq5Y_zKaUudAhfaFTNqwIyyt2gtrrQLnHQLlquceVL-joPyvJxlGrUIVKIeypEo8YjmHlLJj-LEQnZPWKHUwgJYVWk3dLz5PbEekRnGJO9m2X8BnHtPPoN7sfDkQKj2BilNsYGMStCjjz_jP95aE6U4uLqMIF9n3hc0MiplklP4PL34J0I");'>
+</div>
+<div class="flex-1 px-4">
+<h4 class="text-slate-900 dark:text-white font-bold text-sm">Almonds (Raw)</h4>
+<p class="text-slate-500 dark:text-text-secondary text-xs mt-1">180 kcal • Healthy Fats</p>
+</div>
+<button class="size-8 rounded-full bg-slate-100 dark:bg-surface-dark-lighter text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-background-dark transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Feedback Loop -->
+<div class="px-4 mt-2">
+<div class="rounded-xl bg-primary/5 border border-primary/20 p-4 flex items-center justify-between">
+<p class="text-xs font-medium text-slate-600 dark:text-text-secondary">Was this recommendation helpful?</p>
+<div class="flex gap-2">
+<button class="size-8 flex items-center justify-center rounded-lg bg-white dark:bg-surface-dark text-slate-400 hover:text-primary hover:bg-primary/10 transition">
+<span class="material-symbols-outlined text-[18px]">thumb_up</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded-lg bg-white dark:bg-surface-dark text-slate-400 hover:text-red-400 hover:bg-red-400/10 transition">
+<span class="material-symbols-outlined text-[18px]">thumb_down</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Action Button / Tab Bar Placeholder -->
+<div class="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background-light dark:from-background-dark via-background-light dark:via-background-dark to-transparent flex justify-center pb-8 pointer-events-none">
+<div class="pointer-events-auto shadow-2xl rounded-full bg-surface-dark-lighter border border-white/10 flex items-center p-1.5 gap-1 backdrop-blur-xl">
+<button class="size-10 rounded-full bg-primary text-background-dark flex items-center justify-center shadow-lg shadow-primary/40">
+<span class="material-symbols-outlined">smart_toy</span>
+</button>
+<button class="size-10 rounded-full text-slate-400 hover:text-white flex items-center justify-center">
+<span class="material-symbols-outlined">calendar_today</span>
+</button>
+<button class="size-10 rounded-full text-slate-400 hover:text-white flex items-center justify-center">
+<span class="material-symbols-outlined">bar_chart</span>
+</button>
+<button class="size-10 rounded-full text-slate-400 hover:text-white flex items-center justify-center">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

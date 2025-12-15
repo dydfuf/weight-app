@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Workout &amp; Meal Analysis</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#121212", // Adjusted to deep charcoal per plan
+                        "surface-dark": "#1E1E1E", // Card background
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for horizontal scrolling areas */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased selection:bg-primary selection:text-black">
+<div class="relative min-h-screen w-full flex flex-col max-w-md mx-auto overflow-x-hidden pb-6">
+<!-- Header -->
+<header class="flex items-center justify-between px-5 pt-6 pb-2 sticky top-0 z-20 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md">
+<h1 class="text-2xl font-bold tracking-tight">Analysis</h1>
+<button class="flex items-center justify-center w-10 h-10 rounded-full bg-surface-dark/50 hover:bg-surface-dark border border-white/10 transition-colors">
+<span class="material-symbols-outlined text-white" style="font-size: 24px;">calendar_month</span>
+</button>
+</header>
+<!-- Date Filter Chips -->
+<div class="flex gap-3 px-5 py-2 overflow-x-auto hide-scrollbar">
+<button class="flex h-9 shrink-0 items-center justify-center px-5 rounded-full bg-primary text-black font-semibold text-sm transition-transform active:scale-95">
+                Last 7 Days
+            </button>
+<button class="flex h-9 shrink-0 items-center justify-center px-5 rounded-full bg-surface-dark border border-white/10 text-gray-400 font-medium text-sm hover:text-white transition-colors">
+                Last 30 Days
+            </button>
+<button class="flex h-9 shrink-0 items-center justify-center px-5 rounded-full bg-surface-dark border border-white/10 text-gray-400 font-medium text-sm hover:text-white transition-colors">
+                All Time
+            </button>
+</div>
+<!-- Summary Stats (Horizontal Scroll) -->
+<section class="mt-6 px-5">
+<div class="flex gap-4 overflow-x-auto hide-scrollbar pb-2">
+<!-- Weight Card -->
+<div class="flex min-w-[140px] flex-col gap-1 rounded-2xl p-5 bg-surface-dark border border-white/5">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary" style="font-size: 20px;">monitor_weight</span>
+<p class="text-gray-400 text-xs font-medium uppercase tracking-wider">Weight</p>
+</div>
+<p class="text-white text-2xl font-bold">75.2 <span class="text-sm font-normal text-gray-400">kg</span></p>
+<div class="flex items-center gap-1 text-primary text-xs font-semibold bg-primary/10 w-fit px-2 py-0.5 rounded-md mt-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">trending_down</span>
+<span>0.5%</span>
+</div>
+</div>
+<!-- Calories Card -->
+<div class="flex min-w-[140px] flex-col gap-1 rounded-2xl p-5 bg-surface-dark border border-white/5">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-orange-400" style="font-size: 20px;">local_fire_department</span>
+<p class="text-gray-400 text-xs font-medium uppercase tracking-wider">Avg Cals</p>
+</div>
+<p class="text-white text-2xl font-bold">2,150</p>
+<div class="flex items-center gap-1 text-gray-400 text-xs font-medium mt-1">
+<span>Goal: 2,250</span>
+</div>
+</div>
+<!-- Workouts Card -->
+<div class="flex min-w-[140px] flex-col gap-1 rounded-2xl p-5 bg-surface-dark border border-white/5">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-blue-400" style="font-size: 20px;">fitness_center</span>
+<p class="text-gray-400 text-xs font-medium uppercase tracking-wider">Workouts</p>
+</div>
+<p class="text-white text-2xl font-bold">4<span class="text-gray-500 font-normal">/5</span></p>
+<div class="flex items-center gap-1 text-primary text-xs font-semibold mt-1">
+<span>On Track</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Weight Trend Chart -->
+<section class="mt-6 px-5">
+<div class="rounded-2xl bg-surface-dark border border-white/5 p-5">
+<div class="flex justify-between items-end mb-6">
+<div>
+<h2 class="text-gray-400 text-sm font-medium mb-1">Weight Trend</h2>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-bold text-white">-0.5 kg</span>
+<span class="text-sm text-gray-500">this week</span>
+</div>
+</div>
+<div class="bg-white/5 p-2 rounded-lg">
+<span class="material-symbols-outlined text-gray-400" style="font-size: 20px;">show_chart</span>
+</div>
+</div>
+<div class="relative w-full h-40">
+<!-- Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none">
+<div class="border-b border-white/5 w-full h-0"></div>
+<div class="border-b border-white/5 w-full h-0"></div>
+<div class="border-b border-white/5 w-full h-0"></div>
+<div class="border-b border-white/5 w-full h-0"></div>
+</div>
+<!-- SVG Chart -->
+<svg class="absolute inset-0 w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 300 100">
+<defs>
+<lineargradient id="gradientGreen" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#13ec5b" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#13ec5b" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Area -->
+<path d="M0,60 C40,60 40,30 80,40 C120,50 120,20 160,35 C200,50 200,60 240,55 C280,50 300,30 300,30 V100 H0 Z" fill="url(#gradientGreen)"></path>
+<!-- Line -->
+<path d="M0,60 C40,60 40,30 80,40 C120,50 120,20 160,35 C200,50 200,60 240,55 C280,50 300,30 300,30" fill="none" stroke="#13ec5b" stroke-linecap="round" stroke-width="3"></path>
+<!-- Points -->
+<circle cx="80" cy="40" fill="#121212" r="3" stroke="#13ec5b" stroke-width="2"></circle>
+<circle cx="160" cy="35" fill="#121212" r="3" stroke="#13ec5b" stroke-width="2"></circle>
+<circle cx="300" cy="30" fill="#13ec5b" r="4"></circle>
+</svg>
+</div>
+<div class="flex justify-between text-xs text-gray-500 font-medium mt-4 px-1">
+<span>Mon</span>
+<span>Tue</span>
+<span>Wed</span>
+<span>Thu</span>
+<span>Fri</span>
+<span>Sat</span>
+<span>Sun</span>
+</div>
+</div>
+</section>
+<!-- Nutrition Breakdown -->
+<section class="mt-6 px-5">
+<h2 class="text-white text-lg font-bold mb-4">Nutrition Breakdown</h2>
+<div class="rounded-2xl bg-surface-dark border border-white/5 p-6">
+<div class="flex flex-col sm:flex-row items-center gap-8">
+<!-- Donut Chart Representation -->
+<div class="relative w-32 h-32 shrink-0">
+<!-- Using conic-gradient for donut chart -->
+<div class="w-full h-full rounded-full" style="background: conic-gradient(#13ec5b 0% 40%, #ffffff 40% 75%, #a855f7 75% 100%);">
+</div>
+<!-- Inner Circle -->
+<div class="absolute inset-2 bg-surface-dark rounded-full flex flex-col items-center justify-center">
+<span class="text-white text-xl font-bold">2,150</span>
+<span class="text-gray-500 text-[10px] uppercase font-bold tracking-widest">Kcal</span>
+</div>
+</div>
+<!-- Macro List -->
+<div class="flex-1 w-full space-y-4">
+<!-- Protein -->
+<div class="space-y-1">
+<div class="flex justify-between text-sm">
+<span class="text-white font-medium flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div> Protein
+                                </span>
+<span class="text-gray-400">145g <span class="text-gray-600">/ 180g</span></span>
+</div>
+<div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full w-[80%]"></div>
+</div>
+</div>
+<!-- Carbs -->
+<div class="space-y-1">
+<div class="flex justify-between text-sm">
+<span class="text-white font-medium flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-white"></div> Carbs
+                                </span>
+<span class="text-gray-400">220g <span class="text-gray-600">/ 250g</span></span>
+</div>
+<div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-white rounded-full w-[88%]"></div>
+</div>
+</div>
+<!-- Fats -->
+<div class="space-y-1">
+<div class="flex justify-between text-sm">
+<span class="text-white font-medium flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-purple-500"></div> Fats
+                                </span>
+<span class="text-gray-400">55g <span class="text-gray-600">/ 70g</span></span>
+</div>
+<div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-purple-500 rounded-full w-[78%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Insight Pill -->
+<div class="mt-3 flex items-start gap-3 p-4 rounded-xl bg-primary/10 border border-primary/20">
+<span class="material-symbols-outlined text-primary mt-0.5" style="font-size: 20px;">tips_and_updates</span>
+<div>
+<p class="text-white text-sm font-medium">Protein intake is up 10%!</p>
+<p class="text-gray-400 text-xs mt-0.5">Great job prioritizing muscle recovery this week.</p>
+</div>
+</div>
+</section>
+<!-- Training Load -->
+<section class="mt-6 px-5 mb-8">
+<h2 class="text-white text-lg font-bold mb-4">Training Load</h2>
+<div class="rounded-2xl bg-surface-dark border border-white/5 p-6">
+<div class="flex items-center justify-between mb-6">
+<div>
+<p class="text-gray-400 text-xs uppercase tracking-wider font-semibold">Weekly Volume</p>
+<p class="text-white text-2xl font-bold mt-1">42,500 <span class="text-sm font-normal text-gray-500">kg</span></p>
+</div>
+<div class="text-right">
+<p class="text-xs text-primary font-bold">+12%</p>
+<p class="text-[10px] text-gray-500">vs last week</p>
+</div>
+</div>
+<!-- Bar Chart -->
+<div class="flex items-end justify-between h-32 gap-2">
+<!-- Day 1 -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="w-full bg-white/10 rounded-t-sm h-[40%] group-hover:bg-primary/50 transition-all relative">
+</div>
+<span class="text-[10px] text-gray-500 font-medium">M</span>
+</div>
+<!-- Day 2 -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="w-full bg-primary/20 rounded-t-sm h-[65%] group-hover:bg-primary/50 transition-all"></div>
+<span class="text-[10px] text-gray-500 font-medium">T</span>
+</div>
+<!-- Day 3 -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="w-full bg-white/10 rounded-t-sm h-[30%] group-hover:bg-primary/50 transition-all"></div>
+<span class="text-[10px] text-gray-500 font-medium">W</span>
+</div>
+<!-- Day 4 -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="w-full bg-primary rounded-t-sm h-[85%] relative shadow-[0_0_15px_rgba(19,236,91,0.3)]">
+<!-- Tooltip -->
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-white text-black text-[10px] font-bold px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                                Leg Day
+                            </div>
+</div>
+<span class="text-[10px] text-white font-bold">T</span>
+</div>
+<!-- Day 5 -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="w-full bg-white/10 rounded-t-sm h-[0%] min-h-[2px]"></div>
+<span class="text-[10px] text-gray-500 font-medium">F</span>
+</div>
+<!-- Day 6 -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="w-full bg-primary/20 rounded-t-sm h-[55%] group-hover:bg-primary/50 transition-all"></div>
+<span class="text-[10px] text-gray-500 font-medium">S</span>
+</div>
+<!-- Day 7 -->
+<div class="flex flex-col items-center gap-2 flex-1 group">
+<div class="w-full bg-white/10 rounded-t-sm h-[20%] group-hover:bg-primary/50 transition-all"></div>
+<span class="text-[10px] text-gray-500 font-medium">S</span>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-size: 16px;">emoji_events</span>
+</div>
+<div>
+<p class="text-xs text-gray-400">Best Lift</p>
+<p class="text-sm text-white font-medium">Deadlift (140kg)</p>
+</div>
+</div>
+<span class="text-xs text-gray-500">Tue</span>
+</div>
+</div>
+</section>
+</div>
+</body></html>

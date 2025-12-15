@@ -1,5 +1,4 @@
 import { UserProfile } from "@clerk/react-router";
-import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,20 +13,11 @@ export function SettingsPage() {
   const setGoals = useSetGoals();
   const clearGoals = useClearGoals();
 
-  const [dailyCalories, setDailyCalories] = useState("");
-
-  useEffect(() => {
-    if (goals?.dailyCalories !== undefined) {
-      setDailyCalories(String(goals.dailyCalories));
-    } else {
-      setDailyCalories("");
-    }
-  }, [goals?.dailyCalories]);
-
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const value =
-      dailyCalories.trim() === "" ? undefined : Number(dailyCalories);
+    const formData = new FormData(e.currentTarget);
+    const raw = String(formData.get("dailyCalories") ?? "").trim();
+    const value = raw === "" ? undefined : Number(raw);
     if (value !== undefined && !Number.isFinite(value)) return;
 
     setGoals.mutate({
@@ -48,12 +38,15 @@ export function SettingsPage() {
                 일일 칼로리 (kcal)
               </FieldLabel>
               <Input
+                key={goals?.updatedAt ?? "no-goals"}
                 id="dailyCalories"
+                name="dailyCalories"
                 type="number"
                 min={0}
                 placeholder="예: 2000"
-                value={dailyCalories}
-                onChange={(e) => setDailyCalories(e.target.value)}
+                defaultValue={
+                  goals?.dailyCalories !== undefined ? goals.dailyCalories : ""
+                }
                 disabled={isLoading}
               />
             </Field>
