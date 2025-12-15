@@ -1,8 +1,11 @@
 import { NavLink } from "react-router";
-import { Home, Settings } from "lucide-react";
+import { Dumbbell, Home, Settings, TrendingUp, Utensils } from "lucide-react";
 
 const tabs = [
   { to: "/app/dashboard", icon: Home, label: "홈" },
+  { to: "/app/meals", icon: Utensils, label: "식단" },
+  { to: "/app/workouts", icon: Dumbbell, label: "운동" },
+  { to: "/app/progress", icon: TrendingUp, label: "변화" },
   { to: "/app/settings", icon: Settings, label: "설정" },
 ] as const;
 
