@@ -122,6 +122,7 @@
     }
   body {
     @apply font-sans bg-background text-foreground;
+    padding-top: env(safe-area-inset-top);
     }
   html {
     @apply font-sans;

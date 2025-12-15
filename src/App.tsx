@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router";
 
-import { AppLayout } from "@/layouts/AppLayout";
+import { AppShellLayout } from "@/layouts/AppShellLayout";
+import { PublicLayout } from "@/layouts/PublicLayout";
 import { RequireAuth } from "@/layouts/RequireAuth";
 import { RootLayout } from "@/layouts/RootLayout";
 import { DashboardPage } from "@/pages/DashboardPage";
@@ -14,12 +15,14 @@ export function App() {
   return (
     <Routes>
       <Route element={<RootLayout />}>
-        <Route index element={<LandingPage />} />
-        <Route path="sign-in/*" element={<SignInPage />} />
-        <Route path="sign-up/*" element={<SignUpPage />} />
+        <Route element={<PublicLayout />}>
+          <Route index element={<LandingPage />} />
+          <Route path="sign-in/*" element={<SignInPage />} />
+          <Route path="sign-up/*" element={<SignUpPage />} />
+        </Route>
 
         <Route element={<RequireAuth />}>
-          <Route path="app" element={<AppLayout />}>
+          <Route path="app" element={<AppShellLayout />}>
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="settings/*" element={<SettingsPage />} />

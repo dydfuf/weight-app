@@ -22,7 +22,7 @@ export function ReloadPrompt() {
 
   return (
     <div
-      className="fixed bottom-4 right-4 z-50 w-[min(92vw,420px)] border bg-background shadow-sm"
+      className="fixed bottom-[calc(72px+env(safe-area-inset-bottom))] right-4 z-50 w-[min(92vw,420px)] border bg-background shadow-sm"
       role="status"
       aria-live="polite"
     >
