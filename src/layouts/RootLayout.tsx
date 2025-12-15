@@ -14,7 +14,8 @@ export function RootLayout() {
 
         <nav className="flex items-center gap-3">
           <Link to="/">Home</Link>
-          <Link to="/app">App</Link>
+          <Link to="/app/dashboard">Dashboard</Link>
+          <Link to="/app/settings">Settings</Link>
         </nav>
 
         <div className="ml-auto flex items-center gap-3">
