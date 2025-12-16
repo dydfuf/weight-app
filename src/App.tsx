@@ -12,7 +12,7 @@ import { ProgressPage } from "@/pages/ProgressPage";
 import { SettingsPage } from "@/pages/SettingsPage";
 import { SignInPage } from "@/pages/SignInPage";
 import { SignUpPage } from "@/pages/SignUpPage";
-import { WorkoutsPage } from "@/pages/WorkoutsPage";
+import { WorkoutsPage } from "@/pages/workouts";
 
 export function App() {
   return (

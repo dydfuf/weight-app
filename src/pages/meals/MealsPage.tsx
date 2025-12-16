@@ -5,8 +5,8 @@ import { useFoodEntriesByDate } from "@/features/meals/queries";
 import { useGoals } from "@/features/goals/queries";
 import type { FoodEntry, MealType } from "@/domain/meals/types";
 
+import { DateNavigator } from "@/components/date-navigation";
 import { MealsHeader } from "./MealsHeader";
-import { DateNavigator } from "./DateNavigator";
 import { DailySummaryCard } from "./DailySummaryCard";
 import { MealSection } from "./MealSection";
 

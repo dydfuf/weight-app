@@ -37,6 +37,11 @@ export interface WorkoutRepository {
     startDate: string,
     endDate: string
   ): Promise<WorkoutSession[]>;
+  /** Get the most recent sets for an exercise by name (before given date) */
+  getPreviousSetsForExercise(
+    exerciseName: string,
+    beforeDate: string
+  ): Promise<WorkoutSet[]>;
   ensureSession(date: string): Promise<WorkoutSession>;
   addExercise(input: WorkoutExerciseInput): Promise<WorkoutExercise>;
   deleteExercise(args: { date: string; exerciseId: string }): Promise<void>;
@@ -112,6 +117,36 @@ export const workoutRepository: WorkoutRepository = {
     );
     sessions.sort((a, b) => a.date.localeCompare(b.date));
     return sessions;
+  },
+
+  async getPreviousSetsForExercise(
+    exerciseName: string,
+    beforeDate: string
+  ): Promise<WorkoutSet[]> {
+    const db = await getDB();
+
+    // Get all exercises with the given name
+    const allExercises = await db.getAll("workoutExercises");
+    const matchingExercises = allExercises
+      .filter((ex) => ex.name === exerciseName && ex.date < beforeDate)
+      .sort((a, b) => b.date.localeCompare(a.date)); // Most recent first
+
+    if (matchingExercises.length === 0) {
+      return [];
+    }
+
+    // Get the most recent exercise
+    const mostRecent = matchingExercises[0];
+
+    // Get sets for that exercise
+    const sets = await db.getAllFromIndex(
+      "workoutSets",
+      "by-exerciseId",
+      mostRecent.id
+    );
+    sets.sort(sortBySetIndexAsc);
+
+    return sets;
   },
 
   async ensureSession(date: string): Promise<WorkoutSession> {

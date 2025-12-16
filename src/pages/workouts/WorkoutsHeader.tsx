@@ -3,7 +3,7 @@ import { CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CalendarPopover } from "@/components/date-navigation";
 
-interface MealsHeaderProps {
+interface WorkoutsHeaderProps {
   selectedDate: string;
   onDateChange: (date: string) => void;
 }
@@ -20,7 +20,10 @@ function isToday(dateStr: string): boolean {
   return dateStr === today;
 }
 
-export function MealsHeader({ selectedDate, onDateChange }: MealsHeaderProps) {
+export function WorkoutsHeader({
+  selectedDate,
+  onDateChange,
+}: WorkoutsHeaderProps) {
   const dateLabel = isToday(selectedDate)
     ? "오늘"
     : formatKoreanDate(selectedDate);
@@ -28,7 +31,7 @@ export function MealsHeader({ selectedDate, onDateChange }: MealsHeaderProps) {
   return (
     <header className="flex items-center justify-between">
       <div>
-        <h1 className="text-lg font-bold">식단</h1>
+        <h1 className="text-lg font-bold">운동</h1>
         <p className="text-sm text-muted-foreground">{dateLabel}</p>
       </div>
       <CalendarPopover selectedDate={selectedDate} onDateChange={onDateChange}>

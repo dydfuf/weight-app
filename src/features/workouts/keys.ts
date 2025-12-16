@@ -11,4 +11,8 @@ export const workoutKeys = {
   /** Key for workout sessions within a date range */
   sessionRange: (startDate: string, endDate: string) =>
     ["workouts", "sessionRange", startDate, endDate] as const,
+
+  /** Key for previous sets of an exercise */
+  previousSets: (exerciseName: string, beforeDate: string) =>
+    ["workouts", "previousSets", exerciseName, beforeDate] as const,
 };

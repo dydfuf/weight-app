@@ -50,6 +50,8 @@ export interface WorkoutSet {
   weight: number;
   /** Repetitions */
   reps: number;
+  /** Whether this set has been completed */
+  completed?: boolean;
   /** Creation timestamp */
   createdAt: number;
   /** Last update timestamp */
@@ -85,5 +87,5 @@ export interface WorkoutSetInput {
  * Input type for updating an existing set.
  */
 export type WorkoutSetUpdateInput = Partial<
-  Pick<WorkoutSet, "weight" | "reps">
+  Pick<WorkoutSet, "weight" | "reps" | "completed">
 >;
