@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { AccountSection } from "./settings/AccountSection";
 import { GoalsSection } from "./settings/GoalsSection";
 import { PreferencesSection } from "./settings/PreferencesSection";
-import { ProfileHeaderPlaceholder } from "./settings/ProfileHeaderPlaceholder";
+import { ProfileHeader } from "./settings/ProfileHeader";
 import { StatsCards } from "./settings/StatsCards";
 
 export function SettingsPage() {
@@ -36,7 +36,7 @@ export function SettingsPage() {
         </div>
       </div>
 
-      <ProfileHeaderPlaceholder />
+      <ProfileHeader />
       <StatsCards />
       <GoalsSection />
       <PreferencesSection />
