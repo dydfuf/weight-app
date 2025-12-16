@@ -4,7 +4,7 @@ import { AppShellLayout } from "@/layouts/AppShellLayout";
 import { PublicLayout } from "@/layouts/PublicLayout";
 import { RequireAuth } from "@/layouts/RequireAuth";
 import { RootLayout } from "@/layouts/RootLayout";
-import { DashboardPage } from "@/pages/DashboardPage";
+import { DashboardPage } from "@/pages/dashboard";
 import { LandingPage } from "@/pages/LandingPage";
 import { MealsPage } from "@/pages/MealsPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";

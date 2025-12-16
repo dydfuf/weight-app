@@ -14,3 +14,18 @@ export function useWorkoutByDate(date: string) {
     queryFn: () => workoutRepository.getByDate(date),
   });
 }
+
+/**
+ * Fetches all workout sessions within a date range (inclusive).
+ * @param startDate - Start date (YYYY-MM-DD)
+ * @param endDate - End date (YYYY-MM-DD)
+ */
+export function useWorkoutSessionsByDateRange(
+  startDate: string,
+  endDate: string
+) {
+  return useQuery({
+    queryKey: workoutKeys.sessionRange(startDate, endDate),
+    queryFn: () => workoutRepository.listSessionsByDateRange(startDate, endDate),
+  });
+}

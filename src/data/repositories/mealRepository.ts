@@ -12,6 +12,8 @@ import type { FoodEntry, FoodEntryInput } from "@/domain/meals/types";
 export interface MealRepository {
   /** Get all food entries for a specific date */
   getByDate(date: string): Promise<FoodEntry[]>;
+  /** Get all food entries within a date range (inclusive) */
+  getByDateRange(startDate: string, endDate: string): Promise<FoodEntry[]>;
   /** Get a single food entry by ID */
   getById(id: string): Promise<FoodEntry | undefined>;
   /** Create a new food entry */
@@ -34,6 +36,15 @@ export const mealRepository: MealRepository = {
   async getByDate(date: string): Promise<FoodEntry[]> {
     const db = await getDB();
     return db.getAllFromIndex("foodEntries", "by-date", date);
+  },
+
+  async getByDateRange(
+    startDate: string,
+    endDate: string
+  ): Promise<FoodEntry[]> {
+    const db = await getDB();
+    const range = IDBKeyRange.bound(startDate, endDate);
+    return db.getAllFromIndex("foodEntries", "by-date", range);
   },
 
   async getById(id: string): Promise<FoodEntry | undefined> {

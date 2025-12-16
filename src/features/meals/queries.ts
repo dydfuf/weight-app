@@ -16,6 +16,18 @@ export function useFoodEntriesByDate(date: string) {
 }
 
 /**
+ * Fetches all food entries within a date range (inclusive).
+ * @param startDate - Start date (YYYY-MM-DD)
+ * @param endDate - End date (YYYY-MM-DD)
+ */
+export function useFoodEntriesByDateRange(startDate: string, endDate: string) {
+  return useQuery({
+    queryKey: mealKeys.dateRange(startDate, endDate),
+    queryFn: () => mealRepository.getByDateRange(startDate, endDate),
+  });
+}
+
+/**
  * Fetches a single food entry by ID.
  * @param id - Food entry ID
  */

@@ -9,6 +9,10 @@ export const mealKeys = {
   /** Key for food entries by date */
   byDate: (date: string) => ["meals", "byDate", date] as const,
 
+  /** Key for food entries within a date range */
+  dateRange: (startDate: string, endDate: string) =>
+    ["meals", "dateRange", startDate, endDate] as const,
+
   /** Key for a single food entry detail */
   detail: (id: string) => ["meals", "detail", id] as const,
 };

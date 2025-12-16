@@ -32,6 +32,11 @@ export interface WorkoutDay {
  */
 export interface WorkoutRepository {
   getByDate(date: string): Promise<WorkoutDay>;
+  /** Get all workout sessions within a date range (inclusive) */
+  listSessionsByDateRange(
+    startDate: string,
+    endDate: string
+  ): Promise<WorkoutSession[]>;
   ensureSession(date: string): Promise<WorkoutSession>;
   addExercise(input: WorkoutExerciseInput): Promise<WorkoutExercise>;
   deleteExercise(args: { date: string; exerciseId: string }): Promise<void>;
@@ -92,6 +97,21 @@ export const workoutRepository: WorkoutRepository = {
       session,
       exercises: exercisesWithSets,
     };
+  },
+
+  async listSessionsByDateRange(
+    startDate: string,
+    endDate: string
+  ): Promise<WorkoutSession[]> {
+    const db = await getDB();
+    const range = IDBKeyRange.bound(startDate, endDate);
+    const sessions = await db.getAllFromIndex(
+      "workoutSessions",
+      "by-date",
+      range
+    );
+    sessions.sort((a, b) => a.date.localeCompare(b.date));
+    return sessions;
   },
 
   async ensureSession(date: string): Promise<WorkoutSession> {
