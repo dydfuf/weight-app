@@ -1,84 +1,48 @@
 import { UserProfile } from "@clerk/react-router";
+import { ArrowLeft, MoreVertical } from "lucide-react";
+import { useNavigate } from "react-router";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 
-import { useClearGoals, useSetGoals } from "@/features/goals/mutations";
-import { useGoals } from "@/features/goals/queries";
+import { AccountSection } from "./settings/AccountSection";
+import { GoalsSection } from "./settings/GoalsSection";
+import { PreferencesSection } from "./settings/PreferencesSection";
+import { ProfileHeaderPlaceholder } from "./settings/ProfileHeaderPlaceholder";
+import { StatsCards } from "./settings/StatsCards";
 
 export function SettingsPage() {
-  const { data: goals, isLoading } = useGoals();
-  const setGoals = useSetGoals();
-  const clearGoals = useClearGoals();
-
-  const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const raw = String(formData.get("dailyCalories") ?? "").trim();
-    const value = raw === "" ? undefined : Number(raw);
-    if (value !== undefined && !Number.isFinite(value)) return;
-
-    setGoals.mutate({
-      dailyCalories: value,
-    });
-  };
+  const navigate = useNavigate();
 
   return (
-    <div className="mx-auto w-full max-w-3xl space-y-4 p-4">
-      <Card>
-        <CardHeader className="pb-2">
-          <CardTitle className="text-sm">목표</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <form onSubmit={handleSave} className="space-y-3">
-            <Field>
-              <FieldLabel htmlFor="dailyCalories">
-                일일 칼로리 (kcal)
-              </FieldLabel>
-              <Input
-                key={goals?.updatedAt ?? "no-goals"}
-                id="dailyCalories"
-                name="dailyCalories"
-                type="number"
-                min={0}
-                placeholder="예: 2000"
-                defaultValue={
-                  goals?.dailyCalories !== undefined ? goals.dailyCalories : ""
-                }
-                disabled={isLoading}
-              />
-            </Field>
+    <div className="mx-auto w-full max-w-md space-y-4 p-4">
+      {/* TopAppBar */}
+      <div className="sticky top-0 z-40 -mx-4 flex items-center justify-between border-b bg-background/95 px-4 py-2 backdrop-blur">
+        <div className="w-10">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            aria-label="Back"
+            onClick={() => navigate(-1)}
+          >
+            <ArrowLeft />
+          </Button>
+        </div>
+        <h1 className="flex-1 text-center text-base font-bold">Profile</h1>
+        <div className="w-10 flex justify-end">
+          <Button type="button" variant="ghost" size="icon" aria-label="More">
+            <MoreVertical />
+          </Button>
+        </div>
+      </div>
 
-            <div className="flex gap-2">
-              <Button
-                type="submit"
-                className="flex-1"
-                disabled={setGoals.isPending || isLoading}
-              >
-                {setGoals.isPending ? "저장 중..." : "저장"}
-              </Button>
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={() => clearGoals.mutate()}
-                disabled={clearGoals.isPending || isLoading}
-              >
-                초기화
-              </Button>
-            </div>
+      <ProfileHeaderPlaceholder />
+      <StatsCards />
+      <GoalsSection />
+      <PreferencesSection />
+      <AccountSection />
 
-            {goals?.dailyCalories !== undefined && (
-              <p className="text-xs text-muted-foreground">
-                현재 목표: {goals.dailyCalories} kcal
-              </p>
-            )}
-          </form>
-        </CardContent>
-      </Card>
-
-      <div className="flex justify-center">
+      <div id="clerk-profile" className="flex justify-center pt-2">
         <UserProfile path="/app/settings" />
       </div>
     </div>
