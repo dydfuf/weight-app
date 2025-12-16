@@ -6,7 +6,7 @@ import { RequireAuth } from "@/layouts/RequireAuth";
 import { RootLayout } from "@/layouts/RootLayout";
 import { DashboardPage } from "@/pages/dashboard";
 import { LandingPage } from "@/pages/LandingPage";
-import { MealsPage } from "@/pages/MealsPage";
+import { MealsPage } from "@/pages/meals";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 import { ProgressPage } from "@/pages/ProgressPage";
 import { SettingsPage } from "@/pages/SettingsPage";
