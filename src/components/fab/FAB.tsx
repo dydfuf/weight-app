@@ -11,7 +11,7 @@ export function FAB({ onClick, label, icon }: FABProps) {
     <button
       type="button"
       onClick={onClick}
-      className="fixed bottom-20 right-4 z-40 flex size-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg transition-all hover:scale-105 active:scale-95"
+      className="fixed bottom-[calc(80px+env(safe-area-inset-bottom))] right-4 z-40 flex size-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg transition-all hover:scale-105 active:scale-95"
       aria-label={label}
     >
       {icon ?? <PlusIcon className="size-6" />}
