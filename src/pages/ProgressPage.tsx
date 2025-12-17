@@ -1,20 +1,14 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router";
-import { PlusIcon, Trash2Icon, XIcon } from "lucide-react";
+import { PlusIcon, XIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 import type { MetricEntry, MetricType } from "@/domain/metrics/types";
+import { useGoals } from "@/features/goals/queries";
 import {
   useCreateMetricEntry,
   useDeleteMetricEntry,
@@ -23,6 +17,13 @@ import {
   useLatestMetricByType,
   useMetricEntriesByType,
 } from "@/features/metrics/queries";
+
+import {
+  HistoryList,
+  MetricChart,
+  MetricChips,
+  OverviewCards,
+} from "./progress";
 
 const METRIC_LABELS: Record<MetricType, string> = {
   weight: "체중",
@@ -38,13 +39,6 @@ function getTodayDateString(): string {
   return new Date().toISOString().split("T")[0];
 }
 
-function formatTime(ts: number) {
-  return new Date(ts).toLocaleTimeString(undefined, {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
-
 export function ProgressPage() {
   const today = getTodayDateString();
 
@@ -53,20 +47,15 @@ export function ProgressPage() {
     const t = searchParams.get("type");
     return t === "weight" || t === "bodyFat" ? t : "weight";
   });
+
   const { data: latest, isLoading: isLatestLoading } =
     useLatestMetricByType(type);
   const { data: rawEntries = [], isLoading: isEntriesLoading } =
     useMetricEntriesByType(type);
+  const { data: goals } = useGoals();
 
   const createEntry = useCreateMetricEntry();
   const deleteEntry = useDeleteMetricEntry();
-
-  const entries = useMemo(() => {
-    // Show newest first in the UI (repository returns date asc)
-    return [...rawEntries].sort(
-      (a, b) => b.date.localeCompare(a.date) || b.createdAt - a.createdAt
-    );
-  }, [rawEntries]);
 
   const [isFormOpen, setIsFormOpen] = useState(
     () => searchParams.get("add") === "1"
@@ -112,89 +101,51 @@ export function ProgressPage() {
   }
 
   return (
-    <div className="space-y-4 p-4">
-      <header className="space-y-2">
-        <h1 className="text-lg font-semibold">변화</h1>
-        <div className="flex items-end justify-between gap-3">
-          <div className="space-y-1">
-            <p className="text-sm text-muted-foreground">
-              {METRIC_LABELS[type]} 최신값
-            </p>
-            <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold">
-                {latest ? latest.value : "-"}
-              </span>
-              <span className="text-sm text-muted-foreground">
-                {METRIC_UNITS[type]}
-              </span>
-            </div>
-          </div>
-          <div className="w-36">
-            <Field>
-              <FieldLabel htmlFor="metricType">지표</FieldLabel>
-              <Select
-                value={type}
-                onValueChange={(v: MetricType) => setType(v)}
-              >
-                <SelectTrigger id="metricType">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {(Object.keys(METRIC_LABELS) as MetricType[]).map((t) => (
-                    <SelectItem key={t} value={t}>
-                      {METRIC_LABELS[t]}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </Field>
-          </div>
-        </div>
+    <div className="space-y-6 p-4 pb-24">
+      {/* Header */}
+      <header>
+        <h1 className="mb-3 text-lg font-semibold">변화</h1>
+        {/* Metric Chips - Phase 3 */}
+        <MetricChips value={type} onChange={setType} />
       </header>
 
-      <div className="space-y-3">
-        {entries.length === 0 && !isFormOpen ? (
-          <div className="rounded-md border p-4 text-center text-sm text-muted-foreground">
-            기록된 데이터가 없습니다.
-          </div>
-        ) : (
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-muted-foreground">
-                기록
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              {entries.map((entry) => (
-                <div
-                  key={entry.id}
-                  className="flex items-center justify-between gap-2"
-                >
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium">
-                      {entry.value} {entry.unit}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {entry.date} · {formatTime(entry.createdAt)}
-                    </p>
-                  </div>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon-xs"
-                    onClick={() => handleDelete(entry)}
-                    disabled={deleteEntry.isPending}
-                  >
-                    <Trash2Icon className="text-muted-foreground" />
-                  </Button>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        )}
-      </div>
+      {/* Chart Section - Phase 1 */}
+      <MetricChart
+        entries={rawEntries}
+        latest={latest}
+        type={type}
+        unit={METRIC_UNITS[type]}
+        label={METRIC_LABELS[type]}
+      />
 
-      {isFormOpen ? (
+      {/* Overview Cards - Phase 2 */}
+      <OverviewCards
+        entries={rawEntries}
+        latest={latest}
+        goals={goals}
+        type={type}
+        unit={METRIC_UNITS[type]}
+        label={METRIC_LABELS[type]}
+      />
+
+      {/* History List - Phase 4 */}
+      <HistoryList
+        entries={rawEntries}
+        type={type}
+        unit={METRIC_UNITS[type]}
+        onDelete={handleDelete}
+        isDeleting={deleteEntry.isPending}
+      />
+
+      {/* Empty State */}
+      {rawEntries.length === 0 && !isFormOpen && (
+        <div className="rounded-md border p-4 text-center text-sm text-muted-foreground">
+          기록된 데이터가 없습니다. 첫 번째 기록을 추가해보세요!
+        </div>
+      )}
+
+      {/* Add Form */}
+      {isFormOpen && (
         <Card>
           <CardHeader className="flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm">
@@ -232,6 +183,7 @@ export function ProgressPage() {
                   id="metricValue"
                   type="number"
                   inputMode="decimal"
+                  step="0.1"
                   placeholder="0"
                   value={formData.value}
                   onChange={(e) =>
@@ -251,15 +203,18 @@ export function ProgressPage() {
             </form>
           </CardContent>
         </Card>
-      ) : (
-        <Button
+      )}
+
+      {/* FAB Button - Phase 5 */}
+      {!isFormOpen && (
+        <button
           type="button"
           onClick={() => setIsFormOpen(true)}
-          className="w-full"
+          className="fixed bottom-20 right-4 z-40 flex size-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg transition-all hover:scale-105 active:scale-95"
+          aria-label={`${METRIC_LABELS[type]} 기록 추가`}
         >
-          <PlusIcon data-icon="inline-start" />
-          {METRIC_LABELS[type]} 기록
-        </Button>
+          <PlusIcon className="size-6" />
+        </button>
       )}
     </div>
   );
