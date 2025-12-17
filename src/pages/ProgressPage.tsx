@@ -1,24 +1,18 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router";
-import { PlusIcon, XIcon } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { FAB } from "@/components/fab";
 
 import type { MetricEntry, MetricType } from "@/domain/metrics/types";
 import { useGoals } from "@/features/goals/queries";
-import {
-  useCreateMetricEntry,
-  useDeleteMetricEntry,
-} from "@/features/metrics/mutations";
+import { useDeleteMetricEntry } from "@/features/metrics/mutations";
 import {
   useLatestMetricByType,
   useMetricEntriesByType,
 } from "@/features/metrics/queries";
 
 import {
+  AddMetricDrawer,
   HistoryList,
   MetricChart,
   MetricChips,
@@ -35,13 +29,7 @@ const METRIC_UNITS: Record<MetricType, string> = {
   bodyFat: "%",
 };
 
-function getTodayDateString(): string {
-  return new Date().toISOString().split("T")[0];
-}
-
 export function ProgressPage() {
-  const today = getTodayDateString();
-
   const [searchParams] = useSearchParams();
   const [type, setType] = useState<MetricType>(() => {
     const t = searchParams.get("type");
@@ -54,39 +42,11 @@ export function ProgressPage() {
     useMetricEntriesByType(type);
   const { data: goals } = useGoals();
 
-  const createEntry = useCreateMetricEntry();
   const deleteEntry = useDeleteMetricEntry();
 
-  const [isFormOpen, setIsFormOpen] = useState(
+  const [isDrawerOpen, setIsDrawerOpen] = useState(
     () => searchParams.get("add") === "1"
   );
-  const [formData, setFormData] = useState({
-    date: today,
-    value: "",
-  });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.value) return;
-
-    const value = Number(formData.value);
-    if (!Number.isFinite(value)) return;
-
-    createEntry.mutate(
-      {
-        date: formData.date,
-        type,
-        value,
-        unit: METRIC_UNITS[type],
-      },
-      {
-        onSuccess: () => {
-          setFormData({ date: today, value: "" });
-          setIsFormOpen(false);
-        },
-      }
-    );
-  };
 
   const handleDelete = (entry: MetricEntry) => {
     deleteEntry.mutate({ id: entry.id, type: entry.type });
@@ -138,84 +98,26 @@ export function ProgressPage() {
       />
 
       {/* Empty State */}
-      {rawEntries.length === 0 && !isFormOpen && (
+      {rawEntries.length === 0 && (
         <div className="rounded-md border p-4 text-center text-sm text-muted-foreground">
           기록된 데이터가 없습니다. 첫 번째 기록을 추가해보세요!
         </div>
       )}
 
-      {/* Add Form */}
-      {isFormOpen && (
-        <Card>
-          <CardHeader className="flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm">
-              {METRIC_LABELS[type]} 기록
-            </CardTitle>
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon-xs"
-              onClick={() => setIsFormOpen(false)}
-            >
-              <XIcon />
-            </Button>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-3">
-              <Field>
-                <FieldLabel htmlFor="metricDate">날짜</FieldLabel>
-                <Input
-                  id="metricDate"
-                  type="date"
-                  value={formData.date}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, date: e.target.value }))
-                  }
-                  required
-                />
-              </Field>
+      {/* Add Metric Drawer */}
+      <AddMetricDrawer
+        open={isDrawerOpen}
+        onOpenChange={setIsDrawerOpen}
+        type={type}
+        label={METRIC_LABELS[type]}
+        unit={METRIC_UNITS[type]}
+      />
 
-              <Field>
-                <FieldLabel htmlFor="metricValue">
-                  값 ({METRIC_UNITS[type]})
-                </FieldLabel>
-                <Input
-                  id="metricValue"
-                  type="number"
-                  inputMode="decimal"
-                  step="0.1"
-                  placeholder="0"
-                  value={formData.value}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, value: e.target.value }))
-                  }
-                  required
-                />
-              </Field>
-
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={createEntry.isPending}
-              >
-                {createEntry.isPending ? "저장 중..." : "저장"}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* FAB Button - Phase 5 */}
-      {!isFormOpen && (
-        <button
-          type="button"
-          onClick={() => setIsFormOpen(true)}
-          className="fixed bottom-20 right-4 z-40 flex size-14 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg transition-all hover:scale-105 active:scale-95"
-          aria-label={`${METRIC_LABELS[type]} 기록 추가`}
-        >
-          <PlusIcon className="size-6" />
-        </button>
-      )}
+      {/* FAB Button */}
+      <FAB
+        onClick={() => setIsDrawerOpen(true)}
+        label={`${METRIC_LABELS[type]} 기록 추가`}
+      />
     </div>
   );
 }

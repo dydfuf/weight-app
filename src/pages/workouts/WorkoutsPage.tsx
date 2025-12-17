@@ -1,13 +1,14 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router";
 
 import { DateNavigator } from "@/components/date-navigation";
+import { FAB } from "@/components/fab";
 import { useWorkoutByDate } from "@/features/workouts/queries";
 
+import { AddExerciseDrawer } from "./AddExerciseDrawer";
+import { ExerciseCard } from "./ExerciseCard";
 import { WorkoutsHeader } from "./WorkoutsHeader";
 import { WorkoutSummaryCard } from "./WorkoutSummaryCard";
-import { ExerciseCard } from "./ExerciseCard";
-import { AddExerciseDrawer } from "./AddExerciseDrawer";
 
 function getTodayDateString(): string {
   return new Date().toISOString().split("T")[0];
@@ -19,11 +20,16 @@ export function WorkoutsPage() {
 
   const { data, isLoading } = useWorkoutByDate(selectedDate);
 
+  const [isDrawerOpen, setIsDrawerOpen] = useState(
+    () => searchParams.get("add") === "1"
+  );
+
   const handleDateChange = (date: string) => {
     setSearchParams({ date });
   };
 
   const exercises = useMemo(() => data?.exercises ?? [], [data?.exercises]);
+  const isEmpty = exercises.length === 0;
 
   const totals = useMemo(() => {
     const totalSets = exercises.reduce((acc, ex) => acc + ex.sets.length, 0);
@@ -55,7 +61,7 @@ export function WorkoutsPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-md space-y-4 p-4">
+    <div className="mx-auto w-full max-w-md space-y-4 p-4 pb-24">
       <WorkoutsHeader
         selectedDate={selectedDate}
         onDateChange={handleDateChange}
@@ -78,7 +84,28 @@ export function WorkoutsPage() {
           />
         ))}
       </div>
-      <AddExerciseDrawer date={selectedDate} isEmpty={exercises.length === 0} />
+
+      {/* Empty state with inline trigger */}
+      {isEmpty && (
+        <AddExerciseDrawer
+          date={selectedDate}
+          showEmptyTrigger
+          open={isDrawerOpen}
+          onOpenChange={setIsDrawerOpen}
+        />
+      )}
+
+      {/* Drawer without trigger (controlled by FAB) */}
+      {!isEmpty && (
+        <AddExerciseDrawer
+          date={selectedDate}
+          open={isDrawerOpen}
+          onOpenChange={setIsDrawerOpen}
+        />
+      )}
+
+      {/* FAB Button */}
+      <FAB onClick={() => setIsDrawerOpen(true)} label="운동 추가" />
     </div>
   );
 }

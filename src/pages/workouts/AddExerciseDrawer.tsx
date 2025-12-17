@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useSearchParams } from "react-router";
-import { Dumbbell, PlusIcon } from "lucide-react";
+import { Dumbbell } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,26 +18,36 @@ import { useAddWorkoutExercise } from "@/features/workouts/mutations";
 
 interface AddExerciseDrawerProps {
   date: string;
-  isEmpty?: boolean;
+  /** Show empty state trigger when true (for inline empty state button) */
+  showEmptyTrigger?: boolean;
+  /** Controlled mode: open state */
+  open?: boolean;
+  /** Controlled mode: callback when open state changes */
+  onOpenChange?: (open: boolean) => void;
 }
 
 export function AddExerciseDrawer({
   date,
-  isEmpty = false,
+  showEmptyTrigger = false,
+  open: controlledOpen,
+  onOpenChange: controlledOnOpenChange,
 }: AddExerciseDrawerProps) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [open, setOpen] = useState(() => searchParams.get("add") === "1");
+  const [internalOpen, setInternalOpen] = useState(false);
   const [exerciseName, setExerciseName] = useState("");
 
   const addExercise = useAddWorkoutExercise();
 
+  // Support both controlled and uncontrolled modes
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+  const setOpen = isControlled
+    ? (value: boolean) => controlledOnOpenChange?.(value)
+    : setInternalOpen;
+
   const handleOpenChange = (isOpen: boolean) => {
     setOpen(isOpen);
     if (!isOpen) {
-      // Remove add param when closing
-      const newParams = new URLSearchParams(searchParams);
-      newParams.delete("add");
-      setSearchParams(newParams, { replace: true });
+      setExerciseName("");
     }
   };
 
@@ -59,8 +68,9 @@ export function AddExerciseDrawer({
 
   return (
     <Drawer open={open} onOpenChange={handleOpenChange}>
-      <DrawerTrigger asChild>
-        {isEmpty ? (
+      {/* Only show trigger for empty state inline button */}
+      {showEmptyTrigger && (
+        <DrawerTrigger asChild>
           <button
             type="button"
             className="group flex w-full flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-muted-foreground/30 p-6 text-muted-foreground transition-all hover:border-primary/50 hover:text-primary"
@@ -77,13 +87,8 @@ export function AddExerciseDrawer({
               </span>
             </div>
           </button>
-        ) : (
-          <Button type="button" className="w-full">
-            <PlusIcon className="mr-1 h-4 w-4" />
-            운동 추가
-          </Button>
-        )}
-      </DrawerTrigger>
+        </DrawerTrigger>
+      )}
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>운동 추가</DrawerTitle>

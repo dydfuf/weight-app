@@ -1,14 +1,17 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router";
 
-import { useFoodEntriesByDate } from "@/features/meals/queries";
-import { useGoals } from "@/features/goals/queries";
-import type { FoodEntry, MealType } from "@/domain/meals/types";
-
 import { DateNavigator } from "@/components/date-navigation";
-import { MealsHeader } from "./MealsHeader";
+import { FAB } from "@/components/fab";
+import type { FoodEntry, MealType } from "@/domain/meals/types";
+import { useGoals } from "@/features/goals/queries";
+import { useFoodEntriesByDate } from "@/features/meals/queries";
+
+import { AddFoodDrawer } from "./AddFoodDrawer";
 import { DailySummaryCard } from "./DailySummaryCard";
 import { MealSection } from "./MealSection";
+import { MealsHeader } from "./MealsHeader";
+import { SelectMealDrawer } from "./SelectMealDrawer";
 
 const MEAL_TYPE_ORDER: MealType[] = ["breakfast", "lunch", "dinner", "snack"];
 
@@ -23,8 +26,20 @@ export function MealsPage() {
   const { data: entries = [], isLoading } = useFoodEntriesByDate(selectedDate);
   const { data: goals } = useGoals();
 
+  // Drawer states for FAB flow
+  const [isSelectMealOpen, setIsSelectMealOpen] = useState(false);
+  const [isAddFoodOpen, setIsAddFoodOpen] = useState(false);
+  const [selectedMealType, setSelectedMealType] = useState<MealType | null>(
+    null
+  );
+
   const handleDateChange = (date: string) => {
     setSearchParams({ date });
+  };
+
+  const handleSelectMealType = (mealType: MealType) => {
+    setSelectedMealType(mealType);
+    setIsAddFoodOpen(true);
   };
 
   // Group entries by meal type
@@ -70,7 +85,7 @@ export function MealsPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-md space-y-4 p-4">
+    <div className="mx-auto w-full max-w-md space-y-4 p-4 pb-24">
       <MealsHeader
         selectedDate={selectedDate}
         onDateChange={handleDateChange}
@@ -94,6 +109,24 @@ export function MealsPage() {
           />
         ))}
       </div>
+
+      {/* Select Meal Type Drawer */}
+      <SelectMealDrawer
+        open={isSelectMealOpen}
+        onOpenChange={setIsSelectMealOpen}
+        onSelectMealType={handleSelectMealType}
+      />
+
+      {/* Add Food Drawer */}
+      <AddFoodDrawer
+        open={isAddFoodOpen}
+        onOpenChange={setIsAddFoodOpen}
+        date={selectedDate}
+        mealType={selectedMealType}
+      />
+
+      {/* FAB Button */}
+      <FAB onClick={() => setIsSelectMealOpen(true)} label="음식 추가" />
     </div>
   );
 }
