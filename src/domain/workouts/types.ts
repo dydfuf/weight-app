@@ -26,6 +26,11 @@ export interface WorkoutExercise {
   date: string;
   /** Exercise name */
   name: string;
+  /**
+   * Optional catalog exercise id (from ExerciseDB).
+   * This is NOT the same as WorkoutSet.exerciseId (which references WorkoutExercise.id).
+   */
+  catalogExerciseId?: string;
   /** Creation timestamp */
   createdAt: number;
   /** Last update timestamp */
@@ -66,6 +71,8 @@ export interface WorkoutExerciseInput {
   date: string;
   /** Exercise name */
   name: string;
+  /** Optional catalog exercise id (from ExerciseDB) */
+  catalogExerciseId?: string;
 }
 
 /**

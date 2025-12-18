@@ -8,9 +8,17 @@ import type {
 } from "@/domain/workouts/types";
 import type { MetricEntry, MetricType } from "@/domain/metrics/types";
 import type { Goals } from "@/domain/goals/types";
+import type {
+  Exercise,
+  FavoriteExercise,
+  ExerciseUsageRecord,
+  BodyPart,
+  MuscleTarget,
+  Equipment,
+} from "@/domain/exercises/types";
 
 const DB_NAME = "weight-app";
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 
 /**
  * Database schema for type-safe IndexedDB operations.
@@ -65,6 +73,34 @@ interface WeightAppDB extends DBSchema {
   goals: {
     key: string;
     value: Goals;
+  };
+
+  exercises: {
+    key: string;
+    value: Exercise;
+    indexes: {
+      "by-bodyPart": BodyPart;
+      "by-target": MuscleTarget;
+      "by-equipment": Equipment;
+      "by-name": string;
+    };
+  };
+
+  favoriteExercises: {
+    key: string;
+    value: FavoriteExercise;
+    indexes: {
+      "by-createdAt": number;
+    };
+  };
+
+  exerciseUsageHistory: {
+    key: string;
+    value: ExerciseUsageRecord;
+    indexes: {
+      "by-exerciseId": string;
+      "by-usedAt": number;
+    };
   };
 }
 
@@ -123,6 +159,32 @@ export function getDB(): Promise<IDBPDatabase<WeightAppDB>> {
         // Goals: single record (id = "default")
         if (!db.objectStoreNames.contains("goals")) {
           db.createObjectStore("goals", { keyPath: "id" });
+        }
+
+        // Exercises: cached exercise database
+        if (!db.objectStoreNames.contains("exercises")) {
+          const store = db.createObjectStore("exercises", { keyPath: "id" });
+          store.createIndex("by-bodyPart", "bodyPart");
+          store.createIndex("by-target", "target");
+          store.createIndex("by-equipment", "equipment");
+          store.createIndex("by-name", "name");
+        }
+
+        // Favorite exercises
+        if (!db.objectStoreNames.contains("favoriteExercises")) {
+          const store = db.createObjectStore("favoriteExercises", {
+            keyPath: "exerciseId",
+          });
+          store.createIndex("by-createdAt", "createdAt");
+        }
+
+        // Exercise usage history (for recent exercises)
+        if (!db.objectStoreNames.contains("exerciseUsageHistory")) {
+          const store = db.createObjectStore("exerciseUsageHistory", {
+            keyPath: "id",
+          });
+          store.createIndex("by-exerciseId", "exerciseId");
+          store.createIndex("by-usedAt", "usedAt");
         }
       },
     });

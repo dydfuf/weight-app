@@ -1,0 +1,482 @@
+[
+  {
+    "id": "0001",
+    "name": "bench press",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "equipment": "barbell",
+    "secondaryMuscles": ["triceps", "delts"]
+  },
+  {
+    "id": "0002",
+    "name": "incline bench press",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "equipment": "barbell",
+    "secondaryMuscles": ["triceps", "delts"]
+  },
+  {
+    "id": "0003",
+    "name": "dumbbell bench press",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "equipment": "dumbbell",
+    "secondaryMuscles": ["triceps", "delts"]
+  },
+  {
+    "id": "0004",
+    "name": "dumbbell fly",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "equipment": "dumbbell",
+    "secondaryMuscles": ["biceps"]
+  },
+  {
+    "id": "0005",
+    "name": "cable fly",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "equipment": "cable",
+    "secondaryMuscles": ["biceps"]
+  },
+  {
+    "id": "0006",
+    "name": "push-up",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "equipment": "body weight",
+    "secondaryMuscles": ["triceps", "delts", "abs"]
+  },
+  {
+    "id": "0007",
+    "name": "chest dip",
+    "bodyPart": "chest",
+    "target": "pectorals",
+    "equipment": "body weight",
+    "secondaryMuscles": ["triceps", "delts"]
+  },
+  {
+    "id": "0010",
+    "name": "lat pulldown",
+    "bodyPart": "back",
+    "target": "lats",
+    "equipment": "cable",
+    "secondaryMuscles": ["biceps", "traps"]
+  },
+  {
+    "id": "0011",
+    "name": "pull-up",
+    "bodyPart": "back",
+    "target": "lats",
+    "equipment": "body weight",
+    "secondaryMuscles": ["biceps", "traps"]
+  },
+  {
+    "id": "0012",
+    "name": "chin-up",
+    "bodyPart": "back",
+    "target": "lats",
+    "equipment": "body weight",
+    "secondaryMuscles": ["biceps"]
+  },
+  {
+    "id": "0013",
+    "name": "barbell row",
+    "bodyPart": "back",
+    "target": "upper back",
+    "equipment": "barbell",
+    "secondaryMuscles": ["biceps", "lats"]
+  },
+  {
+    "id": "0014",
+    "name": "dumbbell row",
+    "bodyPart": "back",
+    "target": "upper back",
+    "equipment": "dumbbell",
+    "secondaryMuscles": ["biceps", "lats"]
+  },
+  {
+    "id": "0015",
+    "name": "cable row",
+    "bodyPart": "back",
+    "target": "upper back",
+    "equipment": "cable",
+    "secondaryMuscles": ["biceps", "lats"]
+  },
+  {
+    "id": "0016",
+    "name": "deadlift",
+    "bodyPart": "back",
+    "target": "spine",
+    "equipment": "barbell",
+    "secondaryMuscles": ["glutes", "hamstrings", "traps"]
+  },
+  {
+    "id": "0017",
+    "name": "romanian deadlift",
+    "bodyPart": "upper legs",
+    "target": "hamstrings",
+    "equipment": "barbell",
+    "secondaryMuscles": ["glutes", "spine"]
+  },
+  {
+    "id": "0020",
+    "name": "overhead press",
+    "bodyPart": "shoulders",
+    "target": "delts",
+    "equipment": "barbell",
+    "secondaryMuscles": ["triceps", "traps"]
+  },
+  {
+    "id": "0021",
+    "name": "dumbbell shoulder press",
+    "bodyPart": "shoulders",
+    "target": "delts",
+    "equipment": "dumbbell",
+    "secondaryMuscles": ["triceps", "traps"]
+  },
+  {
+    "id": "0022",
+    "name": "lateral raise",
+    "bodyPart": "shoulders",
+    "target": "delts",
+    "equipment": "dumbbell",
+    "secondaryMuscles": ["traps"]
+  },
+  {
+    "id": "0023",
+    "name": "front raise",
+    "bodyPart": "shoulders",
+    "target": "delts",
+    "equipment": "dumbbell",
+    "secondaryMuscles": ["pectorals"]
+  },
+  {
+    "id": "0024",
+    "name": "face pull",
+    "bodyPart": "shoulders",
+    "target": "delts",
+    "equipment": "cable",
+    "secondaryMuscles": ["traps", "upper back"]
+  },
+  {
+    "id": "0025",
+    "name": "rear delt fly",
+    "bodyPart": "shoulders",
+    "target": "delts",
+    "equipment": "dumbbell",
+    "secondaryMuscles": ["traps", "upper back"]
+  },
+  {
+    "id": "0030",
+    "name": "barbell curl",
+    "bodyPart": "upper arms",
+    "target": "biceps",
+    "equipment": "barbell",
+    "secondaryMuscles": ["forearms"]
+  },
+  {
+    "id": "0031",
+    "name": "dumbbell curl",
+    "bodyPart": "upper arms",
+    "target": "biceps",
+    "equipment": "dumbbell",
+    "secondaryMuscles": ["forearms"]
+  },
+  {
+    "id": "0032",
+    "name": "hammer curl",
+    "bodyPart": "upper arms",
+    "target": "biceps",
+    "equipment": "dumbbell",
+    "secondaryMuscles": ["forearms"]
+  },
+  {
+    "id": "0033",
+    "name": "preacher curl",
+    "bodyPart": "upper arms",
+    "target": "biceps",
+    "equipment": "ez barbell",
+    "secondaryMuscles": ["forearms"]
+  },
+  {
+    "id": "0034",
+    "name": "cable curl",
+    "bodyPart": "upper arms",
+    "target": "biceps",
+    "equipment": "cable",
+    "secondaryMuscles": ["forearms"]
+  },
+  {
+    "id": "0040",
+    "name": "tricep pushdown",
+    "bodyPart": "upper arms",
+    "target": "triceps",
+    "equipment": "cable",
+    "secondaryMuscles": []
+  },
+  {
+    "id": "0041",
+    "name": "overhead tricep extension",
+    "bodyPart": "upper arms",
+    "target": "triceps",
+    "equipment": "dumbbell",
+    "secondaryMuscles": []
+  },
+  {
+    "id": "0042",
+    "name": "skull crusher",
+    "bodyPart": "upper arms",
+    "target": "triceps",
+    "equipment": "ez barbell",
+    "secondaryMuscles": []
+  },
+  {
+    "id": "0043",
+    "name": "close grip bench press",
+    "bodyPart": "upper arms",
+    "target": "triceps",
+    "equipment": "barbell",
+    "secondaryMuscles": ["pectorals", "delts"]
+  },
+  {
+    "id": "0044",
+    "name": "tricep dip",
+    "bodyPart": "upper arms",
+    "target": "triceps",
+    "equipment": "body weight",
+    "secondaryMuscles": ["pectorals", "delts"]
+  },
+  {
+    "id": "0050",
+    "name": "squat",
+    "bodyPart": "upper legs",
+    "target": "quads",
+    "equipment": "barbell",
+    "secondaryMuscles": ["glutes", "hamstrings", "abs"]
+  },
+  {
+    "id": "0051",
+    "name": "front squat",
+    "bodyPart": "upper legs",
+    "target": "quads",
+    "equipment": "barbell",
+    "secondaryMuscles": ["glutes", "abs"]
+  },
+  {
+    "id": "0052",
+    "name": "goblet squat",
+    "bodyPart": "upper legs",
+    "target": "quads",
+    "equipment": "dumbbell",
+    "secondaryMuscles": ["glutes", "abs"]
+  },
+  {
+    "id": "0053",
+    "name": "leg press",
+    "bodyPart": "upper legs",
+    "target": "quads",
+    "equipment": "leverage machine",
+    "secondaryMuscles": ["glutes", "hamstrings"]
+  },
+  {
+    "id": "0054",
+    "name": "leg extension",
+    "bodyPart": "upper legs",
+    "target": "quads",
+    "equipment": "leverage machine",
+    "secondaryMuscles": []
+  },
+  {
+    "id": "0055",
+    "name": "lunge",
+    "bodyPart": "upper legs",
+    "target": "quads",
+    "equipment": "body weight",
+    "secondaryMuscles": ["glutes", "hamstrings"]
+  },
+  {
+    "id": "0056",
+    "name": "bulgarian split squat",
+    "bodyPart": "upper legs",
+    "target": "quads",
+    "equipment": "dumbbell",
+    "secondaryMuscles": ["glutes", "hamstrings"]
+  },
+  {
+    "id": "0060",
+    "name": "leg curl",
+    "bodyPart": "upper legs",
+    "target": "hamstrings",
+    "equipment": "leverage machine",
+    "secondaryMuscles": ["calves"]
+  },
+  {
+    "id": "0061",
+    "name": "stiff leg deadlift",
+    "bodyPart": "upper legs",
+    "target": "hamstrings",
+    "equipment": "barbell",
+    "secondaryMuscles": ["glutes", "spine"]
+  },
+  {
+    "id": "0062",
+    "name": "good morning",
+    "bodyPart": "upper legs",
+    "target": "hamstrings",
+    "equipment": "barbell",
+    "secondaryMuscles": ["glutes", "spine"]
+  },
+  {
+    "id": "0070",
+    "name": "hip thrust",
+    "bodyPart": "upper legs",
+    "target": "glutes",
+    "equipment": "barbell",
+    "secondaryMuscles": ["hamstrings"]
+  },
+  {
+    "id": "0071",
+    "name": "glute bridge",
+    "bodyPart": "upper legs",
+    "target": "glutes",
+    "equipment": "body weight",
+    "secondaryMuscles": ["hamstrings"]
+  },
+  {
+    "id": "0072",
+    "name": "cable kickback",
+    "bodyPart": "upper legs",
+    "target": "glutes",
+    "equipment": "cable",
+    "secondaryMuscles": ["hamstrings"]
+  },
+  {
+    "id": "0080",
+    "name": "calf raise",
+    "bodyPart": "lower legs",
+    "target": "calves",
+    "equipment": "leverage machine",
+    "secondaryMuscles": []
+  },
+  {
+    "id": "0081",
+    "name": "seated calf raise",
+    "bodyPart": "lower legs",
+    "target": "calves",
+    "equipment": "leverage machine",
+    "secondaryMuscles": []
+  },
+  {
+    "id": "0082",
+    "name": "standing calf raise",
+    "bodyPart": "lower legs",
+    "target": "calves",
+    "equipment": "body weight",
+    "secondaryMuscles": []
+  },
+  {
+    "id": "0090",
+    "name": "crunch",
+    "bodyPart": "waist",
+    "target": "abs",
+    "equipment": "body weight",
+    "secondaryMuscles": []
+  },
+  {
+    "id": "0091",
+    "name": "plank",
+    "bodyPart": "waist",
+    "target": "abs",
+    "equipment": "body weight",
+    "secondaryMuscles": ["glutes", "spine"]
+  },
+  {
+    "id": "0092",
+    "name": "leg raise",
+    "bodyPart": "waist",
+    "target": "abs",
+    "equipment": "body weight",
+    "secondaryMuscles": []
+  },
+  {
+    "id": "0093",
+    "name": "cable crunch",
+    "bodyPart": "waist",
+    "target": "abs",
+    "equipment": "cable",
+    "secondaryMuscles": []
+  },
+  {
+    "id": "0094",
+    "name": "ab wheel rollout",
+    "bodyPart": "waist",
+    "target": "abs",
+    "equipment": "wheel roller",
+    "secondaryMuscles": ["spine", "delts"]
+  },
+  {
+    "id": "0095",
+    "name": "russian twist",
+    "bodyPart": "waist",
+    "target": "abs",
+    "equipment": "body weight",
+    "secondaryMuscles": ["serratus anterior"]
+  },
+  {
+    "id": "0100",
+    "name": "shrug",
+    "bodyPart": "back",
+    "target": "traps",
+    "equipment": "barbell",
+    "secondaryMuscles": []
+  },
+  {
+    "id": "0101",
+    "name": "dumbbell shrug",
+    "bodyPart": "back",
+    "target": "traps",
+    "equipment": "dumbbell",
+    "secondaryMuscles": []
+  },
+  {
+    "id": "0110",
+    "name": "wrist curl",
+    "bodyPart": "lower arms",
+    "target": "forearms",
+    "equipment": "barbell",
+    "secondaryMuscles": []
+  },
+  {
+    "id": "0111",
+    "name": "reverse wrist curl",
+    "bodyPart": "lower arms",
+    "target": "forearms",
+    "equipment": "barbell",
+    "secondaryMuscles": []
+  },
+  {
+    "id": "0112",
+    "name": "farmer's walk",
+    "bodyPart": "lower arms",
+    "target": "forearms",
+    "equipment": "dumbbell",
+    "secondaryMuscles": ["traps", "abs"]
+  },
+  {
+    "id": "0120",
+    "name": "hip adduction",
+    "bodyPart": "upper legs",
+    "target": "adductors",
+    "equipment": "leverage machine",
+    "secondaryMuscles": []
+  },
+  {
+    "id": "0121",
+    "name": "hip abduction",
+    "bodyPart": "upper legs",
+    "target": "abductors",
+    "equipment": "leverage machine",
+    "secondaryMuscles": []
+  }
+]

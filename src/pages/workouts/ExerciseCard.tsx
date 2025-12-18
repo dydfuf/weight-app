@@ -33,8 +33,11 @@ export function ExerciseCard({ exercise, date }: ExerciseCardProps) {
 
   // Fetch previous sets for this exercise
   const { data: previousSetsData = [] } = usePreviousExerciseSets(
-    exercise.name,
-    date
+    {
+      catalogExerciseId: exercise.catalogExerciseId,
+      exerciseName: exercise.name,
+      beforeDate: date,
+    }
   );
 
   // Convert to simple { weight, reps } array

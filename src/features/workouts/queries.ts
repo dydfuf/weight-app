@@ -34,17 +34,18 @@ export function useWorkoutSessionsByDateRange(
 /**
  * Fetches the most recent sets for an exercise by name (before given date).
  * Used to show "previous" column in workout tracking.
- * @param exerciseName - Exercise name to search for
- * @param beforeDate - Only look at dates before this date (YYYY-MM-DD)
+ * Prefers catalogExerciseId matching when available, with name-based fallback.
  */
 export function usePreviousExerciseSets(
-  exerciseName: string,
-  beforeDate: string
+  args: {
+    catalogExerciseId?: string;
+    exerciseName: string;
+    beforeDate: string;
+  }
 ) {
   return useQuery({
-    queryKey: workoutKeys.previousSets(exerciseName, beforeDate),
-    queryFn: () =>
-      workoutRepository.getPreviousSetsForExercise(exerciseName, beforeDate),
-    enabled: !!exerciseName,
+    queryKey: workoutKeys.previousSets(args),
+    queryFn: () => workoutRepository.getPreviousSetsForExercise(args),
+    enabled: !!args.exerciseName,
   });
 }

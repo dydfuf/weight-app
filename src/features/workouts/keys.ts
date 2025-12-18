@@ -13,6 +13,16 @@ export const workoutKeys = {
     ["workouts", "sessionRange", startDate, endDate] as const,
 
   /** Key for previous sets of an exercise */
-  previousSets: (exerciseName: string, beforeDate: string) =>
-    ["workouts", "previousSets", exerciseName, beforeDate] as const,
+  previousSets: (args: {
+    catalogExerciseId?: string;
+    exerciseName: string;
+    beforeDate: string;
+  }) =>
+    [
+      "workouts",
+      "previousSets",
+      args.catalogExerciseId ?? null,
+      args.exerciseName,
+      args.beforeDate,
+    ] as const,
 };

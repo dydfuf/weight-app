@@ -37,10 +37,13 @@ export interface WorkoutRepository {
     startDate: string,
     endDate: string
   ): Promise<WorkoutSession[]>;
-  /** Get the most recent sets for an exercise by name (before given date) */
+  /** Get the most recent sets for an exercise (before given date). */
   getPreviousSetsForExercise(
-    exerciseName: string,
-    beforeDate: string
+    args: {
+      catalogExerciseId?: string;
+      exerciseName: string;
+      beforeDate: string;
+    }
   ): Promise<WorkoutSet[]>;
   ensureSession(date: string): Promise<WorkoutSession>;
   addExercise(input: WorkoutExerciseInput): Promise<WorkoutExercise>;
@@ -120,16 +123,32 @@ export const workoutRepository: WorkoutRepository = {
   },
 
   async getPreviousSetsForExercise(
-    exerciseName: string,
-    beforeDate: string
+    args: {
+      catalogExerciseId?: string;
+      exerciseName: string;
+      beforeDate: string;
+    }
   ): Promise<WorkoutSet[]> {
     const db = await getDB();
 
-    // Get all exercises with the given name
+    const { catalogExerciseId, exerciseName, beforeDate } = args;
+
+    // Get all exercises and find the most recent matching entry
     const allExercises = await db.getAll("workoutExercises");
-    const matchingExercises = allExercises
-      .filter((ex) => ex.name === exerciseName && ex.date < beforeDate)
-      .sort((a, b) => b.date.localeCompare(a.date)); // Most recent first
+    let matchingExercises = catalogExerciseId
+      ? allExercises.filter(
+          (ex) => ex.catalogExerciseId === catalogExerciseId && ex.date < beforeDate
+        )
+      : [];
+
+    // Fallback for older/manual entries (no catalog id available)
+    if (!catalogExerciseId || matchingExercises.length === 0) {
+      matchingExercises = allExercises.filter(
+        (ex) => ex.name === exerciseName && ex.date < beforeDate
+      );
+    }
+
+    matchingExercises.sort((a, b) => b.date.localeCompare(a.date)); // Most recent first
 
     if (matchingExercises.length === 0) {
       return [];
@@ -202,6 +221,7 @@ export const workoutRepository: WorkoutRepository = {
       sessionId: session.id,
       date: input.date,
       name: input.name,
+      catalogExerciseId: input.catalogExerciseId,
       createdAt: now,
       updatedAt: now,
     };

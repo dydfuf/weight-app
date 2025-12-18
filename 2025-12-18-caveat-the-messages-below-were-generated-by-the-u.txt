@@ -1,0 +1,1195 @@
+                                                                                
+╭─── Claude Code v2.0.72 ──────────────────────────────────────────────────────╮
+│                                                    │ Tips for getting        │
+│                Welcome back 최용열!                │ started                 │
+│                                                    │ Run /init to create a … │
+│                     * ▐▛███▜▌ *                    │ ─────────────────────── │
+│                    * ▝▜█████▛▘ *                   │ Recent activity         │
+│                     *  ▘▘ ▝▝  *                    │ No recent activity      │
+│                                                    │                         │
+│    Opus 4.5 · Claude Pro · dydfuf38@gmail.com's    │                         │
+│    Organization                                    │                         │
+│          ~/Desktop/Development/weight-app          │                         │
+╰──────────────────────────────────────────────────────────────────────────────╯
+                                                                                
+> /ide                                                                          
+  ⎿  Connected to Cursor.                                                       
+                                                                                
+> /model                                                                        
+  ⎿  Set model to opus (claude-opus-4-5-20251101)                               
+                                                                                
+> 현재 프로젝트에서 운동을 등록할때 미리 등록된 운동들을 선택할 수 있게         
+하고싶습니다. 먼저 다른 운동 서비스들 확인하고 어떻게 구현되어있는지            
+                                                                                
+  베스트프랙티스 리서치 하세요                                                  
+                                                                                
+⏺ 운동 서비스들의 운동 선택 기능 베스트 프랙티스를 리서치하겠습니다.            
+                                                                                
+⏺ Web Search("fitness app exercise selection UI UX best practices 2025")        
+  ⎿  Did 1 search in 35s                                                        
+                                                                                
+⏺ Web Search("workout app pre-defined exercise database implementation design") 
+  ⎿  Did 1 search in 24s                                                        
+                                                                                
+⏺ Web Search("Strong app Hevy app exercise picker UI design patterns")          
+  ⎿  Did 1 search in 22s                                                        
+                                                                                
+⏺ Web Search("exercise selection modal search filter muscle group category      
+            fitness app")                                                       
+  ⎿  Did 1 search in 24s                                                        
+                                                                                
+⏺ Web Search("workout tracker exercise list autocomplete recent exercises       
+            favorites feature")                                                 
+  ⎿  Did 1 search in 46s                                                        
+                                                                                
+⏺ 운동 선택 기능 베스트 프랙티스 리서치 결과                                    
+                                                                                
+  1. 운동 데이터베이스 구조                                                     
+                                                                                
+  핵심 엔티티 설계:                                                             
+  - Exercise: name, category, equipment, primaryMuscles, secondaryMuscles,      
+  instructions, images/gifs                                                     
+  - Workout: exercises[], date, duration                                        
+  - UserExercise: 사용자 커스텀 운동 저장                                       
+                                                                                
+  활용 가능한 오픈소스 DB:                                                      
+  - https://github.com/yuhonas/free-exercise-db - 800+ 운동 JSON 데이터         
+  - https://github.com/ExerciseDB/exercisedb-api - 11,000+ 운동, 이미지/GIF 포함
+                                                                                
+  ---                                                                           
+  2. 운동 선택 UI 패턴                                                          
+                                                                                
+  | 패턴            | 설명                     | 사용 앱             |          
+  |-----------------|--------------------------|---------------------|          
+  | 카테고리 필터   | 근육군/장비별 분류       | Hevy, Strong, JEFIT |          
+  | 검색 + 자동완성 | 빠른 운동 검색           | Strong, FitNotes    |          
+  | 최근 운동       | 자주 쓰는 운동 빠른 접근 | Strong, StrengthLog |          
+  | 루틴/템플릿     | 미리 저장된 운동 조합    | FitNotes, Hevy      |          
+  | 3D 인체 모델    | 근육 부위 터치로 선택    | iMuscle 2           |          
+                                                                                
+  ---                                                                           
+  3. 권장 구현 방식                                                             
+                                                                                
+  필터링 옵션:                                                                  
+  - 근육군 (가슴, 등, 어깨, 팔, 다리, 코어)                                     
+  - 장비 (바벨, 덤벨, 케이블, 맨몸)                                             
+  - 난이도 (초급/중급/고급)                                                     
+  - 운동 타입 (컴파운드/아이솔레이션)                                           
+                                                                                
+  UX 베스트 프랙티스:                                                           
+  - 한 화면에 하나의 기능에 집중 (심플한 UI)                                    
+  - 터치 친화적인 큰 버튼                                                       
+  - 운동 이미지/GIF로 시각적 안내                                               
+  - 최근 사용 운동을 상단에 노출                                                
+  - 검색창 + 카테고리 필터 조합                                                 
+                                                                                
+  ---                                                                           
+  4. Hevy/Strong 앱 참고 사항                                                   
+                                                                                
+  Hevy:                                                                         
+  - 파란색 기본 + 회색 계열의 깔끔한 UI                                         
+  - 스와이프 카드 형태의 친화적 디자인                                          
+  - 커스텀 운동 추가 시: 이미지, 이름, 장비, 타겟 근육, 운동 타입 지정          
+  - 남녀 인체 일러스트로 근육 부위 표시                                         
+                                                                                
+  Strong:                                                                       
+  - 미니멀/생산성 중심 레이아웃                                                 
+  - 빠른 무게/세트 입력에 최적화                                                
+  - 정확한 운동 변형 및 템플릿 기능                                             
+                                                                                
+  ---                                                                           
+  5. 추천 구현 플로우                                                           
+                                                                                
+  [운동 추가 버튼]                                                              
+      ↓                                                                         
+  [모달/바텀시트 오픈]                                                          
+      ↓                                                                         
+  [검색바 + 카테고리 탭] (가슴/등/어깨/팔/다리/코어)                            
+      ↓                                                                         
+  [운동 리스트] - 이미지 + 이름 + 타겟 근육                                     
+      ↓                                                                         
+  [운동 선택 → 세트/무게 입력]                                                  
+                                                                                
+  ---                                                                           
+  Sources:                                                                      
+                                                                                
+  - https://www.hevyapp.com/how-we-built-hevy/                                  
+  - https://gymgod.app/blog/strong-vs-hevy                                      
+  - https://stormotion.io/blog/fitness-app-ux/                                  
+  - https://easternpeak.com/blog/fitness-app-design-best-practices/             
+  - https://www.geeksforgeeks.org/dbms/how-to-design-a-database-for-health-and-f
+  itness-tracking-applications/                                                 
+  - https://github.com/yuhonas/free-exercise-db                                 
+  - https://github.com/ExerciseDB/exercisedb-api                                
+                                                                                
+  ---                                                                           
+  현재 프로젝트 구조를 확인하고 구체적인 구현 계획을 세워드릴까요?              
+                                                                                
+> 네 프로젝트 확인하고 구현 계획 세워줘                                         
+                                                                                
+⏺ 현재 프로젝트 구조와 운동 등록 관련 코드를 탐색하겠습니다.                    
+                                                                                
+⏺ 2 Explore agents finished (ctrl+o to expand)                                  
+   ├─ 프로젝트 구조 및 아키텍처 탐색 · 24 tool uses · 41.6k tokens              
+   │  ⎿  Done                                                                   
+   └─ 운동 등록 기능 코드 탐색 · 21 tool uses · 43.5k tokens                    
+      ⎿  Done                                                                   
+                                                                                
+⏺ 프로젝트 구조를 파악했습니다. 현재 운동 추가는 텍스트 입력 방식으로, 미리     
+  정의된 운동 목록이 없습니다.                                                  
+                                                                                
+  구현 계획을 세우기 전에 몇 가지 확인이 필요합니다.                            
+                                                                                
+⏺ User answered Claude's questions:                                             
+  ⎿  · 운동 데이터베이스를 어떻게 구성할까요? → 외부 API 연동                   
+     · 운동 선택 UI를 어떤 방식으로 구현할까요? → 3D 인체 모델                  
+     · 추가로 필요한 기능이 있나요? → 최근 운동 표시, 즐겨찾기, 운동            
+     이미지/GIF                                                                 
+                                                                                
+⏺ 3D 인체 모델은 복잡한 구현이 필요합니다. 계획을 세우기 전에 한 가지 더        
+  확인하겠습니다.                                                               
+                                                                                
+⏺ User answered Claude's questions:                                             
+  ⎿  · 3D 인체 모델을 어떤 방식으로 구현할까요? → SVG 기반 2D 인체도            
+     (Recommended)                                                              
+                                                                                
+⏺ 요구사항이 명확해졌습니다. 이제 구현 계획을 설계하겠습니다.                   
+                                                                                
+⏺ Plan(운동 선택 기능 구현 계획 설계)                                           
+  ⎿  Done (25 tool uses · 56.1k tokens · 4m 13s)                                
+                                                                                
+⏺ 훌륭한 계획이 나왔습니다. 핵심 파일들을 확인하고 최종 계획을 작성하겠습니다.  
+                                                                                
+⏺ Read(src/pages/workouts/AddExerciseDrawer.tsx)                                
+  ⎿  Read 127 lines                                                             
+                                                                                
+⏺ Read(src/data/db.ts)                                                          
+  ⎿  Read 132 lines                                                             
+                                                                                
+⏺ 코드를 확인했습니다. 이제 최종 계획을 작성하겠습니다.                         
+                                                                                
+⏺ Updated plan                                                                  
+  ⎿  /plan to preview                                                           
+                                                                                
+⏺ 계획을 작성했습니다. 주요 내용을 요약하면:                                    
+                                                                                
+  구현 계획 요약                                                                
+                                                                                
+  | 단계 | 내용                                             |                   
+  |------|--------------------------------------------------|                   
+  | 1    | 운동 타입 정의 (Exercise, Favorite, UsageRecord) |                   
+  | 2    | IndexedDB 스키마 v3 확장 (3개 새 store)          |                   
+  | 3    | ExerciseDB API 클라이언트 + Repository           |                   
+  | 4    | React Query hooks (queries, mutations)           |                   
+  | 5    | SVG 인체도 컴포넌트 (react-body-highlighter)     |                   
+  | 6    | 운동 선택 UI 컴포넌트 세트                       |                   
+  | 7    | AddExerciseDrawer 수정 (선택/직접입력 분기)      |                   
+  | 8    | 오프라인 지원 (기본 데이터 번들)                 |                   
+                                                                                
+  새로 생성되는 파일: 14개                                                      
+  수정되는 파일: 2개                                                            
+                                                                                
+  계획을 승인하시면 구현을 시작하겠습니다.                                      
+                                                                                
+⏺ User approved Claude's plan                                                   
+  ⎿  Plan saved to: ~/.claude/plans/vast-gliding-sparkle.md · /plan to edit     
+     운동 선택 기능 구현 계획                                                   
+                                                                                
+     요약                                                                       
+                                                                                
+     운동 등록 시 미리 등록된 운동 목록에서 선택할 수 있는 기능 구현            
+     - 외부 API (ExerciseDB) 연동                                               
+     - SVG 기반 2D 인체도로 근육 부위 선택                                      
+     - 최근 운동, 즐겨찾기, 운동 GIF 지원                                       
+                                                                                
+     ---                                                                        
+     구현 단계                                                                  
+                                                                                
+     1단계: 도메인 및 타입 정의                                                 
+                                                                                
+     새로 생성:                                                                 
+     - src/domain/exercises/types.ts - Exercise, FavoriteExercise,              
+     ExerciseUsageRecord 타입                                                   
+                                                                                
+     interface Exercise {                                                       
+       id: string;                                                              
+       name: string;                                                            
+       bodyPart: string;                                                        
+       target: string;                                                          
+       equipment: string;                                                       
+       gifUrl?: string;                                                         
+       instructions?: string[];                                                 
+       secondaryMuscles?: string[];                                             
+     }                                                                          
+                                                                                
+     2단계: IndexedDB 스키마 확장                                               
+                                                                                
+     수정: src/data/db.ts                                                       
+     - DB_VERSION: 2 → 3                                                        
+     - 새 stores 추가:                                                          
+       - exercises (운동 캐시)                                                  
+       - favoriteExercises (즐겨찾기)                                           
+       - exerciseUsageHistory (최근 운동)                                       
+                                                                                
+     3단계: API 및 Repository 레이어                                            
+                                                                                
+     새로 생성:                                                                 
+     - src/data/api/exerciseApi.ts - ExerciseDB API 클라이언트                  
+     - src/data/repositories/exerciseRepository.ts - 운동 데이터 Repository     
+                                                                                
+     환경변수 (.env.local):                                                     
+     VITE_RAPIDAPI_KEY=your_key                                                 
+     VITE_RAPIDAPI_HOST=exercisedb.p.rapidapi.com                               
+                                                                                
+     4단계: React Query Hooks                                                   
+                                                                                
+     새로 생성:                                                                 
+     - src/features/exercises/keys.ts                                           
+     - src/features/exercises/queries.ts - useExercises, useFavorites,          
+     useRecentExercises                                                         
+     - src/features/exercises/mutations.ts - useFavoriteExercise,               
+     useRecordUsage                                                             
+                                                                                
+     5단계: SVG 인체도 컴포넌트                                                 
+                                                                                
+     패키지 설치:                                                               
+     pnpm add react-body-highlighter                                            
+                                                                                
+     새로 생성:                                                                 
+     - src/components/exercise-selector/MuscleSelector.tsx - 전면/후면          
+     인체도                                                                     
+                                                                                
+     6단계: 운동 선택 UI 컴포넌트                                               
+                                                                                
+     새로 생성:                                                                 
+     - src/components/exercise-selector/ExerciseSelector.tsx - 메인 컴포넌트    
+     - src/components/exercise-selector/ExerciseList.tsx - 운동 목록            
+     - src/components/exercise-selector/ExerciseCard.tsx - 개별 카드 (GIF,      
+     즐겨찾기)                                                                  
+     - src/components/exercise-selector/ExerciseSearchInput.tsx - 검색          
+     - src/pages/workouts/SelectExerciseDrawer.tsx - 풀스크린 선택 드로워       
+                                                                                
+     7단계: 기존 컴포넌트 수정                                                  
+                                                                                
+     수정: src/pages/workouts/AddExerciseDrawer.tsx                             
+     - "운동 선택" 버튼 추가 → SelectExerciseDrawer 열기                        
+     - 기존 텍스트 입력은 "직접 입력" 옵션으로 유지                             
+                                                                                
+     8단계: 오프라인 지원                                                       
+                                                                                
+     새로 생성:                                                                 
+     - src/data/seed/exercises.json - 기본 운동 데이터 (Free Exercise DB에서    
+      추출)                                                                     
+     - src/data/seed/seedExercises.ts - 초기 데이터 로드                        
+                                                                                
+     ---                                                                        
+     파일 구조                                                                  
+                                                                                
+     src/                                                                       
+     ├── domain/exercises/                                                      
+     │   └── types.ts                    # [NEW]                                
+     ├── data/                                                                  
+     │   ├── db.ts                       # [MODIFY] v3, 새 stores               
+     │   ├── api/                                                               
+     │   │   └── exerciseApi.ts          # [NEW]                                
+     │   ├── repositories/                                                      
+     │   │   └── exerciseRepository.ts   # [NEW]                                
+     │   └── seed/                                                              
+     │       ├── exercises.json          # [NEW]                                
+     │       └── seedExercises.ts        # [NEW]                                
+     ├── features/exercises/                                                    
+     │   ├── keys.ts                     # [NEW]                                
+     │   ├── queries.ts                  # [NEW]                                
+     │   └── mutations.ts                # [NEW]                                
+     ├── components/exercise-selector/                                          
+     │   ├── MuscleSelector.tsx          # [NEW]                                
+     │   ├── ExerciseSelector.tsx        # [NEW]                                
+     │   ├── ExerciseList.tsx            # [NEW]                                
+     │   ├── ExerciseCard.tsx            # [NEW]                                
+     │   ├── ExerciseSearchInput.tsx     # [NEW]                                
+     │   └── index.ts                    # [NEW]                                
+     └── pages/workouts/                                                        
+         ├── AddExerciseDrawer.tsx       # [MODIFY]                             
+         └── SelectExerciseDrawer.tsx    # [NEW]                                
+                                                                                
+     ---                                                                        
+     UI 플로우                                                                  
+                                                                                
+     [FAB 클릭] → AddExerciseDrawer                                             
+                     ├─ [운동 선택] → SelectExerciseDrawer (풀스크린)           
+                     │                 ├─ 탭: 최근 | 즐겨찾기 | 전체 |          
+     인체도                                                                     
+                     │                 ├─ 검색창                                
+                     │                 ├─ 인체도 (MuscleSelector)               
+                     │                 └─ 운동 목록 (ExerciseList)              
+                     │                     └─ ExerciseCard (GIF, 즐겨찾기       
+     버튼)                                                                      
+                     │                         └─ [선택] → 운동 추가            
+                     │                                                          
+                     └─ [직접 입력] → 기존 텍스트 입력 방식                     
+                                                                                
+     ---                                                                        
+     주요 수정 파일 (절대 경로)                                                 
+                                                                                
+     1. /Users/raon/Desktop/Development/weight-app/src/data/db.ts               
+     2. /Users/raon/Desktop/Development/weight-app/src/pages/workouts/AddExe    
+     rciseDrawer.tsx                                                            
+                                                                                
+     ---                                                                        
+     기술적 고려사항                                                            
+                                                                                
+     - 캐싱: React Query (staleTime: 1h) + IndexedDB (영구)                     
+     - 오프라인: 기본 운동 데이터 번들 + API 실패 시 캐시 fallback              
+     - 성능: 이미지 lazy loading, 검색 debounce (300ms)                         
+     - 한국어: 주요 운동 100개 한국어 매핑 테이블 (선택적)                      
+                                                                                
+                                                                                
+⏺ 계획이 승인되었습니다. 구현을 시작하겠습니다.                                 
+                                                                                
+⏺ Bash(mkdir -p /Users/raon/Desktop/Development/weight-app/src/domain/exercises)
+  ⎿  (No content)                                                               
+                                                                                
+⏺ Write(src/domain/exercises/types.ts)                                          
+  ⎿  Wrote 125 lines to src/domain/exercises/types.ts                           
+       1 /**                                                                    
+       2  * Body part categories for exercises                                  
+       3  */                                                                    
+       4 export type BodyPart =                                                 
+       5   | "back"                                                             
+       6   | "cardio"                                                           
+       7   | "chest"                                                            
+       8   | "lower arms"                                                       
+       9   | "lower legs"                                                       
+      10   | "neck"                                                             
+     … +115 lines (ctrl+o to expand)                                            
+                                                                                
+⏺ Update(src/data/db.ts)                                                        
+  ⎿  Added 9 lines, removed 1 line                                              
+       8  } from "@/domain/workouts/types";                                     
+       9  import type { MetricEntry, MetricType } from "@/domain/metrics/       
+          types";                                                               
+      10  import type { Goals } from "@/domain/goals/types";                    
+      11 +import type {                                                         
+      12 +  Exercise,                                                           
+      13 +  FavoriteExercise,                                                   
+      14 +  ExerciseUsageRecord,                                                
+      15 +  BodyPart,                                                           
+      16 +  MuscleTarget,                                                       
+      17 +  Equipment,                                                          
+      18 +} from "@/domain/exercises/types";                                    
+      19                                                                        
+      20  const DB_NAME = "weight-app";                                         
+      13 -const DB_VERSION = 2;                                                 
+      21 +const DB_VERSION = 3;                                                 
+      22                                                                        
+      23  /**                                                                   
+      24   * Database schema for type-safe IndexedDB operations.                
+                                                                                
+⏺ Update(src/data/db.ts)                                                        
+  ⎿  Added 28 lines                                                             
+       74      key: string;                                                     
+       75      value: Goals;                                                    
+       76    };                                                                 
+       77 +                                                                     
+       78 +  exercises: {                                                       
+       79 +    key: string;                                                     
+       80 +    value: Exercise;                                                 
+       81 +    indexes: {                                                       
+       82 +      "by-bodyPart": BodyPart;                                       
+       83 +      "by-target": MuscleTarget;                                     
+       84 +      "by-equipment": Equipment;                                     
+       85 +      "by-name": string;                                             
+       86 +    };                                                               
+       87 +  };                                                                 
+       88 +                                                                     
+       89 +  favoriteExercises: {                                               
+       90 +    key: string;                                                     
+       91 +    value: FavoriteExercise;                                         
+       92 +    indexes: {                                                       
+       93 +      "by-createdAt": number;                                        
+       94 +    };                                                               
+       95 +  };                                                                 
+       96 +                                                                     
+       97 +  exerciseUsageHistory: {                                            
+       98 +    key: string;                                                     
+       99 +    value: ExerciseUsageRecord;                                      
+      100 +    indexes: {                                                       
+      101 +      "by-exerciseId": string;                                       
+      102 +      "by-usedAt": number;                                           
+      103 +    };                                                               
+      104 +  };                                                                 
+      105  }                                                                    
+      106                                                                       
+      107  let dbPromise: Promise<IDBPDatabase<WeightAppDB>> | null = nul       
+           l;                                                                   
+                                                                                
+⏺ Update(src/data/db.ts)                                                        
+  ⎿  Added 26 lines                                                             
+      160          if (!db.objectStoreNames.contains("goals")) {                
+      161            db.createObjectStore("goals", { keyPath: "id" });          
+      162          }                                                            
+      163 +                                                                     
+      164 +        // Exercises: cached exercise database                       
+      165 +        if (!db.objectStoreNames.contains("exercises")) {            
+      166 +          const store = db.createObjectStore("exercises", { ke       
+          +yPath: "id" });                                                      
+      167 +          store.createIndex("by-bodyPart", "bodyPart");              
+      168 +          store.createIndex("by-target", "target");                  
+      169 +          store.createIndex("by-equipment", "equipment");            
+      170 +          store.createIndex("by-name", "name");                      
+      171 +        }                                                            
+      172 +                                                                     
+      173 +        // Favorite exercises                                        
+      174 +        if (!db.objectStoreNames.contains("favoriteExercises")       
+          +) {                                                                  
+      175 +          const store = db.createObjectStore("favoriteExercise       
+          +s", {                                                                
+      176 +            keyPath: "exerciseId",                                   
+      177 +          });                                                        
+      178 +          store.createIndex("by-createdAt", "createdAt");            
+      179 +        }                                                            
+      180 +                                                                     
+      181 +        // Exercise usage history (for recent exercises)             
+      182 +        if (!db.objectStoreNames.contains("exerciseUsageHistor       
+          +y")) {                                                               
+      183 +          const store = db.createObjectStore("exerciseUsageHis       
+          +tory", {                                                             
+      184 +            keyPath: "id",                                           
+      185 +          });                                                        
+      186 +          store.createIndex("by-exerciseId", "exerciseId");          
+      187 +          store.createIndex("by-usedAt", "usedAt");                  
+      188 +        }                                                            
+      189        },                                                             
+      190      });                                                              
+      191    }                                                                  
+                                                                                
+⏺ Bash(mkdir -p /Users/raon/Desktop/Development/weight-app/src/data/api)        
+  ⎿  (No content)                                                               
+                                                                                
+⏺ Write(src/data/api/exerciseApi.ts)                                            
+  ⎿  Wrote 271 lines to src/data/api/exerciseApi.ts                             
+      1 import type {                                                           
+      2   Exercise,                                                             
+      3   BodyPart,                                                             
+      4   MuscleTarget,                                                         
+      5   Equipment,                                                            
+      6 } from "@/domain/exercises/types";                                      
+      7 const RAPIDAPI_KEY = import.meta.env.VITE_RAPIDAPI_KEY as string        
+        | undefined;                                                            
+      8 const RAPIDAPI_HOST =                                                   
+      9   (import.meta.env.VITE_RAPIDAPI_HOST as string) || "exercisedb.p       
+        .rapidapi.com";                                                         
+     … +261 lines (ctrl+o to expand)                                            
+                                                                                
+⏺ Write(src/data/repositories/exerciseRepository.ts)                            
+  ⎿  Wrote 207 lines to src/data/repositories/exerciseRepository.ts             
+       1 import { getDB } from "@/data/db";                                     
+       2 import type {                                                          
+       3   Exercise,                                                            
+       4   ExerciseFilters,                                                     
+       5   FavoriteExercise,                                                    
+       6   FavoriteExerciseInput,                                               
+       7   ExerciseUsageRecord,                                                 
+       8   ExerciseUsageInput,                                                  
+       9   BodyPart,                                                            
+      10   MuscleTarget,                                                        
+     … +197 lines (ctrl+o to expand)                                            
+                                                                                
+⏺ Bash(mkdir -p                                                                 
+      /Users/raon/Desktop/Development/weight-app/src/features/exercises)        
+  ⎿  (No content)                                                               
+                                                                                
+⏺ Write(src/features/exercises/keys.ts)                                         
+  ⎿  Wrote 14 lines to src/features/exercises/keys.ts                           
+      1 import type { ExerciseFilters } from "@/domain/exercises/types";        
+      2 export const exerciseKeys = {                                           
+      3   all: ["exercises"] as const,                                          
+      4   lists: () => [...exerciseKeys.all, "list"] as const,                  
+      5   list: (filters: ExerciseFilters) =>                                   
+      6     [...exerciseKeys.lists(), filters] as const,                        
+      7   details: () => [...exerciseKeys.all, "detail"] as const,              
+      8   detail: (id: string) => [...exerciseKeys.details(), id] as cons       
+        t,                                                                      
+      9   favorites: () => [...exerciseKeys.all, "favorites"] as const,         
+     … +4 lines (ctrl+o to expand)                                              
+                                                                                
+⏺ Write(src/features/exercises/queries.ts)                                      
+  ⎿  Wrote 162 lines to src/features/exercises/queries.ts                       
+      1 import { useQuery } from "@tanstack/react-query";                       
+      2 import { exerciseRepository } from "@/data/repositories/exerciseR       
+        epository";                                                             
+      3 import {                                                                
+      4   isApiEnabled,                                                         
+      5   fetchExercisesByBodyPart,                                             
+      6   fetchExercisesByTarget,                                               
+      7   searchExercisesByName,                                                
+      8 } from "@/data/api/exerciseApi";                                        
+      9 import type { ExerciseFilters, BodyPart, MuscleTarget } from "@/d       
+        omain/exercises/types";                                                 
+     … +152 lines (ctrl+o to expand)                                            
+                                                                                
+⏺ Write(src/features/exercises/mutations.ts)                                    
+  ⎿  Wrote 125 lines to src/features/exercises/mutations.ts                     
+      1 import { useMutation, useQueryClient } from "@tanstack/react-quer       
+        y";                                                                     
+      2 import { exerciseRepository } from "@/data/repositories/exerciseR       
+        epository";                                                             
+      3 import type {                                                           
+      4   FavoriteExerciseInput,                                                
+      5   ExerciseUsageInput,                                                   
+      6   Exercise,                                                             
+      7 } from "@/domain/exercises/types";                                      
+      8 import { exerciseKeys } from "./keys";                                  
+     … +115 lines (ctrl+o to expand)                                            
+                                                                                
+⏺ Bash(pnpm add react-body-highlighter) timeout: 1m 0s                          
+  ⎿  Progress: resolved 0, reused 1, downloaded 0, added 0                      
+     Progress: resolved 717, reused 632, downloaded 1, added 0                  
+     Progress: resolved 741, reused 656, downloaded 1, added 0                  
+     … +13 lines (ctrl+o to expand)                                             
+                                                                                
+⏺ Bash(mkdir -p /Users/raon/Desktop/Development/weight-app/src/components/exerci
+      se-selector)                                                              
+  ⎿  (No content)                                                               
+                                                                                
+⏺ Write(src/components/exercise-selector/MuscleSelector.tsx)                    
+  ⎿  Wrote 187 lines to src/components/exercise-selector/MuscleSelector.tsx     
+      1 import { useState } from "react";                                       
+      2 import Model, { type IExerciseData } from "react-body-highlighter       
+        ";                                                                      
+      3 import { Button } from "@/components/ui/button";                        
+      4 import { cn } from "@/lib/utils";                                       
+      5 import type { MuscleTarget } from "@/domain/exercises/types";           
+      6 /**                                                                     
+      7  * Mapping from react-body-highlighter muscle names to ExerciseDB       
+         target names                                                           
+      8  */                                                                     
+     … +177 lines (ctrl+o to expand)                                            
+                                                                                
+⏺ Write(src/components/exercise-selector/ExerciseSearchInput.tsx)               
+  ⎿  Wrote 44 lines to                                                          
+     src/components/exercise-selector/ExerciseSearchInput.tsx                   
+      1 import { Search, X } from "lucide-react";                               
+      2 import { Input } from "@/components/ui/input";                          
+      3 import { cn } from "@/lib/utils";                                       
+      4 interface ExerciseSearchInputProps {                                    
+      5   value: string;                                                        
+      6   onChange: (value: string) => void;                                    
+      7   placeholder?: string;                                                 
+      8   className?: string;                                                   
+     … +34 lines (ctrl+o to expand)                                             
+                                                                                
+⏺ Write(src/components/exercise-selector/ExerciseCard.tsx)                      
+  ⎿  Wrote 142 lines to src/components/exercise-selector/ExerciseCard.tsx       
+      1 import { Star, Dumbbell } from "lucide-react";                          
+      2 import { cn } from "@/lib/utils";                                       
+      3 import type { Exercise } from "@/domain/exercises/types";               
+      4 import { useIsFavorite } from "@/features/exercises/queries";           
+      5 import { useToggleFavorite } from "@/features/exercises/mutations       
+        ";                                                                      
+      6 /**                                                                     
+      7  * Korean labels for body parts                                         
+      8  */                                                                     
+     … +132 lines (ctrl+o to expand)                                            
+                                                                                
+⏺ Write(src/components/exercise-selector/ExerciseList.tsx)                      
+  ⎿  Wrote 56 lines to src/components/exercise-selector/ExerciseList.tsx        
+      1 import { Loader2, SearchX } from "lucide-react";                        
+      2 import { cn } from "@/lib/utils";                                       
+      3 import type { Exercise } from "@/domain/exercises/types";               
+      4 import { ExerciseCard } from "./ExerciseCard";                          
+      5 interface ExerciseListProps {                                           
+      6   exercises: Exercise[];                                                
+      7   isLoading?: boolean;                                                  
+      8   onSelect: (exercise: Exercise) => void;                               
+     … +46 lines (ctrl+o to expand)                                             
+                                                                                
+⏺ Write(src/components/exercise-selector/index.ts)                              
+  ⎿  Wrote 5 lines to src/components/exercise-selector/index.ts                 
+      1 export { MuscleSelector, TARGET_LABELS } from "./MuscleSelector";       
+      2 export { ExerciseSearchInput } from "./ExerciseSearchInput";            
+      3 export { ExerciseCard, BODY_PART_LABELS, EQUIPMENT_LABELS } from        
+        "./ExerciseCard";                                                       
+      4 export { ExerciseList } from "./ExerciseList";                          
+                                                                                
+⏺ Write(src/pages/workouts/SelectExerciseDrawer.tsx)                            
+  ⎿  Wrote 208 lines to src/pages/workouts/SelectExerciseDrawer.tsx             
+      1 import { useState, useMemo, useEffect } from "react";                   
+      2 import { Clock, Star, List, User } from "lucide-react";                 
+      3 import {                                                                
+      4   Drawer,                                                               
+      5   DrawerContent,                                                        
+      6   DrawerHeader,                                                         
+      7   DrawerTitle,                                                          
+      8 } from "@/components/ui/drawer";                                        
+      9 import { Button } from "@/components/ui/button";                        
+     … +198 lines (ctrl+o to expand)                                            
+                                                                                
+⏺ Write(src/pages/workouts/AddExerciseDrawer.tsx)                               
+  ⎿  Added 163 lines, removed 55 lines                                          
+      1  import { useState } from "react";                                      
+      2 -import { Dumbbell } from "lucide-react";                               
+      2 +import { Dumbbell, Search, PenLine } from "lucide-react";              
+      3                                                                         
+      4  import { Button } from "@/components/ui/button";                       
+      5  import {                                                               
+     ...                                                                        
+      15  import { Field, FieldLabel } from "@/components/ui/field";            
+      16  import { Input } from "@/components/ui/input";                        
+      17  import { useAddWorkoutExercise } from "@/features/workouts/muta       
+          tions";                                                               
+      18 +import { useRecordExerciseUsage } from "@/features/exercises/mu       
+         +tations";                                                             
+      19 +import { SelectExerciseDrawer } from "./SelectExerciseDrawer";        
+      20 +import type { Exercise } from "@/domain/exercises/types";             
+      21                                                                        
+      22 +type Mode = "select" | "manual" | null;                               
+      23 +                                                                      
+      24  interface AddExerciseDrawerProps {                                    
+      25    date: string;                                                       
+      26    /** Show empty state trigger when true (for inline empty stat       
+          e button) */                                                          
+     ...                                                                        
+      38    onOpenChange: controlledOnOpenChange,                               
+      39  }: AddExerciseDrawerProps) {                                          
+      40    const [internalOpen, setInternalOpen] = useState(false);            
+      41 +  const [mode, setMode] = useState<Mode>(null);                       
+      42    const [exerciseName, setExerciseName] = useState("");               
+      43 +  const [selectDrawerOpen, setSelectDrawerOpen] = useState(fals       
+         +e);                                                                   
+      44                                                                        
+      45    const addExercise = useAddWorkoutExercise();                        
+      46 +  const recordUsage = useRecordExerciseUsage();                       
+      47                                                                        
+      48    // Support both controlled and uncontrolled modes                   
+      49    const isControlled = controlledOpen !== undefined;                  
+     ...                                                                        
+      55    const handleOpenChange = (isOpen: boolean) => {                     
+      56      setOpen(isOpen);                                                  
+      57      if (!isOpen) {                                                    
+      58 +      // Reset state when closing                                     
+      59        setExerciseName("");                                            
+      60 +      setMode(null);                                                  
+      61      }                                                                 
+      62    };                                                                  
+      63                                                                        
+     ...                                                                        
+       70        {                                                              
+       71          onSuccess: () => {                                           
+       72            setExerciseName("");                                       
+       73 +          setMode(null);                                             
+       74            setOpen(false);                                            
+       75          },                                                           
+       76        }                                                              
+       77      );                                                               
+       78    };                                                                 
+       79                                                                       
+       80 +  const handleExerciseSelect = (exercise: Exercise) => {             
+       81 +    // Add the exercise to workout                                   
+       82 +    addExercise.mutate(                                              
+       83 +      { date, name: exercise.name },                                 
+       84 +      {                                                              
+       85 +        onSuccess: () => {                                           
+       86 +          // Record usage for "recent exercises" feature             
+       87 +          recordUsage.mutate({                                       
+       88 +            exerciseId: exercise.id,                                 
+       89 +            exerciseName: exercise.name,                             
+       90 +          });                                                        
+       91 +          setSelectDrawerOpen(false);                                
+       92 +          setMode(null);                                             
+       93 +          setOpen(false);                                            
+       94 +        },                                                           
+       95 +      }                                                              
+       96 +    );                                                               
+       97 +  };                                                                 
+       98 +                                                                     
+       99 +  const handleSelectClick = () => {                                  
+      100 +    setSelectDrawerOpen(true);                                       
+      101 +  };                                                                 
+      102 +                                                                     
+      103 +  const handleManualClick = () => {                                  
+      104 +    setMode("manual");                                               
+      105 +  };                                                                 
+      106 +                                                                     
+      107 +  const handleBackToSelection = () => {                              
+      108 +    setMode(null);                                                   
+      109 +    setExerciseName("");                                             
+      110 +  };                                                                 
+      111 +                                                                     
+      112    return (                                                           
+       70 -    <Drawer open={open} onOpenChange={handleOpenChange}>             
+       71 -      {/* Only show trigger for empty state inline button */}        
+       72 -      {showEmptyTrigger && (                                         
+       73 -        <DrawerTrigger asChild>                                      
+       74 -          <button                                                    
+       75 -            type="button"                                            
+       76 -            className="group flex w-full flex-col items-center       
+          - justify-center gap-3 rounded-xl border-2 border-dashed border       
+          --muted-foreground/30 p-6 text-muted-foreground transition-all        
+          -hover:border-primary/50 hover:text-primary"                          
+       77 -          >                                                          
+       78 -            <div className="flex size-12 items-center justify-       
+          -center rounded-full bg-muted transition-colors group-hover:bg-       
+          -primary group-hover:text-primary-foreground">                        
+       79 -              <Dumbbell className="h-6 w-6" />                       
+      113 +    <>                                                               
+      114 +      <Drawer open={open} onOpenChange={handleOpenChange}>           
+      115 +        {/* Only show trigger for empty state inline button */       
+          +}                                                                    
+      116 +        {showEmptyTrigger && (                                       
+      117 +          <DrawerTrigger asChild>                                    
+      118 +            <button                                                  
+      119 +              type="button"                                          
+      120 +              className="group flex w-full flex-col items-cent       
+          +er justify-center gap-3 rounded-xl border-2 border-dashed bord       
+          +er-muted-foreground/30 p-6 text-muted-foreground transition-al       
+          +l hover:border-primary/50 hover:text-primary"                        
+      121 +            >                                                        
+      122 +              <div className="flex size-12 items-center justif       
+          +y-center rounded-full bg-muted transition-colors group-hover:b       
+          +g-primary group-hover:text-primary-foreground">                      
+      123 +                <Dumbbell className="h-6 w-6" />                     
+      124 +              </div>                                                 
+      125 +              <div className="text-center">                          
+      126 +                <span className="block text-sm font-medium">         
+      127 +                  기록된 운동이 없습니다                             
+      128 +                </span>                                              
+      129 +                <span className="text-xs font-semibold text-pr       
+          +imary">                                                              
+      130 +                  운동 추가하기                                      
+      131 +                </span>                                              
+      132 +              </div>                                                 
+      133 +            </button>                                                
+      134 +          </DrawerTrigger>                                           
+      135 +        )}                                                           
+      136 +        <DrawerContent>                                              
+      137 +          <DrawerHeader>                                             
+      138 +            <DrawerTitle>운동 추가</DrawerTitle>                     
+      139 +            <DrawerDescription>                                      
+      140 +              {mode === "manual"                                     
+      141 +                ? "수행할 운동 종목을 입력하세요."                   
+      142 +                : "운동을 선택하거나 직접 입력하세요."}              
+      143 +            </DrawerDescription>                                     
+      144 +          </DrawerHeader>                                            
+      145 +                                                                     
+      146 +          {/* Mode selection */}                                     
+      147 +          {mode === null && (                                        
+      148 +            <div className="space-y-3 px-4 pb-2">                    
+      149 +              <Button                                                
+      150 +                type="button"                                        
+      151 +                variant="outline"                                    
+      152 +                className="h-auto w-full justify-start gap-3 p       
+          +-4"                                                                  
+      153 +                onClick={handleSelectClick}                          
+      154 +              >                                                      
+      155 +                <div className="flex size-10 items-center just       
+          +ify-center rounded-lg bg-primary/10 text-primary">                   
+      156 +                  <Search className="size-5" />                      
+      157 +                </div>                                               
+      158 +                <div className="text-left">                          
+      159 +                  <p className="font-medium">운동 선택</p>           
+      160 +                  <p className="text-xs text-muted-foreground"       
+          +>                                                                    
+      161 +                    등록된 운동 목록에서 선택                        
+      162 +                  </p>                                               
+      163 +                </div>                                               
+      164 +              </Button>                                              
+      165 +                                                                     
+      166 +              <Button                                                
+      167 +                type="button"                                        
+      168 +                variant="outline"                                    
+      169 +                className="h-auto w-full justify-start gap-3 p       
+          +-4"                                                                  
+      170 +                onClick={handleManualClick}                          
+      171 +              >                                                      
+      172 +                <div className="flex size-10 items-center just       
+          +ify-center rounded-lg bg-muted text-muted-foreground">               
+      173 +                  <PenLine className="size-5" />                     
+      174 +                </div>                                               
+      175 +                <div className="text-left">                          
+      176 +                  <p className="font-medium">직접 입력</p>           
+      177 +                  <p className="text-xs text-muted-foreground"       
+          +>                                                                    
+      178 +                    운동 이름을 직접 입력                            
+      179 +                  </p>                                               
+      180 +                </div>                                               
+      181 +              </Button>                                              
+      182              </div>                                                   
+       81 -            <div className="text-center">                            
+       82 -              <span className="block text-sm font-medium">           
+       83 -                기록된 운동이 없습니다                               
+       84 -              </span>                                                
+       85 -              <span className="text-xs font-semibold text-prim       
+          -ary">                                                                
+       86 -                운동 추가하기                                        
+       87 -              </span>                                                
+       88 -            </div>                                                   
+       89 -          </button>                                                  
+       90 -        </DrawerTrigger>                                             
+       91 -      )}                                                             
+       92 -      <DrawerContent>                                                
+       93 -        <DrawerHeader>                                               
+       94 -          <DrawerTitle>운동 추가</DrawerTitle>                       
+       95 -          <DrawerDescription>수행할 운동 종목을 입력하세요.</D       
+          -rawerDescription>                                                    
+       96 -        </DrawerHeader>                                              
+       97 -        <form onSubmit={handleSubmit} className="px-4">              
+       98 -          <Field>                                                    
+       99 -            <FieldLabel htmlFor="exerciseName">종목명</FieldLa       
+          -bel>                                                                 
+      100 -            <Input                                                   
+      101 -              id="exerciseName"                                      
+      102 -              type="text"                                            
+      103 -              placeholder="예: 벤치프레스, 스쿼트, 데드리프트"       
+      104 -              value={exerciseName}                                   
+      105 -              onChange={(e) => setExerciseName(e.target.value)       
+          -}                                                                    
+      106 -              autoFocus                                              
+      107 -              required                                               
+      108 -            />                                                       
+      109 -          </Field>                                                   
+      110 -        </form>                                                      
+      111 -        <DrawerFooter>                                               
+      112 -          <Button                                                    
+      113 -            type="submit"                                            
+      114 -            onClick={handleSubmit}                                   
+      115 -            disabled={addExercise.isPending || !exerciseName.t       
+          -rim()}                                                               
+      116 -          >                                                          
+      117 -            {addExercise.isPending ? "추가 중..." : "추가"}          
+      118 -          </Button>                                                  
+      119 -          <DrawerClose asChild>                                      
+      120 -            <Button variant="outline">취소</Button>                  
+      121 -          </DrawerClose>                                             
+      122 -        </DrawerFooter>                                              
+      123 -      </DrawerContent>                                               
+      124 -    </Drawer>                                                        
+      183 +          )}                                                         
+      184 +                                                                     
+      185 +          {/* Manual input mode */}                                  
+      186 +          {mode === "manual" && (                                    
+      187 +            <form onSubmit={handleSubmit} className="px-4">          
+      188 +              <Field>                                                
+      189 +                <FieldLabel htmlFor="exerciseName">종목명</Fie       
+          +ldLabel>                                                             
+      190 +                <Input                                               
+      191 +                  id="exerciseName"                                  
+      192 +                  type="text"                                        
+      193 +                  placeholder="예: 벤치프레스, 스쿼트, 데드리        
+          +프트"                                                                
+      194 +                  value={exerciseName}                               
+      195 +                  onChange={(e) => setExerciseName(e.target.va       
+          +lue)}                                                                
+      196 +                  autoFocus                                          
+      197 +                  required                                           
+      198 +                />                                                   
+      199 +              </Field>                                               
+      200 +            </form>                                                  
+      201 +          )}                                                         
+      202 +                                                                     
+      203 +          <DrawerFooter>                                             
+      204 +            {mode === "manual" ? (                                   
+      205 +              <>                                                     
+      206 +                <Button                                              
+      207 +                  type="submit"                                      
+      208 +                  onClick={handleSubmit}                             
+      209 +                  disabled={addExercise.isPending || !exercise       
+          +Name.trim()}                                                         
+      210 +                >                                                    
+      211 +                  {addExercise.isPending ? "추가 중..." : "추        
+          +가"}                                                                 
+      212 +                </Button>                                            
+      213 +                <Button variant="outline" onClick={handleBackT       
+          +oSelection}>                                                         
+      214 +                  뒤로                                               
+      215 +                </Button>                                            
+      216 +              </>                                                    
+      217 +            ) : (                                                    
+      218 +              <DrawerClose asChild>                                  
+      219 +                <Button variant="outline">취소</Button>              
+      220 +              </DrawerClose>                                         
+      221 +            )}                                                       
+      222 +          </DrawerFooter>                                            
+      223 +        </DrawerContent>                                             
+      224 +      </Drawer>                                                      
+      225 +                                                                     
+      226 +      {/* Exercise selection drawer */}                              
+      227 +      <SelectExerciseDrawer                                          
+      228 +        open={selectDrawerOpen}                                      
+      229 +        onOpenChange={setSelectDrawerOpen}                           
+      230 +        onSelect={handleExerciseSelect}                              
+      231 +      />                                                             
+      232 +    </>                                                              
+      233    );                                                                 
+      234  }                                                                    
+                                                                                
+⏺ Bash(mkdir -p /Users/raon/Desktop/Development/weight-app/src/data/seed)       
+  ⎿  (No content)                                                               
+                                                                                
+⏺ Write(src/data/seed/exercises.json)                                           
+  ⎿  Wrote 483 lines to src/data/seed/exercises.json                            
+       1 [                                                                      
+       2   {                                                                    
+       3     "id": "0001",                                                      
+       4     "name": "bench press",                                             
+       5     "bodyPart": "chest",                                               
+       6     "target": "pectorals",                                             
+       7     "equipment": "barbell",                                            
+       8     "secondaryMuscles": ["triceps", "delts"]                           
+       9   },                                                                   
+      10   {                                                                    
+     … +473 lines (ctrl+o to expand)                                            
+                                                                                
+⏺ Write(src/data/seed/seedExercises.ts)                                         
+  ⎿  Wrote 27 lines to src/data/seed/seedExercises.ts                           
+      1 import { exerciseRepository } from "@/data/repositories/exerciseR       
+        epository";                                                             
+      2 import type { Exercise } from "@/domain/exercises/types";               
+      3 import exercisesJson from "./exercises.json";                           
+      4 /**                                                                     
+      5  * Seed the exercises database with initial data if empty.              
+      6  * This ensures the app works offline with a basic set of exercis       
+        es.                                                                     
+      7  */                                                                     
+      8 export async function seedExercisesIfEmpty(): Promise<void> {           
+      9   const count = await exerciseRepository.count();                       
+     … +17 lines (ctrl+o to expand)                                             
+                                                                                
+⏺ Read(src/main.tsx)                                                            
+  ⎿  Read 33 lines                                                              
+                                                                                
+⏺ Update(src/main.tsx)                                                          
+  ⎿  Added 4 lines                                                              
+       7  import "./index.css";                                                 
+       8  import App from "./App.tsx";                                          
+       9  import { queryClient } from "./lib/queryClient";                      
+      10 +import { seedExercisesIfEmpty } from "./data/seed/seedExercises       
+         +";                                                                    
+      11                                                                        
+      12 +// Seed exercises database on app startup                             
+      13 +seedExercisesIfEmpty().catch(console.error);                          
+      14 +                                                                      
+      15  const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_       
+          KEY;                                                                  
+      16                                                                        
+      17  if (!PUBLISHABLE_KEY) {                                               
+                                                                                
+⏺ Bash(pnpm tsc --noEmit 2>&1 | head -100)                                      
+  ⎿  (No content)                                                               
+                                                                                
+⏺ Bash(pnpm build 2>&1 | tail -30)                                              
+  ⎿  > weight-app@0.0.0 build /Users/raon/Desktop/Development/weight-app        
+     > tsc -b && vite build                                                     
+     … +23 lines (ctrl+o to expand)                                             
+                                                                                
+⏺ 타입 에러를 수정하겠습니다.                                                   
+                                                                                
+⏺ Read(node_modules/react-body-highlighter/dist/index.d.ts)                     
+  ⎿  Read 3 lines                                                               
+                                                                                
+⏺ Bash(find /Users/raon/Desktop/Development/weight-app/node_modules/react-body-h
+      ighlighter -name "*.d.ts" -exec head -50 {} \;)                           
+  ⎿  (No content)                                                               
+                                                                                
+⏺ Bash(cat /Users/raon/Desktop/Development/weight-app/node_modules/react-body-hi
+      ghlighter/dist/component/Model.d.ts 2>/dev/null || cat                    
+      /Users/raon/Desktop/Development/…)                                        
+  ⎿  import * as React from 'react';                                            
+     import { IModelProps } from './metadata';                                  
+     declare const _default: React.NamedExoticComponent<IModelProps>;           
+     … +26 lines (ctrl+o to expand)                                             
+                                                                                
+⏺ Bash(cat /Users/raon/Desktop/Development/weight-app/node_modules/react-body-hi
+      ghlighter/dist/component/metadata.d.ts)                                   
+  ⎿  import { CSSProperties } from 'react';                                     
+     export declare const MuscleType: {                                         
+         readonly TRAPEZIUS: "trapezius";                                       
+     … +52 lines (ctrl+o to expand)                                             
+                                                                                
+⏺ Write(src/components/exercise-selector/MuscleSelector.tsx)                    
+  ⎿  Added 15 lines, removed 12 lines                                           
+      1  import { useState } from "react";                                      
+      2 -import Model, { type IExerciseData } from "react-body-highlighte       
+        -r";                                                                    
+      2 +import Model, { type IExerciseData, type Muscle, type IMuscleSta       
+        +ts } from "react-body-highlighter";                                    
+      3                                                                         
+      4  import { Button } from "@/components/ui/button";                       
+      5  import { cn } from "@/lib/utils";                                      
+     ...                                                                        
+       8  /**                                                                   
+       9   * Mapping from react-body-highlighter muscle names to Exercise       
+          DB target names                                                       
+      10   */                                                                   
+      11 -const MUSCLE_TO_TARGET: Record<string, MuscleTarget> = {              
+      11 +const MUSCLE_TO_TARGET: Record<Muscle, MuscleTarget | undefined       
+         +> = {                                                                 
+      12    chest: "pectorals",                                                 
+      13    trapezius: "traps",                                                 
+      14    "upper-back": "upper back",                                         
+     ...                                                                        
+      26    quadriceps: "quads",                                                
+      27    calves: "calves",                                                   
+      28    gluteal: "glutes",                                                  
+      29 -  head: "levator scapulae",                                           
+      29 +  head: undefined,                                                    
+      30    neck: "levator scapulae",                                           
+      31 +  knees: undefined,                                                   
+      32 +  "left-soleus": "calves",                                            
+      33 +  "right-soleus": "calves",                                           
+      34  };                                                                    
+      35                                                                        
+      36  /**                                                                   
+      37   * Mapping from ExerciseDB target names to react-body-highlight       
+          er muscle names                                                       
+      38   */                                                                   
+      36 -const TARGET_TO_MUSCLE: Record<MuscleTarget, string[]> = {            
+      39 +const TARGET_TO_MUSCLES: Partial<Record<MuscleTarget, Muscle[]>       
+         +> = {                                                                 
+      40    pectorals: ["chest"],                                               
+      41    traps: ["trapezius"],                                               
+      42    "upper back": ["upper-back"],                                       
+     ...                                                                        
+      51    abductors: ["abductors"],                                           
+      52    hamstrings: ["hamstring"],                                          
+      53    quads: ["quadriceps"],                                              
+      51 -  calves: ["calves"],                                                 
+      54 +  calves: ["calves", "left-soleus", "right-soleus"],                  
+      55    glutes: ["gluteal"],                                                
+      56    "levator scapulae": ["neck"],                                       
+      57    lats: ["upper-back"],                                               
+      55 -  "cardiovascular system": [],                                        
+      58  };                                                                    
+      59                                                                        
+      60  /**                                                                   
+     ...                                                                        
+      101                                                                       
+      102    // Convert selected targets to muscle data for highlighting        
+      103    const highlightData: IExerciseData[] = selectedTargets.flatM       
+           ap((target) => {                                                     
+      102 -    const muscles = TARGET_TO_MUSCLE[target] || [];                  
+      103 -    return muscles.map((muscle) => ({                                
+      104 +    const muscles = TARGET_TO_MUSCLES[target] || [];                 
+      105 +    if (muscles.length === 0) return [];                             
+      106 +    return [{                                                        
+      107        name: target,                                                  
+      105 -      muscles: [muscle],                                             
+      106 -    }));                                                             
+      108 +      muscles: muscles,                                              
+      109 +    }];                                                              
+      110    });                                                                
+      111                                                                       
+      109 -  const handleMuscleClick = (data: { muscle: string; data?: IE       
+          -xerciseData }) => {                                                  
+      112 +  const handleMuscleClick = (data: IMuscleStats) => {                
+      113      const muscleName = data.muscle;                                  
+      114      const target = MUSCLE_TO_TARGET[muscleName];                     
+      115                                                                       
+     ...                                                                        
+      186    );                                                                 
+      187  }                                                                    
+      188                                                                       
+      186 -export { TARGET_LABELS, MUSCLE_TO_TARGET, TARGET_TO_MUSCLE };        
+      189 +export { TARGET_LABELS, MUSCLE_TO_TARGET, TARGET_TO_MUSCLES };       
+                                                                                
+⏺ Read(src/features/exercises/mutations.ts)                                     
+  ⎿  Read 125 lines                                                             
+                                                                                
+⏺ Update(src/features/exercises/mutations.ts)                                   
+  ⎿  Added 6 lines, removed 2 lines                                             
+      71          await exerciseRepository.addFavorite({ exerciseId, exer       
+          ciseName });                                                          
+      72        }                                                               
+      73      },                                                                
+      74 -    onSuccess: (_, { exerciseId }) => {                               
+      74 +    onSuccess: (_, variables) => {                                    
+      75        addFavorite.reset();                                            
+      76        removeFavorite.reset();                                         
+      77 -      // Handled by add/remove mutations                              
+      77 +      // Invalidate queries                                           
+      78 +      queryClient.invalidateQueries({ queryKey: exerciseKeys.fa       
+         +vorites() });                                                         
+      79 +      queryClient.invalidateQueries({                                 
+      80 +        queryKey: exerciseKeys.isFavorite(variables.exerciseId)       
+         +,                                                                     
+      81 +      });                                                             
+      82      },                                                                
+      83    });                                                                 
+      84  }                                                                     
+                                                                                
+⏺ Update(src/features/exercises/mutations.ts)                                   
+  ⎿  Added 1 line                                                               
+      52   * Hook to toggle favorite status                                     
+      53   */                                                                   
+      54  export function useToggleFavorite() {                                 
+      55 +  const queryClient = useQueryClient();                               
+      56    const addFavorite = useAddFavorite();                               
+      57    const removeFavorite = useRemoveFavorite();                         
+      58                                                                        
+                                                                                
+⏺ Bash(pnpm build 2>&1 | tail -30)                                              
+  ⎿  > weight-app@0.0.0 build /Users/raon/Desktop/Development/weight-app        
+     > tsc -b && vite build                                                     
+     … +31 lines (ctrl+o to expand)                                             
+                                                                                
+⏺ 빌드가 성공했습니다.                                                          
+                                                                                
+⏺ 구현 완료                                                                     
+                                                                                
+  운동 선택 기능이 성공적으로 구현되었습니다.                                   
+                                                                                
+  생성된 파일 (14개)                                                            
+                                                                                
+  도메인:                                                                       
+  - src/domain/exercises/types.ts                                               
+                                                                                
+  데이터 레이어:                                                                
+  - src/data/db.ts (수정 - v3)                                                  
+  - src/data/api/exerciseApi.ts                                                 
+  - src/data/repositories/exerciseRepository.ts                                 
+  - src/data/seed/exercises.json (60개 기본 운동)                               
+  - src/data/seed/seedExercises.ts                                              
+                                                                                
+  React Query:                                                                  
+  - src/features/exercises/keys.ts                                              
+  - src/features/exercises/queries.ts                                           
+  - src/features/exercises/mutations.ts                                         
+                                                                                
+  UI 컴포넌트:                                                                  
+  - src/components/exercise-selector/MuscleSelector.tsx                         
+  - src/components/exercise-selector/ExerciseSearchInput.tsx                    
+  - src/components/exercise-selector/ExerciseCard.tsx                           
+  - src/components/exercise-selector/ExerciseList.tsx                           
+  - src/components/exercise-selector/index.ts                                   
+                                                                                
+  페이지:                                                                       
+  - src/pages/workouts/SelectExerciseDrawer.tsx                                 
+  - src/pages/workouts/AddExerciseDrawer.tsx (수정)                             
+                                                                                
+  주요 기능                                                                     
+                                                                                
+  1. 운동 선택 UI: FAB → "운동 선택" 또는 "직접 입력" 선택                      
+  2. SVG 인체도: 전면/후면 근육 부위 터치로 필터링                              
+  3. 탭 구성: 최근 | 즐겨찾기 | 전체 | 인체도                                   
+  4. 즐겨찾기: 운동 카드에서 별 아이콘으로 토글                                 
+  5. 검색: 운동명 검색 기능                                                     
+  6. 오프라인 지원: 60개 기본 운동 데이터 내장                                  
+                                                                                
+  다음 단계 (선택사항)                                                          
+                                                                                
+  ExerciseDB API를 사용하려면 .env.local 파일에 추가:                           
+  VITE_RAPIDAPI_KEY=your_api_key                                                
+  VITE_RAPIDAPI_HOST=exercisedb.p.rapidapi.com                                  
+                                                                                
+  pnpm dev로 앱을 실행해서 테스트해보세요.                                      
+                                                                                
+> excercisedb api 를 사용하기 위해 env 파일에 키값을 추가 했습니다. 다음        
+단계 진행해주세요                                                               
+                                                                                
+⏺ API 키가 설정되었네요. 앱을 실행해서 기능이 제대로 작동하는지 확인하겠습니다. 
+                                                                                
+⏺ Bash(pnpm dev &)                                                              
+  ⎿  Running in the background (↓ to manage)                                    
+  ⎿  You've hit your limit · resets 1am (Asia/Seoul)                            
+     /upgrade or /extra-usage to finish what you're working on.                 
+
